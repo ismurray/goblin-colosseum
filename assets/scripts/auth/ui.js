@@ -34,9 +34,22 @@ const signInFailure = function (error) {
   console.log(error)
 }
 
+const signOutSuccess = function () {
+  $('#account-message').text('Signed out successfully!')
+  $('#account-message').css('background-color', '#5cb85c')
+}
+
+const signOutFailure = function (error) {
+  $('#account-page-message').text('Error on Signing Out')
+  $('#account-page-message').css('background-color', '#d9534f')
+  console.log(error)
+}
+
 module.exports = {
   signUpSuccess,
   signUpFailure,
   signInSuccess,
-  signInFailure
+  signInFailure,
+  signOutSuccess,
+  signOutFailure
 }

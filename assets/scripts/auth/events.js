@@ -22,9 +22,17 @@ const onSignIn = function (event) {
     .catch(authUI.signInFailure)
 }
 
+const onSignOut = function (event) {
+  event.preventDefault()
+  authAP.signOut()
+    .then(authUI.signOutSuccess)
+    .catch(authUI.signOutFailure)
+}
+
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp)
   $('#sign-in').on('submit', onSignIn)
+  $('#sign-out').on('submit', onSignOut)
 }
 
 module.exports = {
