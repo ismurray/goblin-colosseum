@@ -45,11 +45,28 @@ const signOutFailure = function (error) {
   console.log(error)
 }
 
+const changePasswordSuccess = function () {
+  $('#account-message').text('Password changed successfully!')
+  $('#account-message').css('background-color', '#5cb85c')
+  $('#change-password').find('input:text').val('')
+  $('#change-password').find('input:password').val('')
+}
+
+const changePasswordFailure = function (error) {
+  $('#account-message').text('Error on changing password')
+  $('#account-message').css('background-color', '#d9534f')
+  $('#change-password').find('input:text').val('')
+  $('#change-password').find('input:password').val('')
+  console.log(error)
+}
+
 module.exports = {
   signUpSuccess,
   signUpFailure,
   signInSuccess,
   signInFailure,
   signOutSuccess,
-  signOutFailure
+  signOutFailure,
+  changePasswordSuccess,
+  changePasswordFailure
 }
