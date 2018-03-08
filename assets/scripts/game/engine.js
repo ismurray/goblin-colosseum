@@ -69,3 +69,13 @@ const validateNeighborIndices = function (combatant) {
     combatant.neighborIndices.right = 'wall'
   }
 }
+
+// moves the player/goblin 'up', 'down', 'left', or 'right'
+const moveCombatant = function (combatant, direction) {
+  if (combatant.neighborIndices[direction] !== 'wall') {
+    combatant.position = combatant.neighborIndices[direction]
+    setNeighborIndices(combatant)
+  } else {
+    console.log('You cannot move that way!')
+  }
+}
