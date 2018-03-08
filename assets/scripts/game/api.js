@@ -14,6 +14,19 @@ const getAllGames = function (data) {
   })
 }
 
+const createGame = function (data) {
+  return $.ajax({
+    url: config.apiOrigin + '/games',
+    method: 'POST',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
+
 module.exports = {
-  getAllGames
+  getAllGames,
+  createGame
 }

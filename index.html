@@ -70,8 +70,8 @@
       <h2>Create Game </h2>
       <form id="create-game" class="border">
         <fieldset>
-          <input type="text" placeholder="Over? true/false">
-          <input type="number" placeholder="Score">
+          <input type="text" name="game[over]" placeholder="Over? true/false">
+          <input type="number" name="game[score]" placeholder="Score">
           <button type="submit" class="btn btn-primary btn">Create Game</button>
         </fieldset>
       </form>
@@ -80,8 +80,8 @@
       <h2>Update Game </h2>
       <form id="update-game" class="border">
         <fieldset>
-          <input type="text" placeholder="Over? true/false">
-          <input type="number" placeholder="Score">
+          <input id="new-game-over-input" type="text" placeholder="Over? true/false">
+          <input id="new-game-score-input" type="number" placeholder="Score">
           <button type="submit" class="btn btn-primary btn">Update Game</button>
         </fieldset>
       </form>

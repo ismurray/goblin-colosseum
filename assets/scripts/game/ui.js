@@ -16,7 +16,25 @@ const getAllGamesFailure = function (error) {
   console.log(error)
 }
 
+const createGameSuccess = function (data) {
+  $('#account-message').text('You have created a game!')
+  $('#account-message').css('background-color', '#5cb85c')
+  const addNewGameHtml = showAllGamesTemplate({ games: data })
+  $('#content').append(addNewGameHtml)
+  // For some reason clearing the text field works, but not the number field
+  // $('#create-game').find('input:text').val('')
+  // $('#create-game').find('input:number').val('')
+}
+
+const createGameFailure = function (error) {
+  $('#account-message').text('Error creating game!')
+  $('#account-message').css('background-color', '#d9534f')
+  console.log(error)
+}
+
 module.exports = {
   getAllGamesSuccess,
-  getAllGamesFailure
+  getAllGamesFailure,
+  createGameSuccess,
+  createGameFailure
 }
