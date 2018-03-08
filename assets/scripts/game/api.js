@@ -26,7 +26,19 @@ const createGame = function (data) {
   })
 }
 
+const deleteGame = function (id) {
+  return $.ajax({
+    url: config.apiOrigin + '/games/' + id,
+    method: 'DELETE',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 module.exports = {
   getAllGames,
-  createGame
+  createGame,
+  deleteGame
 }

@@ -22,9 +22,21 @@ const onCreateGame = function (event) {
     .catch(gameUI.createGameFailure)
 }
 
+const onDeleteGame = (event) => {
+  event.preventDefault()
+  const id = $(event.currentTarget).attr('data-id')
+
+  const getElement = '[data-id=' + id + ']'
+  $(getElement).empty()
+  gameAPI.deleteGame(id)
+    .then(gameUI.deleteGameSuccess)
+    .catch(gameUI.deleteGameFailure)
+}
+
 const addHandlers = () => {
   $('#get-all-games').on('submit', onGetAllGames)
   $('#create-game').on('submit', onCreateGame)
+  $('.content').on('click', 'button', onDeleteGame)
 }
 
 module.exports = {

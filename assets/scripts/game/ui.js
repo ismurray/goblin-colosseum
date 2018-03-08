@@ -32,9 +32,22 @@ const createGameFailure = function (error) {
   console.log(error)
 }
 
+const deleteGameSuccess = function (id) {
+  $('#account-message').text('You have deleted a game!')
+  $('#account-message').css('background-color', '#5cb85c')
+}
+
+const deleteGameFailure = function (error) {
+  $('#account-message').text('Error deleting game!')
+  $('#account-message').css('background-color', '#d9534f')
+  console.log(error)
+}
+
 module.exports = {
   getAllGamesSuccess,
   getAllGamesFailure,
   createGameSuccess,
-  createGameFailure
+  createGameFailure,
+  deleteGameSuccess,
+  deleteGameFailure
 }
