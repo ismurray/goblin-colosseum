@@ -32,6 +32,18 @@ const createGameFailure = function (error) {
   console.log(error)
 }
 
+const updateGameSuccess = function (id) {
+  $('#account-message').text('You have updated a game!')
+  $('#account-message').css('background-color', '#5cb85c')
+  $('#get-all-games-button').click()
+}
+
+const updateGameFailure = function (error) {
+  $('#account-message').text('Error updating game!')
+  $('#account-message').css('background-color', '#d9534f')
+  console.log(error)
+}
+
 const deleteGameSuccess = function (id) {
   $('#account-message').text('You have deleted a game!')
   $('#account-message').css('background-color', '#5cb85c')
@@ -48,6 +60,8 @@ module.exports = {
   getAllGamesFailure,
   createGameSuccess,
   createGameFailure,
+  updateGameSuccess,
+  updateGameFailure,
   deleteGameSuccess,
   deleteGameFailure
 }

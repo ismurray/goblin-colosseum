@@ -22,6 +22,17 @@ const onCreateGame = function (event) {
     .catch(gameUI.createGameFailure)
 }
 
+const onUpdateGame = function (event) {
+  event.preventDefault()
+
+  const id = $('#update-game input').val()
+  const data = getFormFields(this)
+
+  gameAPI.updateGame(id, data)
+    .then(gameUI.updateGameSuccess)
+    .catch(gameUI.updateGameFailure)
+}
+
 const onDeleteGame = (event) => {
   event.preventDefault()
   const id = $(event.currentTarget).attr('data-id')
@@ -36,6 +47,7 @@ const onDeleteGame = (event) => {
 const addHandlers = () => {
   $('#get-all-games').on('submit', onGetAllGames)
   $('#create-game').on('submit', onCreateGame)
+  $('#update-game').on('submit', onUpdateGame)
   $('.content').on('click', 'button', onDeleteGame)
 }
 

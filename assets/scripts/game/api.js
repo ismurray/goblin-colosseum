@@ -26,6 +26,18 @@ const createGame = function (data) {
   })
 }
 
+const updateGame = function (id, data) {
+  return $.ajax({
+    url: config.apiOrigin + '/games/' + id,
+    method: 'PATCH',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
+
 const deleteGame = function (id) {
   return $.ajax({
     url: config.apiOrigin + '/games/' + id,
@@ -40,5 +52,6 @@ const deleteGame = function (id) {
 module.exports = {
   getAllGames,
   createGame,
+  updateGame,
   deleteGame
 }

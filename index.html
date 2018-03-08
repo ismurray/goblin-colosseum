@@ -80,8 +80,9 @@
       <h2>Update Game </h2>
       <form id="update-game" class="border">
         <fieldset>
-          <input id="new-game-over-input" type="text" placeholder="Over? true/false">
-          <input id="new-game-score-input" type="number" placeholder="Score">
+          <input type="text" placeholder="Game ID">
+          <input id="new-game-over-input" type="text" name="game[over]" placeholder="Over? true/false">
+          <input id="new-game-score-input" type="number" name="game[score]" placeholder="Score">
           <button type="submit" class="btn btn-primary btn">Update Game</button>
         </fieldset>
       </form>
@@ -99,18 +100,18 @@
       <h2>Get All Games</h2>
       <form id="get-all-games" class="border">
         <fieldset>
-          <button type="submit" class="btn btn-primary btn">Get All Games</button>
+          <button type="submit" id="get-all-games-button" class="btn btn-primary btn">Get All Games</button>
         </fieldset>
       </form>
 
       <!-- Delete Game Form -->
-      <h2>Delete Game by ID</h2>
+      <!-- <h2>Delete Game by ID</h2>
       <form id="delete-game" class="border">
         <fieldset>
           <input type="number" placeholder="Game ID">
           <button type="submit" class="btn btn-primary btn">Delete Game</button>
         </fieldset>
-      </form>
+      </form> -->
 
       <div class="content" id="content">
       </div>
