@@ -13,7 +13,7 @@ let playerState = {
   name: 'player',
   position: [4, 2],
   hp: [10, 10],
-  attack: 5,
+  attackDmg: 5,
   alive: true
 }
 let goblinState = [
@@ -21,21 +21,21 @@ let goblinState = [
     name: 'goblin',
     position: [0, 0],
     hp: [10, 10],
-    attack: 2,
+    attackDmg: 2,
     alive: true
   },
   {
     name: 'goblin',
     position: [0, 4],
     hp: [10, 10],
-    attack: 2,
+    attackDmg: 2,
     alive: true
   },
   {
     name: 'goblin',
     position: [0, 2],
     hp: [10, 10],
-    attack: 2,
+    attackDmg: 2,
     alive: true
   }
 ]
@@ -128,7 +128,42 @@ const moveCombatant = function (combatant, direction) {
   // if destination is occupied by opposite type (gob -> player or player -> gob),
   // call attack function
   } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
-    console.log(`${map[currentPos[0]][currentPos[1]]} attacks ${map[destination[0]][destination[1]]}`)
+    targetAttack(combatant, destination)
   }
   return updateMap(playerState, goblinState)
 }
+
+// returns index of the goblin at given coords, returns -1 if no gob is there
+const findGobByPosition = function (goblins, givenPosition) {
+  return goblins.findIndex(goblin => goblin.position[0] === givenPosition[0] && goblin.position[1] === givenPosition[1])
+}
+
+// resolves an attack with a given attacker and target (both must be combatants)
+// prints the result of the attack and updates the map
+const attack = function (attacker, target) {
+  target.hp[0] -= attacker.attackDmg
+  console.log(`${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}`)
+  return updateMap(playerState, goblinState)
+}
+
+// resolves an attack if the identity of the target is not set yet. Takes an
+// attacker and an attack destination coord. If attacker is player, finds the
+// goblin at that coord and attacks it. If attacker is gob, attacks the player
+const targetAttack = function (attacker, destination) {
+  if (attacker.name === 'player') {
+    const gobIndex = findGobByPosition(goblinState, destination)
+    if (gobIndex > -1) {
+      const target = goblinState[gobIndex]
+      return attack(attacker, target)
+    } else {
+      return `No target at position ${destination}`
+    }
+  } else {
+    return attack(attacker, playerState)
+  }
+}
+
+// Below is for testing purposes
+
+createNewGame()
+moveCombatant(playerState, 'up')
