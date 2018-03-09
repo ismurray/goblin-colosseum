@@ -26,15 +26,33 @@ let goblinStates = [
   }
 ]
 
-// initializes the game map to be a 2D array
-const createMap = function (rowLength) {
-  const row = []
+// Map funcs:
+
+// initializes the game map to be a 2D array filled with empty spaces
+const resetMap = function (rowLength) {
+  map = []
   for (let i = 0; i < rowLength; i++) {
-    row.push('   ')
-  }
-  for (let i = 0; i < rowLength; i++) {
+    let row = []
+    for (let n = 0; n < rowLength; n++) {
+      row.push('   ')
+    }
     map.push(row)
   }
+  return map
+}
+
+// update player position on map
+const updateMap = function (player, goblins) {
+  map = resetMap(rowLength)
+  if (player.alive) {
+    map[player.position[0]][player.position[1]] = '{o!'
+  }
+  for (let i = 0; i < goblins.length; i++) {
+    if (goblins[i].alive) {
+      map[goblins[i].position[0]][goblins[i].position[1]] = 'rw}'
+    }
+  }
+  return map
 }
 
 // Player funcs:
@@ -78,4 +96,5 @@ const moveCombatant = function (combatant, direction) {
   } else {
     console.log('You cannot move that way!')
   }
+  return updateMap(playerState, goblinStates)
 }
