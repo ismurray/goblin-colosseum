@@ -135,7 +135,9 @@ const moveCombatant = function (combatant, direction) {
 
 // returns index of the goblin at given coords, returns -1 if no gob is there
 const findGobByPosition = function (goblins, givenPosition) {
-  return goblins.findIndex(goblin => goblin.position[0] === givenPosition[0] && goblin.position[1] === givenPosition[1])
+  return goblins.findIndex(goblin => goblin.position[0] === givenPosition[0] &&
+                                     goblin.position[1] === givenPosition[1] &&
+                                     goblin.alive)
 }
 
 // resolves an attack with a given attacker and target (both must be combatants)
@@ -143,7 +145,7 @@ const findGobByPosition = function (goblins, givenPosition) {
 const attack = function (attacker, target) {
   target.hp[0] -= attacker.attackDmg
   console.log(`${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}`)
-  return updateMap(playerState, goblinState)
+  return deathCheck(target)
 }
 
 // resolves an attack if the identity of the target is not set yet. Takes an
@@ -161,6 +163,23 @@ const targetAttack = function (attacker, destination) {
   } else {
     return attack(attacker, playerState)
   }
+}
+
+// Checks to see if target is killed after an attack, if yes, set target to dead,
+// and whether target was a gob or the player, increase score or game over respectively
+const deathCheck = function (target) {
+  if (target.hp[0] < 1) {
+    target.alive = false
+    // if target killed was a gob, increase score by 1
+    if (target.name !== 'player') {
+      score += 1
+    // if target killed was player, game over
+    } else if (target.name === 'player') {
+      over = true
+      console.log('YOU ARE DEAD. GAME OVER.')
+    }
+  }
+  return updateMap(playerState, goblinState)
 }
 
 // Below is for testing purposes
