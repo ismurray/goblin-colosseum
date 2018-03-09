@@ -136,6 +136,8 @@ const moveCombatant = function (combatant, direction) {
   } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
     targetAttack(combatant, destination)
   }
+  // if player's turn is ending, run all the gobs' turns, increase the round
+  // count, and do a spawnCheck
   if (combatant.name === 'player') {
     goblinTurns(goblinState)
     round += 1
@@ -270,6 +272,6 @@ const levels = {
 
 // Below is for testing purposes
 
-createNewGame()
+// createNewGame()
 // moveCombatant(playerState, 'up')
 // goblinTurns(goblinState)
