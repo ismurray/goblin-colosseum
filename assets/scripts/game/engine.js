@@ -1,5 +1,7 @@
 'use strict'
 
+const gameUI = require('./ui.js')
+
 // initial variables
 const rowLength = 5
 let map = []
@@ -44,15 +46,32 @@ let goblinState = []
 //   }
 // ]
 
-createNewGame = function () {
+// initializes new game, resets variables
+const createNewGame = function () {
+  const gameUI = require('./ui.js')
+  goblinState = []
+  score = 0
+  round = 1
+  over = false
+  playerState = {
+    name: 'player',
+    position: [4, 2],
+    hp: [10, 10],
+    attackDmg: 5,
+    alive: true
+  }
   resetMap(rowLength)
   setNeighborIndices(playerState)
   spawnCheck(round)
   for (let i = 0; i < goblinState.length; i++) {
     setNeighborIndices(goblinState[i])
   }
-  return updateMap(playerState, goblinState)
+  updateMap(playerState, goblinState)
+  gameUI.newGameReset(map)
+  return map
 }
+
+
 
 // Map funcs:
 
@@ -62,7 +81,7 @@ const resetMap = function (rowLength) {
   for (let i = 0; i < rowLength; i++) {
     let row = []
     for (let n = 0; n < rowLength; n++) {
-      row.push('   ')
+      row.push('...')
     }
     map.push(row)
   }
@@ -128,7 +147,7 @@ const moveCombatant = function (combatant, direction) {
     console.log('You cannot move that way!')
   // if destination is empty, move combatant to that space and update neighbors
   // prevents gobs from moving over or attacking each other
-  } else if (map[destination[0]][destination[1]] === '   ') {
+} else if (map[destination[0]][destination[1]] === '...') {
     combatant.position = combatant.neighborIndices[direction]
     setNeighborIndices(combatant)
   // if destination is occupied by opposite type (gob -> player or player -> gob),
@@ -268,6 +287,10 @@ const levels = {
     createGoblin([0, 4], [10, 10], 1, true),
     createGoblin([2, 0], [10, 10], 1, true)
   ]
+}
+
+module.exports = {
+  createNewGame
 }
 
 // Below is for testing purposes

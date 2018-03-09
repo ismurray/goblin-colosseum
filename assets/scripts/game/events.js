@@ -2,6 +2,7 @@
 
 const gameAPI = require('./api.js')
 const gameUI = require('./ui.js')
+const gameEngine = require('./engine.js')
 const getFormFields = require('../../../lib/get-form-fields')
 
 const onGetAllGames = function (event) {
@@ -33,6 +34,13 @@ const onCreateGame = function (event) {
     .catch(gameUI.createGameFailure)
 }
 
+// Resets internal game and game UI
+const onNewGame = function (event) {
+  event.preventDefault()
+  console.log('clicked!')
+  gameEngine.createNewGame()
+}
+
 const onUpdateGame = function (event) {
   event.preventDefault()
 
@@ -61,6 +69,7 @@ const addHandlers = () => {
   $('#create-game').on('submit', onCreateGame)
   $('#update-game').on('submit', onUpdateGame)
   $('.content').on('click', 'button', onDeleteGame)
+  $('#new-game-button').on('click', onNewGame)
 }
 
 module.exports = {

@@ -1,6 +1,7 @@
 'use strict'
 
 const showAllGamesTemplate = require('../templates/game-listing.handlebars')
+const gameEngine = require('./engine.js')
 
 const getAllGamesSuccess = function (data) {
   console.log(data.games)
@@ -38,6 +39,19 @@ const createGameSuccess = function (data) {
   const addNewGameHtml = showAllGamesTemplate({ games: data })
   $('#content').append(addNewGameHtml)
   $('#create-game').find('input:text').val('')
+}
+
+// resets the visual board and resets any error/win/draw messages
+const newGameReset = function (map) {
+  $('#account-message').text('New Game! See how many Gobs you can kill before dying!')
+  $('#account-message').css('background-color', '#fefefe')
+  for (let y = 0; y < 5; y++) {
+    const ID1 = '#mark' + y
+    for (let x = 0; x < 5; x++) {
+      const spotID = ID1 + x
+      $(spotID).text(map[y][x])
+    }
+  }
 }
 
 const createGameFailure = function (error) {
@@ -82,5 +96,6 @@ module.exports = {
   updateGameSuccess,
   updateGameFailure,
   deleteGameSuccess,
-  deleteGameFailure
+  deleteGameFailure,
+  newGameReset
 }
