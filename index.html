@@ -66,6 +66,60 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 
+      <!-- Begin Game Display -->
+      <div class="game-wrapper">
+        <p>Round: <span id="current-round"></span></p>
+        <p>Your HP: <span id="current-hp"></span></p>
+        <div class="col-md-12 wrapper">
+          <div class="row board-row">
+            <div class="col-xs-2 board-spot" data-id="0" id="mark0">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="1" id="mark1">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="2" id="mark2">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="3" id="mark3">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="4" id="mark4">'   '</div>
+          </div>
+          <div class="row board-row">
+            <div class="col-xs-2 board-spot" data-id="5" id="mark5">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="6" id="mark6">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="7" id="mark7">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="8" id="mark8">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="8" id="mark9">'   '</div>
+          </div>
+          <div class="row board-row">
+            <div class="col-xs-2 board-spot" data-id="10" id="mark10">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="11" id="mark11">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="12" id="mark12">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="13" id="mark13">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="14" id="mark14">'   '</div>
+          </div>
+          <div class="row board-row">
+            <div class="col-xs-2 board-spot" data-id="15" id="mark15">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="16" id="mark16">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="17" id="mark17">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="18" id="mark18">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="19" id="mark19">'   '</div>
+          </div>
+          <div class="row board-row">
+            <div class="col-xs-2 board-spot" data-id="20" id="mark20">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="21" id="mark21">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="22" id="mark22">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="23" id="mark23">'   '</div>
+            <div class="col-xs-2 board-spot" data-id="24" id="mark24">'   '</div>
+          </div>
+        </div>
+        <p>Your Score: <span id="current-score"></span></p>
+        <p>Current Game ID: <span id="current-game"></span></p>
+      </div>
+      <div class="border player-inputs">
+        <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
+        <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
+        <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
+        <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
+      </div>
+      <!-- End Game Display -->
+
+
+
       <!-- Create Game Form -->
       <h2>Create Game </h2>
       <form id="create-game" class="border">
