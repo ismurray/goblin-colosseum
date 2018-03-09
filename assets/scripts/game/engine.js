@@ -16,15 +16,38 @@ let playerState = {
   attack: 5,
   alive: true
 }
-let goblinStates = [
+let goblinState = [
   {
     name: 'goblin',
-    position: [0, 3],
+    position: [0, 0],
+    hp: [10, 10],
+    attack: 2,
+    alive: true
+  },
+  {
+    name: 'goblin',
+    position: [0, 4],
+    hp: [10, 10],
+    attack: 2,
+    alive: true
+  },
+  {
+    name: 'goblin',
+    position: [0, 2],
     hp: [10, 10],
     attack: 2,
     alive: true
   }
 ]
+
+createNewGame = function () {
+  resetMap(rowLength)
+  setNeighborIndices(playerState)
+  for (let i = 0; i < goblinState.length; i++) {
+    setNeighborIndices(goblinState[i])
+  }
+  return updateMap(playerState, goblinState)
+}
 
 // Map funcs:
 
@@ -96,5 +119,5 @@ const moveCombatant = function (combatant, direction) {
   } else {
     console.log('You cannot move that way!')
   }
-  return updateMap(playerState, goblinStates)
+  return updateMap(playerState, goblinState)
 }
