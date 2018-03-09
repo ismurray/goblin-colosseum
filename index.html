@@ -72,6 +72,8 @@
         <fieldset>
           <input type="text" name="game[over]" placeholder="Over? true/false">
           <input type="text" name="game[score]" placeholder="Score">
+          <input type="text" name="game[player_state]" placeholder="player_state json">
+          <input type="text" name="game[goblin_state]" placeholder="goblin_state json">
           <button type="submit" class="btn btn-primary btn">Create Game</button>
         </fieldset>
       </form>
@@ -81,8 +83,10 @@
       <form id="update-game" class="border">
         <fieldset>
           <input type="text" placeholder="Game ID">
-          <input id="new-game-over-input" type="text" name="game[over]" placeholder="Over? true/false">
-          <input id="new-game-score-input" type="text" name="game[score]" placeholder="Score">
+          <input type="text" name="game[over]" placeholder="Over? true/false">
+          <input type="text" name="game[score]" placeholder="Score">
+          <input type="text" name="game[player_state]" placeholder="player_state json">
+          <input type="text" name="game[goblin_state]" placeholder="goblin_state json">
           <button type="submit" class="btn btn-primary btn">Update Game</button>
         </fieldset>
       </form>

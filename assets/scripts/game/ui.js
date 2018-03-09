@@ -4,6 +4,7 @@ const showAllGamesTemplate = require('../templates/game-listing.handlebars')
 
 const getAllGamesSuccess = function (data) {
   console.log(data.games)
+
   const showAllGamesHtml = showAllGamesTemplate({ games: data.games })
   $('#content').html(showAllGamesHtml)
   $('#account-message').text('Games retrieved!')

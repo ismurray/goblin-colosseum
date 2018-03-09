@@ -12,6 +12,20 @@
       No score listed yet.
     {{/if}}
   </li>
+  <li>Player state:
+    {{#if game.player_state}}
+      {{game.player_state}}
+    {{else}}
+      No player_state listed yet.
+    {{/if}}
+  </li>
+  <li>Goblin states:
+    {{#if game.goblin_state}}
+      {{game.goblin_state}}
+    {{else}}
+      No player_state listed yet.
+    {{/if}}
+  </li>
   <ul>
     <button type="button" data-id="{{game.id}}">Remove</button>
   </ul>
