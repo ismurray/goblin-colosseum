@@ -6,6 +6,7 @@ let map = []
 // playerStartPos = [4, 2]
 // gobStartPos = [0, 3]
 
+
 // Sample game state data that could come from API:
 let score = 0
 let over = false
@@ -18,33 +19,35 @@ let playerState = {
   attackDmg: 5,
   alive: true
 }
-let goblinState = [
-  {
-    name: 'goblin',
-    position: [0, 0],
-    hp: [10, 10],
-    attackDmg: 2,
-    alive: true
-  },
-  {
-    name: 'goblin',
-    position: [0, 4],
-    hp: [10, 10],
-    attackDmg: 2,
-    alive: true
-  },
-  {
-    name: 'goblin',
-    position: [0, 2],
-    hp: [10, 10],
-    attackDmg: 2,
-    alive: true
-  }
-]
+let goblinState = []
+// let goblinState = [
+//   {
+//     name: 'goblin',
+//     position: [0, 0],
+//     hp: [10, 10],
+//     attackDmg: 2,
+//     alive: true
+//   },
+//   {
+//     name: 'goblin',
+//     position: [0, 4],
+//     hp: [10, 10],
+//     attackDmg: 2,
+//     alive: true
+//   },
+//   {
+//     name: 'goblin',
+//     position: [0, 2],
+//     hp: [10, 10],
+//     attackDmg: 2,
+//     alive: true
+//   }
+// ]
 
 createNewGame = function () {
   resetMap(rowLength)
   setNeighborIndices(playerState)
+  spawnCheck(round)
   for (let i = 0; i < goblinState.length; i++) {
     setNeighborIndices(goblinState[i])
   }
@@ -119,6 +122,7 @@ const validateNeighborIndices = function (combatant) {
 const moveCombatant = function (combatant, direction) {
   const destination = combatant.neighborIndices[direction]
   const currentPos = combatant.position
+  map = updateMap(playerState, goblinState)
   // prevent combatant from walking off map
   if (destination === 'wall') {
     console.log('You cannot move that way!')
@@ -135,6 +139,7 @@ const moveCombatant = function (combatant, direction) {
   if (combatant.name === 'player') {
     goblinTurns(goblinState)
     round += 1
+    spawnCheck(round)
   }
   return updateMap(playerState, goblinState)
 }
@@ -219,8 +224,52 @@ const goblinTurns = function (goblins) {
   return updateMap(playerState, goblins)
 }
 
+// This func constructs new goblin hashes with given stats
+const createGoblin = function (position, hp, attackDmg, alive) {
+  const goblin = {}
+  goblin.name = 'goblin'
+  goblin.position = position
+  goblin.hp = hp
+  goblin.attackDmg = attackDmg
+  goblin.alive = alive
+  setNeighborIndices(goblin)
+  return goblin
+}
+
+// run at end of player move and during createGame to check whether current
+// round is a spawn round in the levels hash, if yes, add the goblins to goblinState
+const spawnCheck = function (round) {
+  if (levels[round] !== undefined) {
+    const newGobs = levels[round]
+    for (let i = 0; i < newGobs.length; i++) {
+      goblinState.push(newGobs[i])
+    }
+  }
+}
+
+// holds keys that are landmark rounds (1, 10, 20, etc) whose values are arrays
+// of goblins to be spawned on that round.
+const levels = {
+  1: [createGoblin([0, 2], [10, 10], 1, true)],
+  10: [
+    createGoblin([0, 0], [10, 10], 1, true),
+    createGoblin([0, 4], [10, 10], 1, true)
+  ],
+  20: [
+    createGoblin([0, 0], [10, 10], 1, true),
+    createGoblin([0, 2], [10, 10], 1, true),
+    createGoblin([0, 4], [10, 10], 1, true)
+  ],
+  30: [
+    createGoblin([0, 0], [10, 10], 1, true),
+    createGoblin([0, 2], [10, 10], 1, true),
+    createGoblin([0, 4], [10, 10], 1, true),
+    createGoblin([2, 0], [10, 10], 1, true)
+  ]
+}
+
 // Below is for testing purposes
 
 createNewGame()
-moveCombatant(playerState, 'up')
+// moveCombatant(playerState, 'up')
 // goblinTurns(goblinState)
