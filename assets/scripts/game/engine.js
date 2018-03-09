@@ -112,12 +112,23 @@ const validateNeighborIndices = function (combatant) {
 }
 
 // moves the player/goblin 'up', 'down', 'left', or 'right'
+// prevents invalid movement and calls attack if destination cell is occupied by
+// opposite combatant type
 const moveCombatant = function (combatant, direction) {
-  if (combatant.neighborIndices[direction] !== 'wall') {
+  const destination = combatant.neighborIndices[direction]
+  const currentPos = combatant.position
+  // prevent combatant from walking off map
+  if (destination === 'wall') {
+    console.log('You cannot move that way!')
+  // if destination is empty, move combatant to that space and update neighbors
+  // prevents gobs from moving over or attacking each other
+  } else if (map[destination[0]][destination[1]] === '   ') {
     combatant.position = combatant.neighborIndices[direction]
     setNeighborIndices(combatant)
-  } else {
-    console.log('You cannot move that way!')
+  // if destination is occupied by opposite type (gob -> player or player -> gob),
+  // call attack function
+  } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
+    console.log(`${map[currentPos[0]][currentPos[1]]} attacks ${map[destination[0]][destination[1]]}`)
   }
   return updateMap(playerState, goblinState)
 }
