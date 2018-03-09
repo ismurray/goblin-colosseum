@@ -9,6 +9,8 @@ let map = []
 // Sample game state data that could come from API:
 let score = 0
 let over = false
+// TODO: add round column to the API/ClientUI, etc
+let round = 1
 let playerState = {
   name: 'player',
   position: [4, 2],
@@ -130,6 +132,10 @@ const moveCombatant = function (combatant, direction) {
   } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
     targetAttack(combatant, destination)
   }
+  if (combatant.name === 'player') {
+    goblinTurns(goblinState)
+    round += 1
+  }
   return updateMap(playerState, goblinState)
 }
 
@@ -202,7 +208,19 @@ const chasePlayer = function (goblin) {
   }
 }
 
+// Cycles through every live goblin and runs their turn, then updates map
+const goblinTurns = function (goblins) {
+  for (let i = 0; i < goblins.length; i++) {
+    const goblin = goblins[i]
+    if (goblin.alive) {
+      chasePlayer(goblin)
+    }
+  }
+  return updateMap(playerState, goblins)
+}
+
 // Below is for testing purposes
 
 createNewGame()
-chasePlayer(goblinState[0])
+moveCombatant(playerState, 'up')
+// goblinTurns(goblinState)
