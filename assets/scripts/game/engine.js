@@ -173,6 +173,7 @@ const deathCheck = function (target) {
     // if target killed was a gob, increase score by 1
     if (target.name !== 'player') {
       score += 1
+      console.log(`You have slain a ${target.name}! Your score is now ${score}`)
     // if target killed was player, game over
     } else if (target.name === 'player') {
       over = true
@@ -182,7 +183,26 @@ const deathCheck = function (target) {
   return updateMap(playerState, goblinState)
 }
 
+// Chases the player by determining along which axis the gob is further from the
+// player, and moving in that direction
+const chasePlayer = function (goblin) {
+  const xDiff = goblin.position[1] - playerState.position[1]
+  const yDiff = goblin.position[0] - playerState.position[0]
+  // if further from player along x-axis, move along x-axis
+  if (Math.abs(xDiff) > Math.abs(yDiff) ||
+      Math.abs(xDiff) === Math.abs(yDiff)) {
+    // determine whether player is above or below gob on x-axis and move toward
+    // player accordingly
+    return (xDiff > 0 ? moveCombatant(goblin, 'left') : moveCombatant(goblin, 'right'))
+  // if further from player along y-axis, move along y-axis
+  } else if (Math.abs(yDiff) > Math.abs(xDiff)) {
+    // determine whether player is above or below gob on x-axis and move toward
+    // player accordingly
+    return (yDiff > 0 ? moveCombatant(goblin, 'up') : moveCombatant(goblin, 'down'))
+  }
+}
+
 // Below is for testing purposes
 
 createNewGame()
-moveCombatant(playerState, 'up')
+chasePlayer(goblinState[0])
