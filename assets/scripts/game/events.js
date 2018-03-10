@@ -16,9 +16,9 @@ const onGetGame = function (event) {
   event.preventDefault()
 
   const id = $('#get-game input').val()
-  console.log('id is ', id)
 
   gameAPI.getGame(id)
+    .then(gameEngine.loadGame)
     .then(gameUI.getGameSuccess)
     .catch(gameUI.getGameFailure)
 }
@@ -29,10 +29,8 @@ const onCreateNewGame = function (event) {
   event.preventDefault()
   gameAPI.createGame()
     .then(gameEngine.createNewGame)
+    .then(gameUI.createGameSuccess)
     .catch(gameUI.createGameFailure)
-
-  const gameData = gameEngine.packageGameData()
-  gameAPI.updateGame(gameData)
 }
 
 const onUpdateGame = function (event) {
@@ -61,7 +59,7 @@ const onMakeMove = function (event) {
   event.preventDefault()
   const direction = event.currentTarget.id.split('-')[1]
   const game = gameEngine.movePlayer(direction)
-  gameUI.createGameSuccess(game)
+  gameUI.updateMapUI(game)
 }
 
 const addHandlers = () => {

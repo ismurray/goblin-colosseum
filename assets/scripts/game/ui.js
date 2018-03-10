@@ -34,9 +34,13 @@ const getGameFailure = function (error) {
 }
 
 // Sets the UI game board to match the internal
-const createGameSuccess = function (game) {
+const createGameSuccess = function () {
   $('#game-message').text('New Game! See how many Gobs you can kill before dying!')
   $('#game-message').css('background-color', '#fefefe')
+}
+
+// updates the UI map/score/etc to match the internal map
+const updateMapUI = function (game) {
   $('#current-round').text(game.round)
   $('#current-hp').text(game.hp)
   $('#current-score').text(game.score)
@@ -92,5 +96,5 @@ module.exports = {
   updateGameFailure,
   deleteGameSuccess,
   deleteGameFailure,
-  createGameSuccess
+  updateMapUI
 }

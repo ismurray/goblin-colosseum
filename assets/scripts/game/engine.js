@@ -11,8 +11,8 @@ let map = []
 // Sample game state data that could come from API:
 let apiGame = {
   // id and user_id will be some integer
-  id: 50,
-  user_id: 2,
+  // id: 50,
+  // user_id: 2,
   // below values will always be set to this for a new game
   score: 0,
   round: 1,
@@ -35,11 +35,10 @@ const localGame = {
   goblinState: []
 }
 
+// API FUNCTIONS:
+
 // initializes new game, resets variables
 const createNewGame = function (data) {
-  // have to include gameUI here or it won't be defined when this is called from
-  // within gameEvents. Something to do with context?
-  const gameUI = require('./ui.js')
   // store new game data from api in local object
   apiGame = data.game
   // initialize local game variables to the default values from API for new game
@@ -65,7 +64,44 @@ const createNewGame = function (data) {
   for (let i = 0; i < localGame.goblinState.length; i++) {
     setNeighborIndices(localGame.goblinState[i])
   }
+  // package data for gameUI, and call a UI update
+  updateUI()
+  // package game data and send to API
+  const gameData = packageGameData()
+  gameAPI.updateGame(gameData)
+}
+
+// loads a game from the API, unpacks the data, initializes game and updates UI
+const loadGame = function (data) {
+  // store game data from api in local object
+  apiGame = data.game
+  // unpack player/gob data from JSON to hash/array
+  apiGame.player_state = JSON.parse(data.game.player_state)
+  apiGame.goblin_state = JSON.parse(data.game.goblin_state)
+  // initialize local game variables to the default values from API for new game
+  localGame.score = apiGame.score
+  localGame.round = apiGame.round
+  localGame.over = apiGame.over
+  // initialize goblin and player data, since API just defaults to null on new game
+  localGame.goblinState = apiGame.goblin_state
+  localGame.playerState = apiGame.player_state
+  // debugger
+  // reset and update internal map
+  resetMap(rowLength)
+  updateMap(localGame.playerState, localGame.goblinState)
+  // reset goblin spawns
+  resetLevels()
+  // package data for gameUI, and call a UI update
+  updateUI()
+}
+
+// packages data for gameUI, and calls a UI update
+const updateUI = function () {
+  // have to include gameUI here or it won't be defined when this is called from
+  // within gameEvents. Something to do with context?
+  const gameUI = require('./ui.js')
   // package data for gameUI
+
   const gameUiData = {
     map: updateMap(localGame.playerState, localGame.goblinState),
     score: localGame.score,
@@ -73,10 +109,7 @@ const createNewGame = function (data) {
     hp: localGame.playerState.hp[0]
   }
   // print game data to UI
-  gameUI.createGameSuccess(gameUiData)
-  // package game data and send to API
-  const gameData = packageGameData()
-  gameAPI.updateGame(gameData)
+  gameUI.updateMapUI(gameUiData)
 }
 
 const packageGameData = function () {
@@ -95,7 +128,7 @@ const packageGameData = function () {
   return dataPack
 }
 
-// Map funcs:
+// MAP FUNCTIONS:
 
 // initializes the game map to be a 2D array filled with empty spaces
 const resetMap = function (rowLength) {
@@ -124,7 +157,7 @@ const updateMap = function (player, goblins) {
   return map
 }
 
-// Player funcs:
+// PLAYER/GOBLIN FUNCTIONS:
 
 // Creates a hash of the indices of all four neighboring cells for a given combatant
 const setNeighborIndices = function (combatant) {
@@ -363,5 +396,6 @@ module.exports = {
   moveGoblin,
   localGame,
   movePlayer,
-  packageGameData
+  packageGameData,
+  loadGame
 }
