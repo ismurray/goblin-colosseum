@@ -60,6 +60,7 @@ const createNewGame = function () {
     attackDmg: 5,
     alive: true
   }
+  resetLevels()
   resetMap(rowLength)
   setNeighborIndices(playerState)
   spawnCheck(round)
@@ -148,7 +149,7 @@ const moveGoblin = function (goblin, direction) {
   map = updateMap(playerState, goblinState)
   // prevent goblin from walking off map
   if (destination === 'wall') {
-    console.log('You cannot move that way!')
+    console.log('A goblin attacks the wall in frustration')
   // if destination is empty, move goblin to that space and update neighbors
   // prevents gobs from moving over or attacking each other
   } else if (map[destination[0]][destination[1]] === '...') {
@@ -298,7 +299,27 @@ const spawnCheck = function (round) {
 
 // holds keys that are landmark rounds (1, 10, 20, etc) whose values are arrays
 // of goblins to be spawned on that round.
-const levels = {
+const resetLevels = function () {
+  levels = {
+    1: [createGoblin([0, 2], [10, 10], 1, true)],
+    10: [
+      createGoblin([0, 0], [10, 10], 1, true),
+      createGoblin([0, 4], [10, 10], 1, true)
+    ],
+    20: [
+      createGoblin([0, 0], [10, 10], 1, true),
+      createGoblin([0, 2], [10, 10], 1, true),
+      createGoblin([0, 4], [10, 10], 1, true)
+    ],
+    30: [
+      createGoblin([0, 0], [10, 10], 1, true),
+      createGoblin([0, 2], [10, 10], 1, true),
+      createGoblin([0, 4], [10, 10], 1, true),
+      createGoblin([2, 0], [10, 10], 1, true)
+    ]
+  }
+}
+let levels = {
   1: [createGoblin([0, 2], [10, 10], 1, true)],
   10: [
     createGoblin([0, 0], [10, 10], 1, true),

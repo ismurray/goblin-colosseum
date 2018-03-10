@@ -43,8 +43,8 @@ const createGameSuccess = function (data) {
 
 // resets the visual board and resets any error/win/draw messages
 const newGameReset = function (game) {
-  $('#account-message').text('New Game! See how many Gobs you can kill before dying!')
-  $('#account-message').css('background-color', '#fefefe')
+  $('#game-message').text('New Game! See how many Gobs you can kill before dying!')
+  $('#game-message').css('background-color', '#fefefe')
   $('#current-round').text(game.round)
   $('#current-hp').text(game.hp)
   $('#current-score').text(game.score)
