@@ -36,9 +36,10 @@ const createGame = function () {
   })
 }
 
-const updateGame = function (id, data) {
+const updateGame = function (gamePack) {
+  const data = gamePack.data
   return $.ajax({
-    url: config.apiOrigin + '/games/' + id,
+    url: config.apiOrigin + '/games/' + gamePack.id,
     method: 'PATCH',
     headers: {
       contentType: 'application/json',

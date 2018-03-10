@@ -30,6 +30,9 @@ const onCreateNewGame = function (event) {
   gameAPI.createGame()
     .then(gameEngine.createNewGame)
     .catch(gameUI.createGameFailure)
+
+  const gameData = gameEngine.packageGameData()
+  gameAPI.updateGame(gameData)
 }
 
 const onUpdateGame = function (event) {

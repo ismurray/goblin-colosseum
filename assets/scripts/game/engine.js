@@ -1,6 +1,6 @@
 'use strict'
 
-const gameUI = require('./ui.js')
+const gameAPI = require('./api.js')
 
 // initial variables
 const rowLength = 5
@@ -21,7 +21,7 @@ let apiGame = {
   goblin_state: null
 }
 
-let localGame = {
+const localGame = {
   score: 0,
   round: 1,
   over: false,
@@ -74,6 +74,25 @@ const createNewGame = function (data) {
   }
   // print game data to UI
   gameUI.createGameSuccess(gameUiData)
+  // package game data and send to API
+  const gameData = packageGameData()
+  gameAPI.updateGame(gameData)
+}
+
+const packageGameData = function () {
+  const dataPack = {
+    id: apiGame.id,
+    data: {
+      game: {
+        score: localGame.score,
+        round: localGame.round,
+        over: localGame.over,
+        player_state: JSON.stringify(localGame.playerState),
+        goblin_state: JSON.stringify(localGame.goblinState)
+      }
+    }
+  }
+  return dataPack
 }
 
 // Map funcs:
@@ -82,7 +101,7 @@ const createNewGame = function (data) {
 const resetMap = function (rowLength) {
   map = []
   for (let i = 0; i < rowLength; i++) {
-    let row = []
+    const row = []
     for (let n = 0; n < rowLength; n++) {
       row.push('...')
     }
@@ -91,7 +110,7 @@ const resetMap = function (rowLength) {
   return map
 }
 
-// update player position on map
+// update player position on internal map
 const updateMap = function (player, goblins) {
   map = resetMap(rowLength)
   if (player.alive) {
@@ -189,6 +208,9 @@ const movePlayer = function (direction) {
     round: localGame.round,
     hp: localGame.playerState.hp[0]
   }
+
+  const gameData = packageGameData()
+  gameAPI.updateGame(gameData)
   return game
 }
 
@@ -340,5 +362,6 @@ module.exports = {
   createNewGame,
   moveGoblin,
   localGame,
-  movePlayer
+  movePlayer,
+  packageGameData
 }
