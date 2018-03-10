@@ -11,8 +11,8 @@ let map = []
 // Sample game state data that could come from API:
 let apiGame = {
   // id and user_id will be some integer
-  id: 50
-  user_id: 2
+  id: 50,
+  user_id: 2,
   // below values will always be set to this for a new game
   score: 0,
   round: 1,
