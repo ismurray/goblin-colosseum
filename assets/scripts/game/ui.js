@@ -42,14 +42,17 @@ const createGameSuccess = function (data) {
 }
 
 // resets the visual board and resets any error/win/draw messages
-const newGameReset = function (map) {
+const newGameReset = function (game) {
   $('#account-message').text('New Game! See how many Gobs you can kill before dying!')
   $('#account-message').css('background-color', '#fefefe')
+  $('#current-round').text(game.round)
+  $('#current-hp').text(game.hp)
+  $('#current-score').text(game.score)
   for (let y = 0; y < 5; y++) {
     const ID1 = '#mark' + y
     for (let x = 0; x < 5; x++) {
       const spotID = ID1 + x
-      $(spotID).text(map[y][x])
+      $(spotID).text(game.map[y][x])
     }
   }
 }

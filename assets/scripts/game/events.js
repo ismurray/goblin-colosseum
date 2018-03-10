@@ -37,8 +37,8 @@ const onCreateGame = function (event) {
 // Resets internal game and game UI
 const onNewGame = function (event) {
   event.preventDefault()
-  console.log('clicked!')
-  gameEngine.createNewGame()
+  const game = gameEngine.createNewGame()
+  gameUI.newGameReset(game)
 }
 
 const onUpdateGame = function (event) {
@@ -63,6 +63,13 @@ const onDeleteGame = (event) => {
     .catch(gameUI.deleteGameFailure)
 }
 
+const onMakeMove = function (event) {
+  event.preventDefault()
+  const direction = event.currentTarget.id.split('-')[1]
+  const game = gameEngine.movePlayer(direction)
+  gameUI.newGameReset(game)
+}
+
 const addHandlers = () => {
   $('#get-all-games').on('submit', onGetAllGames)
   $('#get-game').on('submit', onGetGame)
@@ -70,6 +77,10 @@ const addHandlers = () => {
   $('#update-game').on('submit', onUpdateGame)
   $('.content').on('click', 'button', onDeleteGame)
   $('#new-game-button').on('click', onNewGame)
+  $('#move-left').on('click', onMakeMove)
+  $('#move-right').on('click', onMakeMove)
+  $('#move-up').on('click', onMakeMove)
+  $('#move-down').on('click', onMakeMove)
 }
 
 module.exports = {

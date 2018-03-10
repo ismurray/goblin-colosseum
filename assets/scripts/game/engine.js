@@ -66,9 +66,13 @@ const createNewGame = function () {
   for (let i = 0; i < goblinState.length; i++) {
     setNeighborIndices(goblinState[i])
   }
-  updateMap(playerState, goblinState)
-  gameUI.newGameReset(map)
-  return map
+  const game = {
+    map: updateMap(playerState, goblinState),
+    score: score,
+    round: round,
+    hp: playerState.hp[0]
+  }
+  return game
 }
 
 
@@ -135,34 +139,58 @@ const validateNeighborIndices = function (combatant) {
   }
 }
 
-// moves the player/goblin 'up', 'down', 'left', or 'right'
+// moves the goblin 'up', 'down', 'left', or 'right'
 // prevents invalid movement and calls attack if destination cell is occupied by
-// opposite combatant type
-const moveCombatant = function (combatant, direction) {
-  const destination = combatant.neighborIndices[direction]
-  const currentPos = combatant.position
+// opposite goblin type
+const moveGoblin = function (goblin, direction) {
+  const destination = goblin.neighborIndices[direction]
+  const currentPos = goblin.position
   map = updateMap(playerState, goblinState)
-  // prevent combatant from walking off map
+  // prevent goblin from walking off map
   if (destination === 'wall') {
     console.log('You cannot move that way!')
-  // if destination is empty, move combatant to that space and update neighbors
+  // if destination is empty, move goblin to that space and update neighbors
   // prevents gobs from moving over or attacking each other
-} else if (map[destination[0]][destination[1]] === '...') {
-    combatant.position = combatant.neighborIndices[direction]
-    setNeighborIndices(combatant)
+  } else if (map[destination[0]][destination[1]] === '...') {
+    goblin.position = goblin.neighborIndices[direction]
+    setNeighborIndices(goblin)
+  // if destination is occupied by opposite type (gob -> player),
+  // call attack function
+  } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
+    targetAttack(goblin, destination)
+  }
+  return updateMap(playerState, goblinState)
+}
+
+const movePlayer = function (direction) {
+  const destination = playerState.neighborIndices[direction]
+  const currentPos = playerState.position
+  map = updateMap(playerState, goblinState)
+  // prevent player from walking off map
+  if (destination === 'wall') {
+    console.log('You spend your turn attacking the wall. It doesn\'t seem effective')
+  // if destination is empty, move player to that space and update neighbors
+  } else if (map[destination[0]][destination[1]] === '...') {
+    playerState.position = playerState.neighborIndices[direction]
+    setNeighborIndices(playerState)
   // if destination is occupied by opposite type (gob -> player or player -> gob),
   // call attack function
   } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
-    targetAttack(combatant, destination)
+    targetAttack(playerState, destination)
   }
-  // if player's turn is ending, run all the gobs' turns, increase the round
+  // when player's turn is ending, run all the gobs' turns, increase the round
   // count, and do a spawnCheck
-  if (combatant.name === 'player') {
-    goblinTurns(goblinState)
-    round += 1
-    spawnCheck(round)
+  goblinTurns(goblinState)
+  round += 1
+  spawnCheck(round)
+
+  const game = {
+    map: updateMap(playerState, goblinState),
+    score: score,
+    round: round,
+    hp: playerState.hp[0]
   }
-  return updateMap(playerState, goblinState)
+  return game
 }
 
 // returns index of the goblin at given coords, returns -1 if no gob is there
@@ -225,12 +253,12 @@ const chasePlayer = function (goblin) {
       Math.abs(xDiff) === Math.abs(yDiff)) {
     // determine whether player is above or below gob on x-axis and move toward
     // player accordingly
-    return (xDiff > 0 ? moveCombatant(goblin, 'left') : moveCombatant(goblin, 'right'))
+    return (xDiff > 0 ? moveGoblin(goblin, 'left') : moveGoblin(goblin, 'right'))
   // if further from player along y-axis, move along y-axis
   } else if (Math.abs(yDiff) > Math.abs(xDiff)) {
     // determine whether player is above or below gob on x-axis and move toward
     // player accordingly
-    return (yDiff > 0 ? moveCombatant(goblin, 'up') : moveCombatant(goblin, 'down'))
+    return (yDiff > 0 ? moveGoblin(goblin, 'up') : moveGoblin(goblin, 'down'))
   }
 }
 
@@ -290,11 +318,14 @@ const levels = {
 }
 
 module.exports = {
-  createNewGame
+  createNewGame,
+  moveGoblin,
+  playerState,
+  movePlayer
 }
 
 // Below is for testing purposes
 
 // createNewGame()
-// moveCombatant(playerState, 'up')
+// moveGoblin(playerState, 'up')
 // goblinTurns(goblinState)
