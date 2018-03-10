@@ -23,22 +23,13 @@ const onGetGame = function (event) {
     .catch(gameUI.getGameFailure)
 }
 
-const onCreateGame = function (event) {
+// Creates new game in API, loads server response into game engine. Then
+// initializes new game in the engine and updates the visual game UI
+const onCreateNewGame = function (event) {
   event.preventDefault()
-
-  const data = getFormFields(this)
-  console.log('data is ', data)
-
-  gameAPI.createGame(data)
-    .then(gameUI.createGameSuccess)
+  gameAPI.createGame()
+    .then(gameEngine.createNewGame)
     .catch(gameUI.createGameFailure)
-}
-
-// Resets internal game and game UI
-const onNewGame = function (event) {
-  event.preventDefault()
-  const game = gameEngine.createNewGame()
-  gameUI.newGameReset(game)
 }
 
 const onUpdateGame = function (event) {
@@ -67,16 +58,15 @@ const onMakeMove = function (event) {
   event.preventDefault()
   const direction = event.currentTarget.id.split('-')[1]
   const game = gameEngine.movePlayer(direction)
-  gameUI.newGameReset(game)
+  gameUI.createGameSuccess(game)
 }
 
 const addHandlers = () => {
   $('#get-all-games').on('submit', onGetAllGames)
   $('#get-game').on('submit', onGetGame)
-  $('#create-game').on('submit', onCreateGame)
+  $('#create-new-game').on('click', onCreateNewGame)
   $('#update-game').on('submit', onUpdateGame)
   $('.content').on('click', 'button', onDeleteGame)
-  $('#new-game-button').on('click', onNewGame)
   $('#move-left').on('click', onMakeMove)
   $('#move-right').on('click', onMakeMove)
   $('#move-up').on('click', onMakeMove)

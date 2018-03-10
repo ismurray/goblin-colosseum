@@ -116,7 +116,7 @@
           </div>
         </div>
 
-        <button id="new-game-button" type="submit" class="btn btn-primary btn">New Game</button>
+        <button id="create-new-game" type="submit" class="btn btn-primary btn">Create New Game</button>
         <p>Current Game ID: <span id="current-game"></span></p>
       </div>
       <div class="border player-inputs">
@@ -126,20 +126,6 @@
         <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
       </div>
       <!-- End Game Display -->
-
-
-
-      <!-- Create Game Form -->
-      <h2>Create Game </h2>
-      <form id="create-game" class="border">
-        <fieldset>
-          <input type="text" name="game[over]" placeholder="Over? true/false">
-          <input type="text" name="game[score]" placeholder="Score">
-          <input type="text" name="game[player_state]" placeholder="player_state json">
-          <input type="text" name="game[goblin_state]" placeholder="goblin_state json">
-          <button type="submit" class="btn btn-primary btn">Create Game</button>
-        </fieldset>
-      </form>
 
       <!-- Update Game Form -->
       <h2>Update Game </h2>

@@ -8,75 +8,73 @@ let map = []
 // playerStartPos = [4, 2]
 // gobStartPos = [0, 3]
 
-
 // Sample game state data that could come from API:
-let score = 0
-let over = false
-// TODO: add round column to the API/ClientUI, etc
-let round = 1
-let playerState = {
-  name: 'player',
-  position: [4, 2],
-  hp: [10, 10],
-  attackDmg: 5,
-  alive: true
+let apiGame = {
+  // id and user_id will be some integer
+  id: 50
+  user_id: 2
+  // below values will always be set to this for a new game
+  score: 0,
+  round: 1,
+  over: false,
+  player_state: null,
+  goblin_state: null
 }
-let goblinState = []
-// let goblinState = [
-//   {
-//     name: 'goblin',
-//     position: [0, 0],
-//     hp: [10, 10],
-//     attackDmg: 2,
-//     alive: true
-//   },
-//   {
-//     name: 'goblin',
-//     position: [0, 4],
-//     hp: [10, 10],
-//     attackDmg: 2,
-//     alive: true
-//   },
-//   {
-//     name: 'goblin',
-//     position: [0, 2],
-//     hp: [10, 10],
-//     attackDmg: 2,
-//     alive: true
-//   }
-// ]
+
+let localGame = {
+  score: 0,
+  round: 1,
+  over: false,
+  playerState: {
+    name: 'player',
+    position: [4, 2],
+    hp: [10, 10],
+    attackDmg: 5,
+    alive: true
+  },
+  goblinState: []
+}
 
 // initializes new game, resets variables
-const createNewGame = function () {
+const createNewGame = function (data) {
+  // have to include gameUI here or it won't be defined when this is called from
+  // within gameEvents. Something to do with context?
   const gameUI = require('./ui.js')
-  goblinState = []
-  score = 0
-  round = 1
-  over = false
-  playerState = {
+  // store new game data from api in local object
+  apiGame = data.game
+  // initialize local game variables to the default values from API for new game
+  localGame.score = apiGame.score
+  localGame.round = apiGame.round
+  localGame.over = apiGame.over
+  // initialize goblin and player data, since API just defaults to null on new game
+  localGame.goblinState = []
+  localGame.playerState = {
     name: 'player',
     position: [4, 2],
     hp: [10, 10],
     attackDmg: 5,
     alive: true
   }
+  // reset goblin spawns
   resetLevels()
+  // initialize internal map
   resetMap(rowLength)
-  setNeighborIndices(playerState)
-  spawnCheck(round)
-  for (let i = 0; i < goblinState.length; i++) {
-    setNeighborIndices(goblinState[i])
+  // set the neighborIndices for player, spawn goblins, then set their neighbors
+  setNeighborIndices(localGame.playerState)
+  spawnCheck(localGame.round)
+  for (let i = 0; i < localGame.goblinState.length; i++) {
+    setNeighborIndices(localGame.goblinState[i])
   }
-  const game = {
-    map: updateMap(playerState, goblinState),
-    score: score,
-    round: round,
-    hp: playerState.hp[0]
+  // package data for gameUI
+  const gameUiData = {
+    map: updateMap(localGame.playerState, localGame.goblinState),
+    score: localGame.score,
+    round: localGame.round,
+    hp: localGame.playerState.hp[0]
   }
-  return game
+  // print game data to UI
+  gameUI.createGameSuccess(gameUiData)
 }
-
-
 
 // Map funcs:
 
@@ -146,7 +144,7 @@ const validateNeighborIndices = function (combatant) {
 const moveGoblin = function (goblin, direction) {
   const destination = goblin.neighborIndices[direction]
   const currentPos = goblin.position
-  map = updateMap(playerState, goblinState)
+  map = updateMap(localGame.playerState, localGame.goblinState)
   // prevent goblin from walking off map
   if (destination === 'wall') {
     console.log('A goblin attacks the wall in frustration')
@@ -160,36 +158,36 @@ const moveGoblin = function (goblin, direction) {
   } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
     targetAttack(goblin, destination)
   }
-  return updateMap(playerState, goblinState)
+  return updateMap(localGame.playerState, localGame.goblinState)
 }
 
 const movePlayer = function (direction) {
-  const destination = playerState.neighborIndices[direction]
-  const currentPos = playerState.position
-  map = updateMap(playerState, goblinState)
+  const destination = localGame.playerState.neighborIndices[direction]
+  const currentPos = localGame.playerState.position
+  map = updateMap(localGame.playerState, localGame.goblinState)
   // prevent player from walking off map
   if (destination === 'wall') {
     console.log('You spend your turn attacking the wall. It doesn\'t seem effective')
   // if destination is empty, move player to that space and update neighbors
   } else if (map[destination[0]][destination[1]] === '...') {
-    playerState.position = playerState.neighborIndices[direction]
-    setNeighborIndices(playerState)
+    localGame.playerState.position = localGame.playerState.neighborIndices[direction]
+    setNeighborIndices(localGame.playerState)
   // if destination is occupied by opposite type (gob -> player or player -> gob),
   // call attack function
   } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
-    targetAttack(playerState, destination)
+    targetAttack(localGame.playerState, destination)
   }
   // when player's turn is ending, run all the gobs' turns, increase the round
   // count, and do a spawnCheck
-  goblinTurns(goblinState)
-  round += 1
-  spawnCheck(round)
+  goblinTurns(localGame.goblinState)
+  localGame.round += 1
+  spawnCheck(localGame.round)
 
   const game = {
-    map: updateMap(playerState, goblinState),
-    score: score,
-    round: round,
-    hp: playerState.hp[0]
+    map: updateMap(localGame.playerState, localGame.goblinState),
+    score: localGame.score,
+    round: localGame.round,
+    hp: localGame.playerState.hp[0]
   }
   return game
 }
@@ -214,15 +212,15 @@ const attack = function (attacker, target) {
 // goblin at that coord and attacks it. If attacker is gob, attacks the player
 const targetAttack = function (attacker, destination) {
   if (attacker.name === 'player') {
-    const gobIndex = findGobByPosition(goblinState, destination)
+    const gobIndex = findGobByPosition(localGame.goblinState, destination)
     if (gobIndex > -1) {
-      const target = goblinState[gobIndex]
+      const target = localGame.goblinState[gobIndex]
       return attack(attacker, target)
     } else {
       return `No target at position ${destination}`
     }
   } else {
-    return attack(attacker, playerState)
+    return attack(attacker, localGame.playerState)
   }
 }
 
@@ -233,22 +231,22 @@ const deathCheck = function (target) {
     target.alive = false
     // if target killed was a gob, increase score by 1
     if (target.name !== 'player') {
-      score += 1
-      console.log(`You have slain a ${target.name}! Your score is now ${score}`)
+      localGame.score += 1
+      console.log(`You have slain a ${target.name}! Your score is now ${localGame.score}`)
     // if target killed was player, game over
     } else if (target.name === 'player') {
-      over = true
+      localGame.over = true
       console.log('YOU ARE DEAD. GAME OVER.')
     }
   }
-  return updateMap(playerState, goblinState)
+  return updateMap(localGame.playerState, localGame.goblinState)
 }
 
 // Chases the player by determining along which axis the gob is further from the
 // player, and moving in that direction
 const chasePlayer = function (goblin) {
-  const xDiff = goblin.position[1] - playerState.position[1]
-  const yDiff = goblin.position[0] - playerState.position[0]
+  const xDiff = goblin.position[1] - localGame.playerState.position[1]
+  const yDiff = goblin.position[0] - localGame.playerState.position[0]
   // if further from player along x-axis, move along x-axis
   if (Math.abs(xDiff) > Math.abs(yDiff) ||
       Math.abs(xDiff) === Math.abs(yDiff)) {
@@ -271,7 +269,7 @@ const goblinTurns = function (goblins) {
       chasePlayer(goblin)
     }
   }
-  return updateMap(playerState, goblins)
+  return updateMap(localGame.playerState, goblins)
 }
 
 // This func constructs new goblin hashes with given stats
@@ -287,12 +285,12 @@ const createGoblin = function (position, hp, attackDmg, alive) {
 }
 
 // run at end of player move and during createGame to check whether current
-// round is a spawn round in the levels hash, if yes, add the goblins to goblinState
+// round is a spawn round in the levels hash, if yes, add the goblins to localGame.goblinState
 const spawnCheck = function (round) {
   if (levels[round] !== undefined) {
     const newGobs = levels[round]
     for (let i = 0; i < newGobs.length; i++) {
-      goblinState.push(newGobs[i])
+      localGame.goblinState.push(newGobs[i])
     }
   }
 }
@@ -341,12 +339,6 @@ let levels = {
 module.exports = {
   createNewGame,
   moveGoblin,
-  playerState,
+  localGame,
   movePlayer
 }
-
-// Below is for testing purposes
-
-// createNewGame()
-// moveGoblin(playerState, 'up')
-// goblinTurns(goblinState)

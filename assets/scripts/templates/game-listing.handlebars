@@ -1,17 +1,10 @@
 {{#each games as |game|}}
 
-
- <!-- Developers, why are we using data-id and not just id? -->
  <ul data-id="{{game.id}}">
   <li>Game ID: {{game.id}}</li>
-  <li>Over?: {{game.over}}</li>
-  <li>Score:
-    {{#if game.score}}
-      {{game.score}}
-    {{else}}
-      No score listed yet.
-    {{/if}}
-  </li>
+  <li>Is the game over?: {{game.over}}</li>
+  <li>Score: {{game.score}}</li>
+  <li>Round: {{game.round}}</li>
   <li>Player state:
     {{#if game.player_state}}
       {{game.player_state}}

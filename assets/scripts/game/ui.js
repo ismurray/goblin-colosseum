@@ -33,16 +33,8 @@ const getGameFailure = function (error) {
   $('#get-game').find('input:text').val('')
 }
 
-const createGameSuccess = function (data) {
-  $('#account-message').text('You have created a game!')
-  $('#account-message').css('background-color', '#5cb85c')
-  const addNewGameHtml = showAllGamesTemplate({ games: data })
-  $('#content').append(addNewGameHtml)
-  $('#create-game').find('input:text').val('')
-}
-
-// resets the visual board and resets any error/win/draw messages
-const newGameReset = function (game) {
+// Sets the UI game board to match the internal
+const createGameSuccess = function (game) {
   $('#game-message').text('New Game! See how many Gobs you can kill before dying!')
   $('#game-message').css('background-color', '#fefefe')
   $('#current-round').text(game.round)
@@ -100,5 +92,5 @@ module.exports = {
   updateGameFailure,
   deleteGameSuccess,
   deleteGameFailure,
-  newGameReset
+  createGameSuccess
 }
