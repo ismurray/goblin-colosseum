@@ -63,6 +63,9 @@ const updateMapUI = function (game) {
           case 'right':
             $(spotID).html('<img src="./assets/resources/male-sprite-right.png" alt="player" height="42" width="42">')
             break
+          case undefined:
+            $(spotID).html('<img src="./assets/resources/male-sprite-up.png" alt="player" height="42" width="42">')
+            break
         }
       } else if (game.map[y][x] === '...') {
         $(spotID).text(game.map[y][x])
@@ -72,7 +75,6 @@ const updateMapUI = function (game) {
   for (let i = 0; i < game.liveGoblins.length; i++) {
     const ID1 = '#mark' + game.liveGoblins[i].position[0]
     const spotID = ID1 + game.liveGoblins[i].position[1]
-    console.log('spotID: ', spotID)
     switch (game.liveGoblins[i].lastMove) {
       case 'up':
         $(spotID).html('<img src="./assets/resources/goblin-up.png" alt="goblin" height="42" width="42">')
@@ -85,6 +87,9 @@ const updateMapUI = function (game) {
         break
       case 'right':
         $(spotID).html('<img src="./assets/resources/goblin-right.png" alt="goblin" height="42" width="42">')
+        break
+      case undefined:
+        $(spotID).html('<img src="./assets/resources/goblin-down.png" alt="player" height="42" width="42">')
         break
     }
   }
