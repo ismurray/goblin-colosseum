@@ -339,12 +339,60 @@ const createGoblin = function (position, hp, attackDmg, alive) {
   return goblin
 }
 
+// returns random integer from 0 to (upperLimit - 1)
+const makeRandomNum = function (upperLimit) {
+  return Math.floor(Math.random() * upperLimit)
+}
+
+// returns true if player position overlaps with newPosition. Both params are coords
+const playerOverlapCheck = function (newPosition, playerPosition) {
+  if (newPosition[0] === playerPosition[0] && newPosition[1] === playerPosition[1]) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// returns true if any gob position overlaps with newPosition. newPosition param
+// is coord, goblins param is goblin array
+const goblinOverlapCheck = function (newPosition, goblins) {
+  const goblinAlreadyAtNewPos = findGobByPosition(goblins, newPosition)
+  if (goblinAlreadyAtNewPos !== -1) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// randomizes the position of a goblin, making sure the new position doesn't
+// overlap with the player position or any gobs already on the map
+const randomizeGobPos = function (goblin) {
+  console.log('gob initial pos is ', goblin.position)
+  let newPosition = [makeRandomNum(5), makeRandomNum(5)]
+  const playerPosition = localGame.playerState.position
+  // run overlap checks
+  let playerOverlaps = playerOverlapCheck(newPosition, playerPosition)
+  let goblinOverlaps = goblinOverlapCheck(newPosition, localGame.goblinState)
+
+  if (playerOverlaps || goblinOverlaps) {
+    while (playerOverlaps || goblinOverlaps) {
+      newPosition = [makeRandomNum(5), makeRandomNum(5)]
+      playerOverlaps = playerOverlapCheck(newPosition, playerPosition)
+      goblinOverlaps = goblinOverlapCheck(newPosition, localGame.goblinState)
+    }
+    return newPosition
+  }
+  return newPosition
+}
+
 // run at end of player move and during createGame to check whether current
 // round is a spawn round in the levels hash, if yes, add the goblins to localGame.goblinState
 const spawnCheck = function (round) {
   if (levels[round] !== undefined) {
     const newGobs = levels[round]
     for (let i = 0; i < newGobs.length; i++) {
+      newGobs[i].position = randomizeGobPos(newGobs[i])
+      setNeighborIndices(newGobs[i])
       localGame.goblinState.push(newGobs[i])
     }
   }
