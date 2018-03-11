@@ -17,163 +17,271 @@
       <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
     <body class="container-fluid">
-      <h1>Goblin Colosseum</h1>
 
-      <!-- Account Message Panel -->
-      <div class="col-md-3 col-sm-6 col-xs-8 panel panel-default" id="account-message">
-          <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
-          </div>
-        </div>
-
-      <!-- Sign In Form -->
-      <h2>Sign In </h2>
-      <form id="sign-in" class="border">
-        <fieldset>
-          <input type="text" name="credentials[email]" placeholder="Email">
-          <input type="password" name="credentials[password]" placeholder="Password">
-          <button type="submit" class="btn btn-primary btn">Sign In</button>
-        </fieldset>
-      </form>
-
-      <!-- Sign Up Form -->
-      <h2>Sign Up </h2>
-      <form id="sign-up" class="border">
-        <fieldset>
-          <input type="text" name="credentials[email]" placeholder="Email">
-          <input type="password" name="credentials[password]" placeholder="Password">
-          <input type="password" name="credentials[password_confirmation]" placeholder="Confirm Password">
-          <button type="submit" class="btn btn-primary btn">Sign Up</button>
-        </fieldset>
-      </form>
-
-      <!-- Sign Out Form -->
-      <div>
-        <h2>Sign Out</h2>
-        <form class="navbar-form" id="sign-out">
-          <button type="submit" class="blue-btn btn btn-default navbar-btn">Sign Out</button>
-        </form>
+      <div class="header-box">
+        <h1>Goblin Colosseum</h1>
       </div>
 
-      <!-- Change Password Form -->
-      <h2>Change PW</h2>
-      <form class="navbar-form" id="change-password">
-        <div class="form-group">
-          <input type="password" name="passwords[old]" class="form-control" placeholder="Old Password">
-          <input type="password" name="passwords[new]" class="form-control" placeholder="New Password">
-        </div>
-        <button type="submit" class="blue-btn btn btn-default navbar-btn">Submit</button>
-      </form>
+      <!-- Start non-header/footer body -->
+      <div class="container-fluid">
 
-
-
-
-
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-
-      <!-- Begin Game Display -->
-      <div class="game-wrapper">
-        <!-- Game Message Panel -->
-        <!-- <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="game-message">
-          <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
-          </div>
-        </div> -->
-
-        <p>Your Score: <span id="current-score"></span></p>
-        <p>Round: <span id="current-round"></span></p>
-        <p>Your HP: <span id="current-hp"></span></p>
-
-        <div class="col-md-12 wrapper">
-          <div class="row board-row">
-            <div class="col-xs-2 board-spot" data-id="0" id="mark00">...</div>
-            <div class="col-xs-2 board-spot" data-id="1" id="mark01">...</div>
-            <div class="col-xs-2 board-spot" data-id="2" id="mark02">...</div>
-            <div class="col-xs-2 board-spot" data-id="3" id="mark03">...</div>
-            <div class="col-xs-2 board-spot" data-id="4" id="mark04">...</div>
-          </div>
-          <div class="row board-row">
-            <div class="col-xs-2 board-spot" data-id="5" id="mark10">...</div>
-            <div class="col-xs-2 board-spot" data-id="6" id="mark11">...</div>
-            <div class="col-xs-2 board-spot" data-id="7" id="mark12">...</div>
-            <div class="col-xs-2 board-spot" data-id="8" id="mark13">...</div>
-            <div class="col-xs-2 board-spot" data-id="8" id="mark14">...</div>
-          </div>
-          <div class="row board-row">
-            <div class="col-xs-2 board-spot" data-id="10" id="mark20">...</div>
-            <div class="col-xs-2 board-spot" data-id="11" id="mark21">...</div>
-            <div class="col-xs-2 board-spot" data-id="12" id="mark22">...</div>
-            <div class="col-xs-2 board-spot" data-id="13" id="mark23">...</div>
-            <div class="col-xs-2 board-spot" data-id="14" id="mark24">...</div>
-          </div>
-          <div class="row board-row">
-            <div class="col-xs-2 board-spot" data-id="15" id="mark30">...</div>
-            <div class="col-xs-2 board-spot" data-id="16" id="mark31">...</div>
-            <div class="col-xs-2 board-spot" data-id="17" id="mark32">...</div>
-            <div class="col-xs-2 board-spot" data-id="18" id="mark33">...</div>
-            <div class="col-xs-2 board-spot" data-id="19" id="mark34">...</div>
-          </div>
-          <div class="row board-row">
-            <div class="col-xs-2 board-spot" data-id="20" id="mark40">...</div>
-            <div class="col-xs-2 board-spot" data-id="21" id="mark41">...</div>
-            <div class="col-xs-2 board-spot" data-id="22" id="mark42">...</div>
-            <div class="col-xs-2 board-spot" data-id="23" id="mark43">...</div>
-            <div class="col-xs-2 board-spot" data-id="24" id="mark44">...</div>
-          </div>
-        </div>
-
-        <!-- Game Messages: -->
-        <div class="col-md-12 col-sm-12 col-xs-12 well well-sm pre-scrollable" id="game-message">
-          <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
-          </div>
-        </div>
-
-        <p>Current Game ID: <span id="current-game"></span></p>
-      </div>
-      <div class="border player-inputs">
-        <div class="row">
-          <div class="col-md-3 col-xs-offset-3 col-md-offset-2 col-lg-offset-1">
-            <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
-            <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
-            <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
-          </div>
-        </div>
-      </div>
-      <button id="create-new-game" type="submit" class="btn btn-primary btn">Create New Game</button>
-      <!-- End Game Display -->
-
-
-      <!-- Get Game Form -->
-      <h2>Get Game by ID</h2>
-      <form id="get-game" class="border">
+        <!-- Hide/Show All for testing-->
+        <!-- <form id="hide-all" class="border">
         <fieldset>
-          <input type="text" placeholder="Game ID">
-          <button type="submit" class="btn btn-primary btn">Get Game</button>
+          <input type="submit" value="Hide All">
         </fieldset>
       </form>
-
-      <!-- Get All Games Form -->
-      <h2>Get All Games</h2>
-      <form id="get-all-games" class="border">
+      <form id="show-all" class="border">
         <fieldset>
-          <button type="submit" id="get-all-games-button" class="btn btn-primary btn">Get All Games</button>
+          <input type="submit" value="Show All">
         </fieldset>
-      </form>
+      </form> -->
 
-      <div class="content" id="content">
-      </div>
+      <!-- Start Nav Bar: -->
+      <nav class="navbar navbar-default" id="account-navbar">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand navbar-btn" href="#">Brand</a> -->
+          </div>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.</p>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <!-- <ul class="nav navbar-nav">
+              <li>
+                <form class="navbar-form" id="start-game">
+                <button type="submit" class="blue-btn btn btn-default navbar-btn">New Game</button>
+                </form>
+              </li>
+            </ul> -->
+            <!-- Get Game Form: -->
+            <form class="navbar-form navbar-left" id="get-game">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Load game by ID">
+              </div>
+              <button type="submit" class="blue-btn btn btn-default navbar-btn">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+
+              <li class="dropdown navbar-btn">
+                <a href="#" id="nav-text" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Change Password <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <!-- Change Password Form: -->
+                  <form class="navbar-form navbar-left" id="change-password">
+                    <div class="form-group">
+                      <input type="password" name="passwords[old]" class="form-control" placeholder="Old Password">
+                      <input type="password" name="passwords[new]" class="form-control" placeholder="New Password">
+                    </div>
+                    <button type="submit" class="blue-btn btn btn-default navbar-btn">Submit</button>
+                  </form>
+                </ul>
+              </li>
+              <li>
+                <!-- Sign Out Form: -->
+                <form class="navbar-form" id="sign-out">
+                <button type="submit" class="blue-btn btn btn-default navbar-btn">Sign Out</button>
+              </form>
+            </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <!-- End Nav Bar -->
+
+        <!-- Account Message Panel -->
+        <div class="col-md-3 col-sm-6 col-xs-8 panel panel-default" id="account-message">
+            <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+            </div>
+        </div>
+
+        <!-- Begin SignIn/SignOut Wrapper: -->
+        <div id="auth-wrapper">
+          <h2>Sign in to Play!</h2>
+
+          <!-- <div class="col-md-3 col-sm-6 col-xs-8 panel panel-default" id="account-message">
+            <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-xs-12 center-block">
+              <!-- Button trigger modal -->
+              <button type="button" id="sign-in-button" class="btn btn-primary btn-lg auth-buttons" data-toggle="modal" data-target="#myModal">
+                Sign In
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Sign In to an Existing Account</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Sign In Form: -->
+                      <form id="sign-in" class="border">
+                        <fieldset>
+                          <input type="text" name="credentials[email]" placeholder="Username">
+                          <input type="password" name="credentials[password]" placeholder="Password">
+                          <button type="submit" class="btn btn-primary btn">Sign In</button>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 center-block">
+              <!-- Button trigger modal -->
+              <button type="button" id="sign-up-button" class="btn btn-primary btn-lg auth-buttons" data-toggle="modal" data-target="#signUpModal">
+                Sign Up
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Sign Up to Create An Account</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Sign Up Form: -->
+                      <form id="sign-up" class="border">
+                        <fieldset>
+                          <input type="text" name="credentials[email]" placeholder="Username">
+                          <input type="password" name="credentials[password]" placeholder="Password">
+                          <input type="password" name="credentials[password_confirmation]" placeholder="Confirm Password">
+                          <button type="submit" class="btn btn-primary btn">Sign Up</button>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End SignIn/SignOut Wrapper -->
+
+
+
+
+
+        <div id="non-auth-wrapper">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+
+          <!-- Begin Game Display -->
+          <div class="game-wrapper">
+            <!-- Game Message Panel -->
+            <!-- <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="game-message">
+              <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+              </div>
+            </div> -->
+
+            <p>Your Score: <span id="current-score"></span></p>
+            <p>Round: <span id="current-round"></span></p>
+            <p>Your HP: <span id="current-hp"></span></p>
+
+            <div class="col-md-12 wrapper">
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="0" id="mark00">...</div>
+                <div class="col-xs-2 board-spot" data-id="1" id="mark01">...</div>
+                <div class="col-xs-2 board-spot" data-id="2" id="mark02">...</div>
+                <div class="col-xs-2 board-spot" data-id="3" id="mark03">...</div>
+                <div class="col-xs-2 board-spot" data-id="4" id="mark04">...</div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="5" id="mark10">...</div>
+                <div class="col-xs-2 board-spot" data-id="6" id="mark11">...</div>
+                <div class="col-xs-2 board-spot" data-id="7" id="mark12">...</div>
+                <div class="col-xs-2 board-spot" data-id="8" id="mark13">...</div>
+                <div class="col-xs-2 board-spot" data-id="8" id="mark14">...</div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="10" id="mark20">...</div>
+                <div class="col-xs-2 board-spot" data-id="11" id="mark21">...</div>
+                <div class="col-xs-2 board-spot" data-id="12" id="mark22">...</div>
+                <div class="col-xs-2 board-spot" data-id="13" id="mark23">...</div>
+                <div class="col-xs-2 board-spot" data-id="14" id="mark24">...</div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="15" id="mark30">...</div>
+                <div class="col-xs-2 board-spot" data-id="16" id="mark31">...</div>
+                <div class="col-xs-2 board-spot" data-id="17" id="mark32">...</div>
+                <div class="col-xs-2 board-spot" data-id="18" id="mark33">...</div>
+                <div class="col-xs-2 board-spot" data-id="19" id="mark34">...</div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="20" id="mark40">...</div>
+                <div class="col-xs-2 board-spot" data-id="21" id="mark41">...</div>
+                <div class="col-xs-2 board-spot" data-id="22" id="mark42">...</div>
+                <div class="col-xs-2 board-spot" data-id="23" id="mark43">...</div>
+                <div class="col-xs-2 board-spot" data-id="24" id="mark44">...</div>
+              </div>
+            </div>
+
+            <!-- Game Messages: -->
+            <div class="col-md-12 col-sm-12 col-xs-12 well well-sm pre-scrollable" id="game-message">
+              <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+              </div>
+            </div>
+
+            <p>Current Game ID: <span id="current-game"></span></p>
+          </div>
+          <div class="border player-inputs">
+            <div class="row">
+              <div class="col-md-3 col-xs-offset-3 col-md-offset-2 col-lg-offset-1">
+                <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
+                <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
+                <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
+              </div>
+            </div>
+          </div>
+          <button id="create-new-game" type="submit" class="btn btn-primary btn">Create New Game</button>
+          <!-- End Game Display -->
+
+
+          <!-- Get All Games Form -->
+          <h2>Get All Games</h2>
+          <form id="get-all-games" class="border">
+            <fieldset>
+              <button type="submit" id="get-all-games-button" class="btn btn-primary btn">Get All Games</button>
+            </fieldset>
+          </form>
+
+          <div class="content" id="content">
+          </div>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+          cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.</p>
+        </div>
+        <!-- end non-header/footer body -->
+        </div>
+
+
+
+
 
     </body>
 </html>

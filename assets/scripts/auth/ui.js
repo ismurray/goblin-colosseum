@@ -5,6 +5,7 @@ const store = require('../store')
 const signUpSuccess = function (data) {
   $('#account-message').text('Signed up successfully!')
   $('#account-message').css('background-color', '#5cb85c')
+  $('#sign-up-button').click()
   $('#sign-up').find('input:text').val('')
   $('#sign-up').find('input:password').val('')
 }
@@ -12,6 +13,7 @@ const signUpSuccess = function (data) {
 const signUpFailure = function (error) {
   $('#account-message').text('Error on signing up')
   $('#account-message').css('background-color', '#d9534f')
+  $('#sign-up-button').click()
   $('#sign-up').find('input:text').val('')
   $('#sign-up').find('input:password').val('')
   console.log(error)
@@ -22,13 +24,18 @@ const signInSuccess = function (data) {
   $('#account-message').css('background-color', '#5cb85c')
   store.user = data.user
   console.log(store.user)
+  $('#sign-in-button').click()
   $('#sign-in').find('input:text').val('')
   $('#sign-in').find('input:password').val('')
+  $('#auth-wrapper').hide()
+  $('#account-navbar').show()
+  $('#non-auth-wrapper').show()
 }
 
 const signInFailure = function (error) {
   $('#account-message').text('Error on signing in')
   $('#account-message').css('background-color', '#d9534f')
+  $('#sign-in-button').click()
   $('#sign-in').find('input:text').val('')
   $('#sign-in').find('input:password').val('')
   console.log(error)
@@ -37,6 +44,9 @@ const signInFailure = function (error) {
 const signOutSuccess = function () {
   $('#account-message').text('Signed out successfully!')
   $('#account-message').css('background-color', '#5cb85c')
+  $('#auth-wrapper').show()
+  $('#account-navbar').hide()
+  $('#non-auth-wrapper').hide()
 }
 
 const signOutFailure = function (error) {

@@ -9,6 +9,8 @@ $(() => {
   setAPIOrigin(location, config)
   authEvents.addHandlers()
   gameEvents.addHandlers()
+  $('#non-auth-wrapper').hide()
+  $('#account-navbar').hide()
 })
 
 // use require with a reference to bundle the file and use it in this file
