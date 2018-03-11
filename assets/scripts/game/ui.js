@@ -23,6 +23,7 @@ const getGameSuccess = function (data) {
   $('#account-message').css('background-color', '#5cb85c')
   const showGameHtml = showAllGamesTemplate({ games: data })
   $('#content').html(showGameHtml)
+  $('#game-message').text('Game Loaded! Pick up where you left off and kill as many Goblins as you can before you die!')
   $('#get-game').find('input:text').val('')
 }
 
