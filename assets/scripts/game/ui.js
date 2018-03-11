@@ -44,20 +44,51 @@ const updateMapUI = function (game) {
   $('#current-round').text(game.round)
   $('#current-hp').text(game.hp)
   $('#current-score').text(game.score)
+  $('#current-game').text(game.gameId)
   for (let y = 0; y < 5; y++) {
     const ID1 = '#mark' + y
     for (let x = 0; x < 5; x++) {
       const spotID = ID1 + x
-      $(spotID).text(game.map[y][x])
+      if (game.map[y][x] === '{o!') {
+        switch (game.player.lastMove) {
+          case 'up':
+            $(spotID).html('<img src="./assets/resources/male-sprite-up.png" alt="player" height="42" width="42">')
+            break
+          case 'down':
+            $(spotID).html('<img src="./assets/resources/male-sprite-down.png" alt="player" height="42" width="42">')
+            break
+          case 'left':
+            $(spotID).html('<img src="./assets/resources/male-sprite-left.png" alt="player" height="42" width="42">')
+            break
+          case 'right':
+            $(spotID).html('<img src="./assets/resources/male-sprite-right.png" alt="player" height="42" width="42">')
+            break
+        }
+      } else if (game.map[y][x] === '...') {
+        $(spotID).text(game.map[y][x])
+      }
+    }
+  }
+  for (let i = 0; i < game.liveGoblins.length; i++) {
+    const ID1 = '#mark' + game.liveGoblins[i].position[0]
+    const spotID = ID1 + game.liveGoblins[i].position[1]
+    console.log('spotID: ', spotID)
+    switch (game.liveGoblins[i].lastMove) {
+      case 'up':
+        $(spotID).html('<img src="./assets/resources/goblin-up.png" alt="goblin" height="42" width="42">')
+        break
+      case 'down':
+        $(spotID).html('<img src="./assets/resources/goblin-down.png" alt="goblin" height="42" width="42">')
+        break
+      case 'left':
+        $(spotID).html('<img src="./assets/resources/goblin-left.png" alt="goblin" height="42" width="42">')
+        break
+      case 'right':
+        $(spotID).html('<img src="./assets/resources/goblin-right.png" alt="goblin" height="42" width="42">')
+        break
     }
   }
 }
-
-// const addGameMessage = function (message) {
-//   const gameMessageHtml = gameMessageTemplate({ messages: ['inside gameUI'] })
-//   console.log(gameMessageHtml)
-//   $('#game-message').append(gameMessageHtml)
-// }
 
 const createGameFailure = function (error) {
   $('#account-message').text('Error creating game!')

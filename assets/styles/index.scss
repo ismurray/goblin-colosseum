@@ -3,6 +3,8 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 .board-spot {
   border: 1px solid black;
+  min-height: 50px;
+  min-width: 50px;
 }
 
 .well {

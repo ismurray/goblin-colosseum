@@ -52,7 +52,8 @@ const createNewGame = function (data) {
     position: [4, 2],
     hp: [10, 10],
     attackDmg: 5,
-    alive: true
+    alive: true,
+    lastMove: 'up'
   }
   // reset goblin spawns
   resetLevels()
@@ -102,11 +103,15 @@ const updateUI = function () {
   const gameUI = require('./ui.js')
   // package data for gameUI
 
+  const liveGoblins = findLiveGoblins(localGame.goblinState)
   const gameUiData = {
     map: updateMap(localGame.playerState, localGame.goblinState),
     score: localGame.score,
     round: localGame.round,
-    hp: localGame.playerState.hp[0]
+    hp: localGame.playerState.hp[0],
+    liveGoblins: liveGoblins,
+    player: localGame.playerState,
+    gameId: apiGame.id
   }
   // print game data to UI
   gameUI.updateMapUI(gameUiData)
@@ -194,6 +199,7 @@ const validateNeighborIndices = function (combatant) {
 // prevents invalid movement and calls attack if destination cell is occupied by
 // opposite goblin type
 const moveGoblin = function (goblin, direction) {
+  goblin.lastMove = direction
   const destination = goblin.neighborIndices[direction]
   const currentPos = goblin.position
   map = updateMap(localGame.playerState, localGame.goblinState)
@@ -214,6 +220,7 @@ const moveGoblin = function (goblin, direction) {
 }
 
 const movePlayer = function (direction) {
+  localGame.playerState.lastMove = direction
   const destination = localGame.playerState.neighborIndices[direction]
   const currentPos = localGame.playerState.position
   map = updateMap(localGame.playerState, localGame.goblinState)
@@ -235,16 +242,32 @@ const movePlayer = function (direction) {
   localGame.round += 1
   spawnCheck(localGame.round)
 
+  // make list of live goblins
+  const liveGoblins = findLiveGoblins(localGame.goblinState)
   const game = {
     map: updateMap(localGame.playerState, localGame.goblinState),
     score: localGame.score,
     round: localGame.round,
-    hp: localGame.playerState.hp[0]
+    hp: localGame.playerState.hp[0],
+    liveGoblins: liveGoblins,
+    player: localGame.playerState,
+    gameId: apiGame.id
   }
 
   const gameData = packageGameData()
   gameAPI.updateGame(gameData)
   return game
+}
+
+// returns an array of live goblins
+const findLiveGoblins = function (goblins) {
+  const liveGoblins = []
+  for (let i = 0; i < goblins.length; i++) {
+    if (goblins[i].alive) {
+      liveGoblins.push(goblins[i])
+    }
+  }
+  return liveGoblins
 }
 
 // returns index of the goblin at given coords, returns -1 if no gob is there
@@ -337,6 +360,7 @@ const createGoblin = function (position, hp, attackDmg, alive) {
   goblin.hp = hp
   goblin.attackDmg = attackDmg
   goblin.alive = alive
+  goblin.lastMove = 'down'
   setNeighborIndices(goblin)
   return goblin
 }
