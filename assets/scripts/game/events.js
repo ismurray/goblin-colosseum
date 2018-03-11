@@ -14,8 +14,14 @@ const onGetAllGames = function (event) {
 
 const onGetGame = function (event) {
   event.preventDefault()
-
-  const id = $('#get-game input').val()
+  let id
+  // if getting game by id, use input value
+  if ($('#get-game input').val()) {
+    id = $('#get-game input').val()
+  // if getting game from all games list, use data id
+  } else if ($(event.currentTarget).attr('data-id')) {
+    id = $(event.currentTarget).attr('data-id')
+  }
 
   gameAPI.getGame(id)
     .then(gameEngine.loadGame)
@@ -67,7 +73,8 @@ const addHandlers = () => {
   $('#get-game').on('submit', onGetGame)
   $('#create-new-game').on('click', onCreateNewGame)
   $('#update-game').on('submit', onUpdateGame)
-  $('.content').on('click', 'button', onDeleteGame)
+  $('.content').on('click', '.delete-button', onDeleteGame)
+  $('.content').on('click', '.load-button', onGetGame)
   $('#move-left').on('click', onMakeMove)
   $('#move-right').on('click', onMakeMove)
   $('#move-up').on('click', onMakeMove)

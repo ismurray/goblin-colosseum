@@ -74,10 +74,10 @@
       <!-- Begin Game Display -->
       <div class="game-wrapper">
         <!-- Game Message Panel -->
-        <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="game-message">
+        <!-- <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="game-message">
           <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
           </div>
-        </div>
+        </div> -->
 
         <p>Your Score: <span id="current-score"></span></p>
         <p>Round: <span id="current-round"></span></p>
@@ -121,15 +121,27 @@
           </div>
         </div>
 
-        <button id="create-new-game" type="submit" class="btn btn-primary btn">Create New Game</button>
+        <!-- Game Messages: -->
+        <div class="col-md-12 col-sm-12 col-xs-12 well well-sm pre-scrollable" id="game-message">
+          <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+          </div>
+        </div>
+
         <p>Current Game ID: <span id="current-game"></span></p>
       </div>
       <div class="border player-inputs">
-        <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
-        <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
-        <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
-        <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
+        <div class="row">
+          <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
+        </div>
+        <div class="row">
+          <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
+          <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
+        </div>
+        <div class="row">
+          <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
+        </div>
       </div>
+      <button id="create-new-game" type="submit" class="btn btn-primary btn">Create New Game</button>
       <!-- End Game Display -->
 
 

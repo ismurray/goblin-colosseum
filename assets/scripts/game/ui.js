@@ -1,11 +1,11 @@
 'use strict'
 
 const showAllGamesTemplate = require('../templates/game-listing.handlebars')
-const gameEngine = require('./engine.js')
+// const gameMessageTemplate = require('../templates/game-message.handlebars')
+// const gameEngine = require('./engine.js')
 
 const getAllGamesSuccess = function (data) {
   console.log(data.games)
-
   const showAllGamesHtml = showAllGamesTemplate({ games: data.games })
   $('#content').html(showAllGamesHtml)
   $('#account-message').text('Games retrieved!')
@@ -33,7 +33,6 @@ const getGameFailure = function (error) {
   $('#get-game').find('input:text').val('')
 }
 
-// Sets the UI game board to match the internal
 const createGameSuccess = function () {
   $('#game-message').text('New Game! See how many Gobs you can kill before dying!')
   $('#game-message').css('background-color', '#fefefe')
@@ -53,6 +52,12 @@ const updateMapUI = function (game) {
   }
 }
 
+// const addGameMessage = function (message) {
+//   const gameMessageHtml = gameMessageTemplate({ messages: ['inside gameUI'] })
+//   console.log(gameMessageHtml)
+//   $('#game-message').append(gameMessageHtml)
+// }
+
 const createGameFailure = function (error) {
   $('#account-message').text('Error creating game!')
   $('#account-message').css('background-color', '#d9534f')
@@ -64,7 +69,6 @@ const updateGameSuccess = function (id) {
   $('#account-message').text('You have updated a game!')
   $('#account-message').css('background-color', '#5cb85c')
   $('#get-all-games-button').click()
-  $('#update-game').find('input:text').val('')
 }
 
 const updateGameFailure = function (error) {

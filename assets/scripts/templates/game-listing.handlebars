@@ -19,8 +19,11 @@
       No player_state listed yet.
     {{/if}}
   </li>
+  {{#unless game.over}}
+  <button type="button" class="load-button" data-id="{{game.id}}">Load Game</button>
+  {{/unless}}
   <ul>
-    <button type="button" data-id="{{game.id}}">Remove</button>
+    <button type="button" class="delete-button" data-id="{{game.id}}">Delete Game</button>
   </ul>
 </ul>
 

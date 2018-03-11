@@ -85,7 +85,7 @@ const loadGame = function (data) {
   // initialize goblin and player data, since API just defaults to null on new game
   localGame.goblinState = apiGame.goblin_state
   localGame.playerState = apiGame.player_state
-  // debugger
+
   // reset and update internal map
   resetMap(rowLength)
   updateMap(localGame.playerState, localGame.goblinState)
@@ -199,7 +199,7 @@ const moveGoblin = function (goblin, direction) {
   map = updateMap(localGame.playerState, localGame.goblinState)
   // prevent goblin from walking off map
   if (destination === 'wall') {
-    console.log('A goblin attacks the wall in frustration')
+    addGameMessage('A goblin attacks the wall in frustration')
   // if destination is empty, move goblin to that space and update neighbors
   // prevents gobs from moving over or attacking each other
   } else if (map[destination[0]][destination[1]] === '...') {
@@ -219,7 +219,7 @@ const movePlayer = function (direction) {
   map = updateMap(localGame.playerState, localGame.goblinState)
   // prevent player from walking off map
   if (destination === 'wall') {
-    console.log('You spend your turn attacking the wall. It doesn\'t seem effective')
+    addGameMessage('You spend your turn attacking the wall. It doesn\'t seem effective')
   // if destination is empty, move player to that space and update neighbors
   } else if (map[destination[0]][destination[1]] === '...') {
     localGame.playerState.position = localGame.playerState.neighborIndices[direction]
@@ -258,7 +258,8 @@ const findGobByPosition = function (goblins, givenPosition) {
 // prints the result of the attack and updates the map
 const attack = function (attacker, target) {
   target.hp[0] -= attacker.attackDmg
-  console.log(`${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}`)
+  const text = `${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}`
+  addGameMessage(text)
   return deathCheck(target)
 }
 
@@ -287,11 +288,12 @@ const deathCheck = function (target) {
     // if target killed was a gob, increase score by 1
     if (target.name !== 'player') {
       localGame.score += 1
-      console.log(`You have slain a ${target.name}! Your score is now ${localGame.score}`)
+      const text = `You have slain a ${target.name}! Your score is now ${localGame.score}`
+      addGameMessage(text)
     // if target killed was player, game over
     } else if (target.name === 'player') {
       localGame.over = true
-      console.log('YOU ARE DEAD. GAME OVER.')
+      addGameMessage('YOU ARE DEAD. GAME OVER.')
     }
   }
   return updateMap(localGame.playerState, localGame.goblinState)
@@ -367,7 +369,6 @@ const goblinOverlapCheck = function (newPosition, goblins) {
 // randomizes the position of a goblin, making sure the new position doesn't
 // overlap with the player position or any gobs already on the map
 const randomizeGobPos = function (goblin) {
-  console.log('gob initial pos is ', goblin.position)
   let newPosition = [makeRandomNum(5), makeRandomNum(5)]
   const playerPosition = localGame.playerState.position
   // run overlap checks
@@ -396,6 +397,13 @@ const spawnCheck = function (round) {
       localGame.goblinState.push(newGobs[i])
     }
   }
+}
+
+const addGameMessage = function (message) {
+  const gameMessageTemplate = require('../templates/game-message.handlebars')
+  const timeStamp = new Date()
+  const gameMessageHtml = gameMessageTemplate({ messages: [{text: message, time: timeStamp}] })
+  $('#game-message').prepend(gameMessageHtml)
 }
 
 // holds keys that are landmark rounds (1, 10, 20, etc) whose values are arrays
