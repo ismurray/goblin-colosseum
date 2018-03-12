@@ -68,7 +68,8 @@ const updateMapUI = function (game) {
             break
         }
       } else if (game.map[y][x] === '...') {
-        $(spotID).text(game.map[y][x])
+        // $(spotID).text(game.map[y][x])
+        $(spotID).text('')
       }
     }
   }
