@@ -53,13 +53,24 @@
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <!-- <ul class="nav navbar-nav">
+            <!-- New Game Button -->
+            <ul class="nav navbar-nav">
               <li>
                 <form class="navbar-form" id="start-game">
                 <button type="submit" class="blue-btn btn btn-default navbar-btn">New Game</button>
                 </form>
               </li>
-            </ul> -->
+            </ul>
+            <!-- Button trigger All Games modal -->
+            <ul class="nav navbar-nav">
+              <li>
+                <form class="navbar-form">
+                <button type="button" class="blue-btn btn btn-default navbar-btn" data-toggle="modal" data-target="#all-games-modal">
+                  Get All Games
+                </button>
+              </form>
+              </li>
+            </ul>
             <!-- Get Game Form: -->
             <form class="navbar-form navbar-left" id="get-game">
               <div class="form-group">
@@ -181,7 +192,7 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
           <!-- Begin Game Display -->
-          <div class="game-wrapper">
+          <div class="game-wrapper" id="game-wrapper-div">
             <!-- Game Message Panel -->
             <!-- <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="game-message">
               <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
@@ -237,26 +248,27 @@
             </div>
 
             <p>Current Game ID: <span id="current-game"></span></p>
-          </div>
+
           <div class="border player-inputs">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-6 col-lg-6">
                 <button id="sweep-button" type="submit" class="btn btn-primary btn">Sweeping Sword</button>
                 <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
                 <button id="heal-button" type="submit" class="btn btn-primary btn">Rallying Shout</button>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-6 col-lg-6">
                 <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
                 <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
                 <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
               </div>
             </div>
           </div>
-        <div class="row">
-          <button id="create-new-game" type="submit" class="btn btn-primary btn">Create New Game</button>
         </div>
+        <!-- <div class="row">
+          <button id="create-new-game" type="submit" class="btn btn-primary btn">Create New Game</button>
+        </div> -->
           <!-- End Game Display -->
 
 
@@ -272,11 +284,11 @@
           </div> -->
 
           <!-- Button trigger All Games modal -->
-          <div class="row">
+          <!-- <div class="row">
             <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#all-games-modal">
               Get All Games
             </button>
-          </div>
+          </div> -->
 
           <!-- All Games Modal -->
           <div class="modal fade" id="all-games-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

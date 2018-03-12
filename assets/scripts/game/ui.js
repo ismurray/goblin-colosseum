@@ -3,6 +3,7 @@
 const showAllGamesTemplate = require('../templates/game-listing.handlebars')
 // const gameMessageTemplate = require('../templates/game-message.handlebars')
 // const gameEngine = require('./engine.js')
+const store = require('../store')
 
 const getAllGamesSuccess = function (data) {
   console.log(data.games)
@@ -19,6 +20,7 @@ const getAllGamesFailure = function (error) {
 }
 
 const getGameSuccess = function (data) {
+  $('#game-wrapper-div').show()
   $('#account-message').text('Game retrieved!')
   $('#account-message').css('background-color', '#5cb85c')
   const showGameHtml = showAllGamesTemplate({ games: data })
@@ -35,6 +37,7 @@ const getGameFailure = function (error) {
 }
 
 const createGameSuccess = function () {
+  $('#game-wrapper-div').show()
   $('#game-message').text('New Game! See how many Gobs you can kill before dying!')
   $('#game-message').css('background-color', '#fefefe')
 }
@@ -117,6 +120,10 @@ const updateGameFailure = function (error) {
 }
 
 const deleteGameSuccess = function (id) {
+  const currentGameId = $('#current-game').text()
+  if (currentGameId === store.deletedGameId) {
+    $('#game-wrapper-div').hide()
+  }
   $('#account-message').text('You have deleted a game!')
   $('#account-message').css('background-color', '#5cb85c')
 }

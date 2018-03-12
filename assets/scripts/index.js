@@ -9,6 +9,7 @@ $(() => {
   setAPIOrigin(location, config)
   authEvents.addHandlers()
   gameEvents.addHandlers()
+  $('#game-wrapper-div').hide()
   $('#non-auth-wrapper').hide()
   $('#account-navbar').hide()
 })

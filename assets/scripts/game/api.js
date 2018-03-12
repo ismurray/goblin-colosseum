@@ -50,6 +50,7 @@ const updateGame = function (gamePack) {
 }
 
 const deleteGame = function (id) {
+  store.deletedGameId = id
   return $.ajax({
     url: config.apiOrigin + '/games/' + id,
     method: 'DELETE',

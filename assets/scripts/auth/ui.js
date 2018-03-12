@@ -46,6 +46,7 @@ const signOutSuccess = function () {
   $('#account-message').css('background-color', '#5cb85c')
   $('#auth-wrapper').show()
   $('#account-navbar').hide()
+  $('#game-wrapper-div').hide()
   $('#non-auth-wrapper').hide()
 }
 
