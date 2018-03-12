@@ -55,8 +55,6 @@ const createNewGame = function (data) {
     alive: true,
     lastMove: 'up'
   }
-  // reset goblin spawns
-  resetLevels()
   // initialize internal map
   resetMap(rowLength)
   // set the neighborIndices for player, spawn goblins, then set their neighbors
@@ -90,8 +88,6 @@ const loadGame = function (data) {
   // reset and update internal map
   resetMap(rowLength)
   updateMap(localGame.playerState, localGame.goblinState)
-  // reset goblin spawns
-  resetLevels()
   // package data for gameUI, and call a UI update
   updateUI()
 }
@@ -447,10 +443,14 @@ const randomizeGobPos = function (goblin) {
 }
 
 // run at end of player move and during createGame to check whether current
-// round is a spawn round in the levels hash, if yes, add the goblins to localGame.goblinState
+// round is a spawn round, if yes, add the goblins to localGame.goblinState
 const spawnCheck = function (round) {
-  if (levels[round] !== undefined) {
-    const newGobs = levels[round]
+  if (round % 10 === 0) {
+    const newGobAmount = round / 10 + 1
+    const newGobs = []
+    for (let i = 0; i < newGobAmount; i++) {
+      newGobs.push(createGoblin([0, 2], [10, 10], 1, true))
+    }
     const text = `${newGobs.length} goblins enter the arena!`
     addGameMessage(text)
     for (let i = 0; i < newGobs.length; i++) {
@@ -458,6 +458,10 @@ const spawnCheck = function (round) {
       setNeighborIndices(newGobs[i])
       localGame.goblinState.push(newGobs[i])
     }
+  } else if (round === 1) {
+    const newGobs = [createGoblin([0, 2], [10, 10], 1, true)]
+    setNeighborIndices(newGobs[0])
+    localGame.goblinState.push(newGobs[0])
   }
 }
 
@@ -468,46 +472,6 @@ const addGameMessage = function (message) {
   $('#game-message').prepend(gameMessageHtml)
 }
 
-// holds keys that are landmark rounds (1, 10, 20, etc) whose values are arrays
-// of goblins to be spawned on that round.
-const resetLevels = function () {
-  levels = {
-    1: [createGoblin([0, 2], [10, 10], 1, true)],
-    10: [
-      createGoblin([0, 0], [10, 10], 1, true),
-      createGoblin([0, 4], [10, 10], 1, true)
-    ],
-    20: [
-      createGoblin([0, 0], [10, 10], 1, true),
-      createGoblin([0, 2], [10, 10], 1, true),
-      createGoblin([0, 4], [10, 10], 1, true)
-    ],
-    30: [
-      createGoblin([0, 0], [10, 10], 1, true),
-      createGoblin([0, 2], [10, 10], 1, true),
-      createGoblin([0, 4], [10, 10], 1, true),
-      createGoblin([2, 0], [10, 10], 1, true)
-    ]
-  }
-}
-let levels = {
-  1: [createGoblin([0, 2], [10, 10], 1, true)],
-  10: [
-    createGoblin([0, 0], [10, 10], 1, true),
-    createGoblin([0, 4], [10, 10], 1, true)
-  ],
-  20: [
-    createGoblin([0, 0], [10, 10], 1, true),
-    createGoblin([0, 2], [10, 10], 1, true),
-    createGoblin([0, 4], [10, 10], 1, true)
-  ],
-  30: [
-    createGoblin([0, 0], [10, 10], 1, true),
-    createGoblin([0, 2], [10, 10], 1, true),
-    createGoblin([0, 4], [10, 10], 1, true),
-    createGoblin([2, 0], [10, 10], 1, true)
-  ]
-}
 
 module.exports = {
   createNewGame,
