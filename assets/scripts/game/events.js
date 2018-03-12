@@ -74,6 +74,13 @@ const onSweepAttack = function (event) {
   gameUI.updateMapUI(game)
 }
 
+const onHeal = function (event) {
+  event.preventDefault()
+  const game = gameEngine.movePlayer('down', 'heal')
+  gameUI.updateMapUI(game)
+}
+
+
 const addHandlers = () => {
   $('#get-all-games').on('submit', onGetAllGames)
   $('#get-game').on('submit', onGetGame)
@@ -86,6 +93,7 @@ const addHandlers = () => {
   $('#move-up').on('click', onMakeMove)
   $('#move-down').on('click', onMakeMove)
   $('#sweep-button').on('click', onSweepAttack)
+  $('#heal-button').on('click', onHeal)
 }
 
 module.exports = {

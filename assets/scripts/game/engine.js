@@ -238,9 +238,13 @@ const movePlayer = function (direction, ability) {
     } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
       targetAttack(localGame.playerState, destination)
     }
+  // Trigger sweeping attack
   } else if (ability === 'sweep') {
-    console.log('sweep!')
     sweepAttack(localGame.playerState)
+  // Trigger healing ability
+  } else if (ability === 'heal') {
+    console.log('trigger heal')
+    heal(localGame.playerState)
   }
   // when player's turn is ending, run all the gobs' turns, increase the round
   // count, and do a spawnCheck
@@ -265,8 +269,9 @@ const movePlayer = function (direction, ability) {
   return game
 }
 
+// Takes player obect as input to enact an attack at all four directions
 const sweepAttack = function (player) {
-  addGameMessage('Player makes a sweeping attack that strikes at all four sides')
+  addGameMessage('player makes a sweeping attack that strikes at all four sides')
   const attackDestinations = [
     player.neighborIndices['up'],
     player.neighborIndices['down'],
@@ -277,6 +282,13 @@ const sweepAttack = function (player) {
   for (let i = 0; i < attackDestinations.length; i++) {
     targetAttack(player, attackDestinations[i])
   }
+}
+
+const heal = function (player) {
+  const formerHP = player.hp[0]
+  player.hp[0] = player.hp[1]
+  const text = `player lets loose a rallying shout, raising player's HP from ${formerHP} to ${player.hp[0]}!`
+  addGameMessage(text)
 }
 
 // returns an array of live goblins
