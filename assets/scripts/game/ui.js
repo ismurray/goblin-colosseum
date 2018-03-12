@@ -52,19 +52,19 @@ const updateMapUI = function (game) {
       if (game.map[y][x] === '{o!') {
         switch (game.player.lastMove) {
           case 'up':
-            $(spotID).html('<img src="./assets/resources/male-sprite-up.png" alt="player" height="42" width="42">')
+            $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858541/male-sprite-up.png" alt="player" height="42" width="42">')
             break
           case 'down':
-            $(spotID).html('<img src="./assets/resources/male-sprite-down.png" alt="player" height="42" width="42">')
+            $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858540/male-sprite-down.png" alt="player" height="42" width="42">')
             break
           case 'left':
-            $(spotID).html('<img src="./assets/resources/male-sprite-left.png" alt="player" height="42" width="42">')
+            $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858540/male-sprite-left.png" alt="player" height="42" width="42">')
             break
           case 'right':
-            $(spotID).html('<img src="./assets/resources/male-sprite-right.png" alt="player" height="42" width="42">')
+            $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858540/male-sprite-right.png" alt="player" height="42" width="42">')
             break
           case undefined:
-            $(spotID).html('<img src="./assets/resources/male-sprite-up.png" alt="player" height="42" width="42">')
+            $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858541/male-sprite-up.png" alt="player" height="42" width="42">')
             break
         }
       } else if (game.map[y][x] === '...') {
@@ -78,19 +78,19 @@ const updateMapUI = function (game) {
     const spotID = ID1 + game.liveGoblins[i].position[1]
     switch (game.liveGoblins[i].lastMove) {
       case 'up':
-        $(spotID).html('<img src="./assets/resources/goblin-up.png" alt="goblin" height="42" width="42">')
+        $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858541/goblin-up.png" alt="goblin" height="42" width="42">')
         break
       case 'down':
-        $(spotID).html('<img src="./assets/resources/goblin-down.png" alt="goblin" height="42" width="42">')
+        $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858540/goblin-down.png" alt="goblin" height="42" width="42">')
         break
       case 'left':
-        $(spotID).html('<img src="./assets/resources/goblin-left.png" alt="goblin" height="42" width="42">')
+        $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858540/goblin-left.png" alt="goblin" height="42" width="42">')
         break
       case 'right':
-        $(spotID).html('<img src="./assets/resources/goblin-right.png" alt="goblin" height="42" width="42">')
+        $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858540/goblin-right.png" alt="goblin" height="42" width="42">')
         break
       case undefined:
-        $(spotID).html('<img src="./assets/resources/goblin-down.png" alt="player" height="42" width="42">')
+        $(spotID).html('<img src="http://res.cloudinary.com/ismurray/image/upload/v1520858540/goblin-down.png" alt="player" height="42" width="42">')
         break
     }
   }
