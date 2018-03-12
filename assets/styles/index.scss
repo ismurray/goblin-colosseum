@@ -11,13 +11,21 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 .board-spot::after {
   content: '';
   background: url('http://res.cloudinary.com/ismurray/image/upload/v1520817079/brick-tiles.png');
-  opacity: 0.75;
+  opacity: 1;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   position: absolute;
   z-index: -1;
+}
+
+body {
+  background: url('http://res.cloudinary.com/ismurray/image/upload/v1520820267/8-bit-landscape.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #232055;
+  color: grey;
 }
 
 .well {
