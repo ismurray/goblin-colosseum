@@ -53,10 +53,9 @@ const createNewGame = function (data) {
     hp: [10, 10],
     attackDmg: 5,
     alive: true,
+    goblinCount: 1,
     lastMove: 'up'
   }
-  // reset goblin spawns
-  resetLevels()
   // initialize internal map
   resetMap(rowLength)
   // set the neighborIndices for player, spawn goblins, then set their neighbors
@@ -86,12 +85,10 @@ const loadGame = function (data) {
   // initialize goblin and player data, since API just defaults to null on new game
   localGame.goblinState = apiGame.goblin_state
   localGame.playerState = apiGame.player_state
-
+  localGame.playerState.goblinCount = (localGame.playerState.goblinCount === undefined ? localGame.score + 1 : localGame.playerState.goblinCount)
   // reset and update internal map
   resetMap(rowLength)
   updateMap(localGame.playerState, localGame.goblinState)
-  // reset goblin spawns
-  resetLevels()
   // package data for gameUI, and call a UI update
   updateUI()
 }
@@ -219,28 +216,43 @@ const moveGoblin = function (goblin, direction) {
   return updateMap(localGame.playerState, localGame.goblinState)
 }
 
-const movePlayer = function (direction) {
-  localGame.playerState.lastMove = direction
-  const destination = localGame.playerState.neighborIndices[direction]
-  const currentPos = localGame.playerState.position
-  map = updateMap(localGame.playerState, localGame.goblinState)
-  // prevent player from walking off map
-  if (destination === 'wall') {
-    addGameMessage('You spend your turn attacking the wall. It doesn\'t seem effective')
-  // if destination is empty, move player to that space and update neighbors
-  } else if (map[destination[0]][destination[1]] === '...') {
-    localGame.playerState.position = localGame.playerState.neighborIndices[direction]
-    setNeighborIndices(localGame.playerState)
-  // if destination is occupied by opposite type (gob -> player or player -> gob),
-  // call attack function
-  } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
-    targetAttack(localGame.playerState, destination)
+// runs the player's and gobs turn when user inputs a direction
+const movePlayer = function (direction, ability) {
+  if (abilityCostTooHigh(ability)) {
+    addGameMessage('Your score is too low to use that ability!')
+  } else {
+    localGame.playerState.lastMove = direction
+    const destination = localGame.playerState.neighborIndices[direction]
+    const currentPos = localGame.playerState.position
+    map = updateMap(localGame.playerState, localGame.goblinState)
+    if (ability === 'attack') {
+      // prevent player from walking off map
+      if (destination === 'wall') {
+        addGameMessage('You spend your turn attacking the wall. It doesn\'t seem effective')
+      // if destination is empty, move player to that space and update neighbors
+      } else if (map[destination[0]][destination[1]] === '...') {
+        localGame.playerState.position = localGame.playerState.neighborIndices[direction]
+        setNeighborIndices(localGame.playerState)
+      // if destination is occupied by opposite type (gob -> player or player -> gob),
+      // call attack function
+      } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
+        targetAttack(localGame.playerState, destination)
+      }
+    // Trigger sweeping attack
+    } else if (ability === 'sweep') {
+      sweepAttack(localGame.playerState)
+      localGame.score = localGame.score - 1
+    // Trigger healing ability
+    } else if (ability === 'heal') {
+      heal(localGame.playerState)
+      localGame.score = localGame.score - 3
+    }
+    // when player's turn is ending, run all the gobs' turns, increase the round
+    // count, and do a spawnCheck
+    goblinTurns(localGame.goblinState)
+    localGame.round += 1
+    spawnCheck(localGame.round)
   }
-  // when player's turn is ending, run all the gobs' turns, increase the round
-  // count, and do a spawnCheck
-  goblinTurns(localGame.goblinState)
-  localGame.round += 1
-  spawnCheck(localGame.round)
 
   // make list of live goblins
   const liveGoblins = findLiveGoblins(localGame.goblinState)
@@ -253,10 +265,44 @@ const movePlayer = function (direction) {
     player: localGame.playerState,
     gameId: apiGame.id
   }
-
+  buryDeadGobs(localGame.goblinState)
   const gameData = packageGameData()
   gameAPI.updateGame(gameData)
   return game
+}
+
+// returns true if player's score is too low to use attempted ability. Else false.
+const abilityCostTooHigh = function (ability) {
+  const abilityCosts = {
+    sweep: 1,
+    heal: 3
+  }
+  if (localGame.score < abilityCosts[ability]) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// Takes player obect as input to enact an attack at all four directions
+const sweepAttack = function (player) {
+  addGameMessage('player spends one score point to make a sweeping attack that strikes at all four sides')
+  const attackDestinations = [
+    player.neighborIndices['up'],
+    player.neighborIndices['down'],
+    player.neighborIndices['left'],
+    player.neighborIndices['right']
+  ]
+  for (let i = 0; i < attackDestinations.length; i++) {
+    targetAttack(player, attackDestinations[i])
+  }
+}
+
+const heal = function (player) {
+  const formerHP = player.hp[0]
+  player.hp[0] = player.hp[1]
+  const text = `player spends 3 score points to let loose a rallying shout, raising player's HP from ${formerHP} to ${player.hp[0]}!`
+  addGameMessage(text)
 }
 
 // returns an array of live goblins
@@ -270,6 +316,15 @@ const findLiveGoblins = function (goblins) {
   return liveGoblins
 }
 
+// Remove all dead goblins from goblinState to prevent memory overload from buildup
+const buryDeadGobs = function (goblins) {
+  for (let i = 0; i < goblins.length; i++) {
+    if (!goblins[i].alive) {
+      goblins.splice(i, 1)
+    }
+  }
+}
+
 // returns index of the goblin at given coords, returns -1 if no gob is there
 const findGobByPosition = function (goblins, givenPosition) {
   return goblins.findIndex(goblin => goblin.position[0] === givenPosition[0] &&
@@ -281,7 +336,7 @@ const findGobByPosition = function (goblins, givenPosition) {
 // prints the result of the attack and updates the map
 const attack = function (attacker, target) {
   target.hp[0] -= attacker.attackDmg
-  const text = `${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}`
+  const text = `${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}/${target.hp[1]}`
   addGameMessage(text)
   return deathCheck(target)
 }
@@ -295,8 +350,6 @@ const targetAttack = function (attacker, destination) {
     if (gobIndex > -1) {
       const target = localGame.goblinState[gobIndex]
       return attack(attacker, target)
-    } else {
-      return `No target at position ${destination}`
     }
   } else {
     return attack(attacker, localGame.playerState)
@@ -311,7 +364,7 @@ const deathCheck = function (target) {
     // if target killed was a gob, increase score by 1
     if (target.name !== 'player') {
       localGame.score += 1
-      const text = `You have slain a ${target.name}! Your score is now ${localGame.score}`
+      const text = `You have slain ${target.name}! Your score is now ${localGame.score}`
       addGameMessage(text)
     // if target killed was player, game over
     } else if (target.name === 'player') {
@@ -411,16 +464,45 @@ const randomizeGobPos = function (goblin) {
 }
 
 // run at end of player move and during createGame to check whether current
-// round is a spawn round in the levels hash, if yes, add the goblins to localGame.goblinState
+// round is a spawn round, if yes, add the goblins to localGame.goblinState
 const spawnCheck = function (round) {
-  if (levels[round] !== undefined) {
-    const newGobs = levels[round]
+  if (round % 10 === 0) {
+    const newGobs = []
+    let newGobAmount = round / 10 + 1
+    const availableSpaces = numberOfOpenMapSpaces()
+    newGobAmount = (newGobAmount > availableSpaces ? availableSpaces : newGobAmount)
+    for (let i = 0; i < newGobAmount; i++) {
+      newGobs.push(createGoblin([0, 2], [10, 10], 1, true))
+    }
+    const text = `${newGobs.length} goblins enter the arena!`
+    addGameMessage(text)
     for (let i = 0; i < newGobs.length; i++) {
+      localGame.playerState.goblinCount++
       newGobs[i].position = randomizeGobPos(newGobs[i])
       setNeighborIndices(newGobs[i])
+      newGobs[i].name = newGobs[i].name + localGame.playerState.goblinCount
       localGame.goblinState.push(newGobs[i])
     }
+  } else if (round === 1) {
+    const newGobs = [createGoblin([0, 2], [10, 10], 1, true)]
+    setNeighborIndices(newGobs[0])
+    newGobs[0].name = newGobs[0].name + localGame.playerState.goblinCount
+    localGame.goblinState.push(newGobs[0])
   }
+}
+
+// returns the number of open spaces on the map
+const numberOfOpenMapSpaces = function () {
+  let counter = 0
+  // iterate through every map cell and count all the empty spaces
+  for (let y = 0; y < rowLength; y++) {
+    for (let x = 0; x < rowLength; x++) {
+      if (map[y][x] === '...') {
+        counter++
+      }
+    }
+  }
+  return counter
 }
 
 const addGameMessage = function (message) {
@@ -428,47 +510,6 @@ const addGameMessage = function (message) {
   const timeStamp = new Date()
   const gameMessageHtml = gameMessageTemplate({ messages: [{text: message, time: timeStamp}] })
   $('#game-message').prepend(gameMessageHtml)
-}
-
-// holds keys that are landmark rounds (1, 10, 20, etc) whose values are arrays
-// of goblins to be spawned on that round.
-const resetLevels = function () {
-  levels = {
-    1: [createGoblin([0, 2], [10, 10], 1, true)],
-    10: [
-      createGoblin([0, 0], [10, 10], 1, true),
-      createGoblin([0, 4], [10, 10], 1, true)
-    ],
-    20: [
-      createGoblin([0, 0], [10, 10], 1, true),
-      createGoblin([0, 2], [10, 10], 1, true),
-      createGoblin([0, 4], [10, 10], 1, true)
-    ],
-    30: [
-      createGoblin([0, 0], [10, 10], 1, true),
-      createGoblin([0, 2], [10, 10], 1, true),
-      createGoblin([0, 4], [10, 10], 1, true),
-      createGoblin([2, 0], [10, 10], 1, true)
-    ]
-  }
-}
-let levels = {
-  1: [createGoblin([0, 2], [10, 10], 1, true)],
-  10: [
-    createGoblin([0, 0], [10, 10], 1, true),
-    createGoblin([0, 4], [10, 10], 1, true)
-  ],
-  20: [
-    createGoblin([0, 0], [10, 10], 1, true),
-    createGoblin([0, 2], [10, 10], 1, true),
-    createGoblin([0, 4], [10, 10], 1, true)
-  ],
-  30: [
-    createGoblin([0, 0], [10, 10], 1, true),
-    createGoblin([0, 2], [10, 10], 1, true),
-    createGoblin([0, 4], [10, 10], 1, true),
-    createGoblin([2, 0], [10, 10], 1, true)
-  ]
 }
 
 module.exports = {

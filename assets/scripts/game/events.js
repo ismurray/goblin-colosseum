@@ -64,9 +64,22 @@ const onDeleteGame = (event) => {
 const onMakeMove = function (event) {
   event.preventDefault()
   const direction = event.currentTarget.id.split('-')[1]
-  const game = gameEngine.movePlayer(direction)
+  const game = gameEngine.movePlayer(direction, 'attack')
   gameUI.updateMapUI(game)
 }
+
+const onSweepAttack = function (event) {
+  event.preventDefault()
+  const game = gameEngine.movePlayer('down', 'sweep')
+  gameUI.updateMapUI(game)
+}
+
+const onHeal = function (event) {
+  event.preventDefault()
+  const game = gameEngine.movePlayer('down', 'heal')
+  gameUI.updateMapUI(game)
+}
+
 
 const addHandlers = () => {
   $('#get-all-games').on('submit', onGetAllGames)
@@ -79,6 +92,8 @@ const addHandlers = () => {
   $('#move-right').on('click', onMakeMove)
   $('#move-up').on('click', onMakeMove)
   $('#move-down').on('click', onMakeMove)
+  $('#sweep-button').on('click', onSweepAttack)
+  $('#heal-button').on('click', onHeal)
 }
 
 module.exports = {
