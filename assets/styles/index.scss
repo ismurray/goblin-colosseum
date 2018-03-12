@@ -5,8 +5,27 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
   border: 1px solid black;
   min-height: 50px;
   min-width: 50px;
+  // background-image: url('http://res.cloudinary.com/ismurray/image/upload/v1520817079/brick-tiles.png');
+}
+
+.board-spot::after {
+  content: '';
+  background: url('http://res.cloudinary.com/ismurray/image/upload/v1520817079/brick-tiles.png');
+  opacity: 0.75;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 .well {
   max-height: 100px;
+}
+
+.board-spot img {
+  margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
