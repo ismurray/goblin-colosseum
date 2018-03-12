@@ -65,7 +65,7 @@
             <ul class="nav navbar-nav">
               <li>
                 <form class="navbar-form">
-                <button type="button" class="blue-btn btn btn-default navbar-btn" data-toggle="modal" data-target="#all-games-modal">
+                <button type="button" id="get-all-games" class="blue-btn btn btn-default navbar-btn" data-toggle="modal" data-target="#all-games-modal">
                   Get All Games
                 </button>
               </form>
@@ -295,15 +295,15 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                  <button type="button" id="close-all-games-modal" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">All your games</h4>
                 </div>
                 <div class="modal-body">
-                  <form id="get-all-games" class="border">
+                  <!-- <form  class="border">
                     <fieldset>
                       <button type="submit" id="get-all-games-button" class="btn btn-primary btn">Get All Games</button>
                     </fieldset>
-                  </form>
+                  </form> -->
                   <!-- All Games handlebars target: -->
                   <div class="content" id="content">
                   </div>

@@ -21,6 +21,7 @@ const onGetGame = function (event) {
   // if getting game from all games list, use data id
   } else if ($(event.currentTarget).attr('data-id')) {
     id = $(event.currentTarget).attr('data-id')
+    $('#close-all-games-modal').click()
   }
 
   gameAPI.getGame(id)
@@ -82,7 +83,7 @@ const onHeal = function (event) {
 
 
 const addHandlers = () => {
-  $('#get-all-games').on('submit', onGetAllGames)
+  $('#get-all-games').on('click', onGetAllGames)
   $('#get-game').on('submit', onGetGame)
   $('#create-new-game').on('click', onCreateNewGame)
   $('#start-game').on('submit', onCreateNewGame)
