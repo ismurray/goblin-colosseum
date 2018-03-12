@@ -33,23 +33,23 @@ Initial Wire frames: https://imgur.com/IIScTZZ
 ## User Stories
 Below are some of the initial user stories I made during the planning stage:
   As a user, I should be able to:
-    * [Auth] create an account
-    * [Auth] login to my account
-    * [Auth] change my password
-    * [Auth] sign out of my account
-    * [Game UI] click a button to start a new game
-    * [Game UI/Engine] See myself on the map
-    * [Engine] Move around the colosseum
-    * [Game UI/Engine] See the enemies on the map
-    * [Engine] Attack the enemies
-    * [Game UI/Engine] See how much HP I have
-    * [Game UI/Engine] See how much HP the goblins have
-    * [Game UI/Engine] See when I'm hit by the enemies
-    * [Game UI/Engine] See how many rounds until the next wave
-    * [Game UI/Engine] See my current score
-    * [Game API] Abandon a game at any point and have my progress saved to the surver
-    * [Game API] Continue playing an abandoned game
-    * [Game API] See a list of my high scores
+    - [Auth] create an account
+    - [Auth] login to my account
+    - [Auth] change my password
+    - [Auth] sign out of my account
+    - [Game UI] click a button to start a new game
+    - [Game UI/Engine] See myself on the map
+    - [Engine] Move around the colosseum
+    - [Game UI/Engine] See the enemies on the map
+    - [Engine] Attack the enemies
+    - [Game UI/Engine] See how much HP I have
+    - [Game UI/Engine] See how much HP the goblins have
+    - [Game UI/Engine] See when I'm hit by the enemies
+    - [Game UI/Engine] See how many rounds until the next wave
+    - [Game UI/Engine] See my current score
+    - [Game API] Abandon a game at any point and have my progress saved to the surver
+    - [Game API] Continue playing an abandoned game
+    - [Game API] See a list of my high scores
 
 ## Technologies Used
 * JavaScript
