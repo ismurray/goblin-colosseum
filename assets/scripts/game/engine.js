@@ -53,6 +53,7 @@ const createNewGame = function (data) {
     hp: [10, 10],
     attackDmg: 5,
     alive: true,
+    goblinCount: 1,
     lastMove: 'up'
   }
   // initialize internal map
@@ -84,7 +85,7 @@ const loadGame = function (data) {
   // initialize goblin and player data, since API just defaults to null on new game
   localGame.goblinState = apiGame.goblin_state
   localGame.playerState = apiGame.player_state
-
+  localGame.playerState.goblinCount = (localGame.playerState.goblinCount === undefined ? localGame.score + 1 : localGame.playerState.goblinCount)
   // reset and update internal map
   resetMap(rowLength)
   updateMap(localGame.playerState, localGame.goblinState)
@@ -239,7 +240,6 @@ const movePlayer = function (direction, ability) {
     sweepAttack(localGame.playerState)
   // Trigger healing ability
   } else if (ability === 'heal') {
-    console.log('trigger heal')
     heal(localGame.playerState)
   }
   // when player's turn is ending, run all the gobs' turns, increase the round
@@ -274,7 +274,6 @@ const sweepAttack = function (player) {
     player.neighborIndices['left'],
     player.neighborIndices['right']
   ]
-  console.log(attackDestinations)
   for (let i = 0; i < attackDestinations.length; i++) {
     targetAttack(player, attackDestinations[i])
   }
@@ -300,13 +299,11 @@ const findLiveGoblins = function (goblins) {
 
 // Remove all dead goblins from goblinState to prevent memory overload from buildup
 const buryDeadGobs = function (goblins) {
-  console.log('all gobbos: ', goblins)
   for (let i = 0; i < goblins.length; i++) {
     if (!goblins[i].alive) {
       goblins.splice(i, 1)
     }
   }
-  console.log('live gobbos', goblins)
 }
 
 // returns index of the goblin at given coords, returns -1 if no gob is there
@@ -319,9 +316,8 @@ const findGobByPosition = function (goblins, givenPosition) {
 // resolves an attack with a given attacker and target (both must be combatants)
 // prints the result of the attack and updates the map
 const attack = function (attacker, target) {
-  console.log('start attack')
   target.hp[0] -= attacker.attackDmg
-  const text = `${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}`
+  const text = `${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}/${target.hp[1]}`
   addGameMessage(text)
   return deathCheck(target)
 }
@@ -330,16 +326,11 @@ const attack = function (attacker, target) {
 // attacker and an attack destination coord. If attacker is player, finds the
 // goblin at that coord and attacks it. If attacker is gob, attacks the player
 const targetAttack = function (attacker, destination) {
-  console.log('start targetAttack. attacker.name is ', attacker.name)
   if (attacker.name === 'player') {
-    console.log('player is swings at ', destination)
     const gobIndex = findGobByPosition(localGame.goblinState, destination)
     if (gobIndex > -1) {
       const target = localGame.goblinState[gobIndex]
-      console.log('player attacks', target)
       return attack(attacker, target)
-    } else {
-      console.log(`No target at position ${destination}`)
     }
   } else {
     return attack(attacker, localGame.playerState)
@@ -354,7 +345,7 @@ const deathCheck = function (target) {
     // if target killed was a gob, increase score by 1
     if (target.name !== 'player') {
       localGame.score += 1
-      const text = `You have slain a ${target.name}! Your score is now ${localGame.score}`
+      const text = `You have slain ${target.name}! Your score is now ${localGame.score}`
       addGameMessage(text)
     // if target killed was player, game over
     } else if (target.name === 'player') {
@@ -467,13 +458,16 @@ const spawnCheck = function (round) {
     const text = `${newGobs.length} goblins enter the arena!`
     addGameMessage(text)
     for (let i = 0; i < newGobs.length; i++) {
+      localGame.playerState.goblinCount++
       newGobs[i].position = randomizeGobPos(newGobs[i])
       setNeighborIndices(newGobs[i])
+      newGobs[i].name = newGobs[i].name + localGame.playerState.goblinCount
       localGame.goblinState.push(newGobs[i])
     }
   } else if (round === 1) {
     const newGobs = [createGoblin([0, 2], [10, 10], 1, true)]
     setNeighborIndices(newGobs[0])
+    newGobs[0].name = newGobs[0].name + localGame.playerState.goblinCount
     localGame.goblinState.push(newGobs[0])
   }
 }
@@ -498,7 +492,6 @@ const addGameMessage = function (message) {
   const gameMessageHtml = gameMessageTemplate({ messages: [{text: message, time: timeStamp}] })
   $('#game-message').prepend(gameMessageHtml)
 }
-
 
 module.exports = {
   createNewGame,
