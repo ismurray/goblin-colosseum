@@ -259,7 +259,7 @@ const movePlayer = function (direction, ability) {
     player: localGame.playerState,
     gameId: apiGame.id
   }
-
+  buryDeadGobs(localGame.goblinState)
   const gameData = packageGameData()
   gameAPI.updateGame(gameData)
   return game
@@ -296,6 +296,17 @@ const findLiveGoblins = function (goblins) {
     }
   }
   return liveGoblins
+}
+
+// Remove all dead goblins from goblinState to prevent memory overload from buildup
+const buryDeadGobs = function (goblins) {
+  console.log('all gobbos: ', goblins)
+  for (let i = 0; i < goblins.length; i++) {
+    if (!goblins[i].alive) {
+      goblins.splice(i, 1)
+    }
+  }
+  console.log('live gobbos', goblins)
 }
 
 // returns index of the goblin at given coords, returns -1 if no gob is there
@@ -446,8 +457,10 @@ const randomizeGobPos = function (goblin) {
 // round is a spawn round, if yes, add the goblins to localGame.goblinState
 const spawnCheck = function (round) {
   if (round % 10 === 0) {
-    const newGobAmount = round / 10 + 1
     const newGobs = []
+    let newGobAmount = round / 10 + 1
+    const availableSpaces = numberOfOpenMapSpaces()
+    newGobAmount = (newGobAmount > availableSpaces ? availableSpaces : newGobAmount)
     for (let i = 0; i < newGobAmount; i++) {
       newGobs.push(createGoblin([0, 2], [10, 10], 1, true))
     }
@@ -463,6 +476,20 @@ const spawnCheck = function (round) {
     setNeighborIndices(newGobs[0])
     localGame.goblinState.push(newGobs[0])
   }
+}
+
+// returns the number of open spaces on the map
+const numberOfOpenMapSpaces = function () {
+  let counter = 0
+  // iterate through every map cell and count all the empty spaces
+  for (let y = 0; y < rowLength; y++) {
+    for (let x = 0; x < rowLength; x++) {
+      if (map[y][x] === '...') {
+        counter++
+      }
+    }
+  }
+  return counter
 }
 
 const addGameMessage = function (message) {
