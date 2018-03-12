@@ -219,22 +219,28 @@ const moveGoblin = function (goblin, direction) {
   return updateMap(localGame.playerState, localGame.goblinState)
 }
 
-const movePlayer = function (direction) {
+// runs the player's and gobs turn when user inputs a direction
+const movePlayer = function (direction, ability) {
   localGame.playerState.lastMove = direction
   const destination = localGame.playerState.neighborIndices[direction]
   const currentPos = localGame.playerState.position
   map = updateMap(localGame.playerState, localGame.goblinState)
-  // prevent player from walking off map
-  if (destination === 'wall') {
-    addGameMessage('You spend your turn attacking the wall. It doesn\'t seem effective')
-  // if destination is empty, move player to that space and update neighbors
-  } else if (map[destination[0]][destination[1]] === '...') {
-    localGame.playerState.position = localGame.playerState.neighborIndices[direction]
-    setNeighborIndices(localGame.playerState)
-  // if destination is occupied by opposite type (gob -> player or player -> gob),
-  // call attack function
-  } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
-    targetAttack(localGame.playerState, destination)
+  if (ability === 'attack') {
+    // prevent player from walking off map
+    if (destination === 'wall') {
+      addGameMessage('You spend your turn attacking the wall. It doesn\'t seem effective')
+    // if destination is empty, move player to that space and update neighbors
+    } else if (map[destination[0]][destination[1]] === '...') {
+      localGame.playerState.position = localGame.playerState.neighborIndices[direction]
+      setNeighborIndices(localGame.playerState)
+    // if destination is occupied by opposite type (gob -> player or player -> gob),
+    // call attack function
+    } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
+      targetAttack(localGame.playerState, destination)
+    }
+  } else if (ability === 'sweep') {
+    console.log('sweep!')
+    sweepAttack(localGame.playerState)
   }
   // when player's turn is ending, run all the gobs' turns, increase the round
   // count, and do a spawnCheck
@@ -259,6 +265,20 @@ const movePlayer = function (direction) {
   return game
 }
 
+const sweepAttack = function (player) {
+  addGameMessage('Player makes a sweeping attack that strikes at all four sides')
+  const attackDestinations = [
+    player.neighborIndices['up'],
+    player.neighborIndices['down'],
+    player.neighborIndices['left'],
+    player.neighborIndices['right']
+  ]
+  console.log(attackDestinations)
+  for (let i = 0; i < attackDestinations.length; i++) {
+    targetAttack(player, attackDestinations[i])
+  }
+}
+
 // returns an array of live goblins
 const findLiveGoblins = function (goblins) {
   const liveGoblins = []
@@ -280,6 +300,7 @@ const findGobByPosition = function (goblins, givenPosition) {
 // resolves an attack with a given attacker and target (both must be combatants)
 // prints the result of the attack and updates the map
 const attack = function (attacker, target) {
+  console.log('start attack')
   target.hp[0] -= attacker.attackDmg
   const text = `${attacker.name} attacks ${target.name} for ${attacker.attackDmg} damage! Reducing ${target.name} HP to ${target.hp[0]}`
   addGameMessage(text)
@@ -290,13 +311,16 @@ const attack = function (attacker, target) {
 // attacker and an attack destination coord. If attacker is player, finds the
 // goblin at that coord and attacks it. If attacker is gob, attacks the player
 const targetAttack = function (attacker, destination) {
+  console.log('start targetAttack. attacker.name is ', attacker.name)
   if (attacker.name === 'player') {
+    console.log('player is swings at ', destination)
     const gobIndex = findGobByPosition(localGame.goblinState, destination)
     if (gobIndex > -1) {
       const target = localGame.goblinState[gobIndex]
+      console.log('player attacks', target)
       return attack(attacker, target)
     } else {
-      return `No target at position ${destination}`
+      console.log(`No target at position ${destination}`)
     }
   } else {
     return attack(attacker, localGame.playerState)
@@ -415,6 +439,8 @@ const randomizeGobPos = function (goblin) {
 const spawnCheck = function (round) {
   if (levels[round] !== undefined) {
     const newGobs = levels[round]
+    const text = `${newGobs.length} goblins enter the arena!`
+    addGameMessage(text)
     for (let i = 0; i < newGobs.length; i++) {
       newGobs[i].position = randomizeGobPos(newGobs[i])
       setNeighborIndices(newGobs[i])
