@@ -14,6 +14,18 @@ const getGold = function () {
   })
 }
 
+const updateGold = function (tx) {
+  return $.ajax({
+    url: config.apiOrigin + '/gold-transaction/' + tx,
+    method: 'PATCH',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 module.exports = {
-  getGold
+  getGold,
+  updateGold
 }

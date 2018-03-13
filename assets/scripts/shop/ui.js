@@ -14,7 +14,21 @@ const getGoldFailure = function (error) {
   console.log(error)
 }
 
+const updateGoldSuccess = function (data) {
+  $('#account-message').text('Transaction successfull!')
+  $('#account-message').css('background-color', '#5cb85c')
+  $('#user-gold').html(data)
+}
+
+const updateGoldFailure = function (error) {
+  $('#account-message').text('Error processing transaction!')
+  $('#account-message').css('background-color', '#d9534f')
+  console.log(error)
+}
+
 module.exports = {
   getGoldSuccess,
-  getGoldFailure
+  getGoldFailure,
+  updateGoldSuccess,
+  updateGoldFailure
 }
