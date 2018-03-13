@@ -50,11 +50,14 @@ const storePurchases = function (data) {
       accountPurchases.healPurchaseIDs.push(data.purchases[i].id)
     } else if (data.purchases[i].item.name === 'Sweeping Strike') {
       accountPurchases.sweep = true
+      $('#sweep-button').css('background-color', '#5cb85c')
     } else if (data.purchases[i].item.name === 'Lightning Blast') {
       accountPurchases.blast = true
+      $('#blast-button').css('background-color', '#5cb85c')
     }
   }
   store.accountPurchases = accountPurchases
+  $('#current-heals').text('(' + store.accountPurchases.healthPotions + ')')
 }
 
 const getPurchasesSuccess = function (data) {

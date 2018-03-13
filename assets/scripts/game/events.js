@@ -92,6 +92,7 @@ const onHeal = function (event) {
     const purchaseID = store.accountPurchases.healPurchaseIDs.shift()
     shopAPI.deletePurchase(purchaseID)
     store.accountPurchases.healthPotions -= 1
+    $('#current-heals').text('(' + store.accountPurchases.healthPotions + ')')
     console.log('after:', store.accountPurchases)
   } else {
     gameEngine.addGameMessage('You must buy more Healing Potions in the store!')

@@ -30,6 +30,7 @@ const signInSuccess = function (data) {
   $('#auth-wrapper').hide()
   $('#account-navbar').show()
   $('#non-auth-wrapper').show()
+  $('#get-user-purchases').click()
 }
 
 const signInFailure = function (error) {
