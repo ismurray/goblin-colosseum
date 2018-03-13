@@ -108,7 +108,8 @@ const updateUI = function () {
     hp: localGame.playerState.hp[0],
     liveGoblins: liveGoblins,
     player: localGame.playerState,
-    gameId: apiGame.id
+    gameId: apiGame.id,
+    over: localGame.over
   }
   // print game data to UI
   gameUI.updateMapUI(gameUiData)
@@ -257,7 +258,8 @@ const movePlayer = function (direction, ability) {
     hp: localGame.playerState.hp[0],
     liveGoblins: liveGoblins,
     player: localGame.playerState,
-    gameId: apiGame.id
+    gameId: apiGame.id,
+    over: localGame.over
   }
   buryDeadGobs(localGame.goblinState)
   const gameData = packageGameData()

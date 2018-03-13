@@ -22,6 +22,7 @@ const getAllGamesFailure = function (error) {
 
 const getGameSuccess = function (data) {
   $('#game-wrapper-div').show()
+  $('#game-input-wrapper').show()
   $('#account-message').text('Game retrieved!')
   $('#account-message').css('background-color', '#5cb85c')
   const showGameHtml = showAllGamesTemplate({ games: data })
@@ -41,6 +42,7 @@ const createGameSuccess = function () {
   $('#game-wrapper-div').show()
   $('#game-message').text('New Game! See how many Gobs you can kill before dying!')
   $('#game-message').css('background-color', '#fefefe')
+  $('#game-input-wrapper').show()
 }
 
 // updates the UI map/score/etc to match the internal map
@@ -49,6 +51,11 @@ const updateMapUI = function (game) {
   $('#current-hp').text(game.hp)
   $('#current-score').text(game.score)
   $('#current-game').text(game.gameId)
+  console.log(game)
+  if (game.over) {
+    $('#game-input-wrapper').hide()
+  }
+
   for (let y = 0; y < 5; y++) {
     const ID1 = '#mark' + y
     for (let x = 0; x < 5; x++) {
