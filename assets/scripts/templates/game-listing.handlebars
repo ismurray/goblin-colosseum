@@ -2,7 +2,12 @@
 
  <ul data-id="{{game.id}}">
   <li>Game ID: {{game.id}}</li>
-  <li>Is the game over?: {{game.over}}</li>
+  {{#unless game.over}}
+  <li>This game is still ACTIVE. You should finish this game to earn gold and publish your score!</li>
+  {{/unless}}
+  {{#if game.over}}
+  <li>Game Status: Completed!</li>
+  {{/if}}
   <li>Score: {{game.score}}</li>
   <li>Round: {{game.round}}</li>
   <li>Player state:
@@ -21,9 +26,10 @@
   </li>
   {{#unless game.over}}
   <button type="button" class="load-button" data-id="{{game.id}}">Load Game</button>
+  <button type="button" class="delete-button" data-id="{{game.id}}">Delete Game</button>
   {{/unless}}
   <ul>
-    <button type="button" class="delete-button" data-id="{{game.id}}">Delete Game</button>
+
   </ul>
 </ul>
 
