@@ -1,6 +1,6 @@
 'use strict'
 
-// const store = require('../store')
+const store = require('../store')
 const showAllPurchasesTemplate = require('../templates/purchase-listing.handlebars')
 
 const getGoldSuccess = function (data) {
@@ -27,9 +27,35 @@ const updateGoldFailure = function (error) {
   console.log(error)
 }
 
+// iterate through API purchases data and update local store
+const storePurchases = function (data) {
+  // reset local store of account purchases
+  const accountPurchases = {
+    healthPotions: 0,
+    healPurchaseIDs: [],
+    sweep: false,
+    blast: false
+  }
+  // add each purchase
+  for (let i = 0; i < data.purchases.length; i++) {
+    if (data.purchases[i].item.name === 'Health Potion') {
+      accountPurchases.healthPotions += 1
+      // store consumable id's for easier deletion later
+      accountPurchases.healPurchaseIDs.push(data.purchases[i].id)
+    } else if (data.purchases[i].item.name === 'Sweeping Strike') {
+      accountPurchases.sweep = true
+    } else if (data.purchases[i].item.name === 'Lightning Blast') {
+      accountPurchases.blast = true
+    }
+  }
+  store.accountPurchases = accountPurchases
+}
+
 const getPurchasesSuccess = function (data) {
   $('#account-message').text('Purchases retrieved!')
   $('#account-message').css('background-color', '#5cb85c')
+  storePurchases(data)
+  console.log(store.accountPurchases)
   const showPurchasesHtml = showAllPurchasesTemplate({ purchases: data.purchases })
   $('#all-purchases-content').html(showPurchasesHtml)
 }
