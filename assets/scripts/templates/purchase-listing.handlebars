@@ -1,0 +1,17 @@
+{{#each purchases as |purchase|}}
+
+ <ul data-id="{{purchase.id}}">
+  <li>Name: {{purchase.item.name}}</li>
+  <li>Purchase ID: {{purchase.id}}</li>
+  {{#unless purchase.item.consumable}}
+  <li>This purchase in not consumable. You may use it as many times as you like.</li>
+  {{/unless}}
+  {{#if purchase.item.consumable}}
+  <li>This purchase is consumable. You may only use it once.</li>
+  {{/if}}
+  <li>Description: {{purchase.item.description}}</li>
+  <li>Gold Paid: {{purchase.item.cost}}</li>
+  <li>Date Purchased: {{purchase.created_at}}</li>
+</ul>
+
+{{/each}}

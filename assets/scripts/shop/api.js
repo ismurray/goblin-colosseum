@@ -25,7 +25,32 @@ const updateGold = function (tx) {
   })
 }
 
+const getPurchases = function () {
+  return $.ajax({
+    url: config.apiOrigin + '/purchases',
+    method: 'GET',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const createPurchase = function (data) {
+  return $.ajax({
+    url: config.apiOrigin + '/purchases/',
+    method: 'POST',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
+
 module.exports = {
   getGold,
-  updateGold
+  updateGold,
+  getPurchases,
+  createPurchase
 }
