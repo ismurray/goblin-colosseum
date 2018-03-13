@@ -218,41 +218,35 @@ const moveGoblin = function (goblin, direction) {
 
 // runs the player's and gobs turn when user inputs a direction
 const movePlayer = function (direction, ability) {
-  if (abilityCostTooHigh(ability)) {
-    addGameMessage('Your score is too low to use that ability!')
-  } else {
-    localGame.playerState.lastMove = direction
-    const destination = localGame.playerState.neighborIndices[direction]
-    const currentPos = localGame.playerState.position
-    map = updateMap(localGame.playerState, localGame.goblinState)
-    if (ability === 'attack') {
-      // prevent player from walking off map
-      if (destination === 'wall') {
-        addGameMessage('You spend your turn attacking the wall. It doesn\'t seem effective')
-      // if destination is empty, move player to that space and update neighbors
-      } else if (map[destination[0]][destination[1]] === '...') {
-        localGame.playerState.position = localGame.playerState.neighborIndices[direction]
-        setNeighborIndices(localGame.playerState)
-      // if destination is occupied by opposite type (gob -> player or player -> gob),
-      // call attack function
-      } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
-        targetAttack(localGame.playerState, destination)
-      }
-    // Trigger sweeping attack
-    } else if (ability === 'sweep') {
-      sweepAttack(localGame.playerState)
-      localGame.score = localGame.score - 1
-    // Trigger healing ability
-    } else if (ability === 'heal') {
-      heal(localGame.playerState)
-      localGame.score = localGame.score - 3
+  localGame.playerState.lastMove = direction
+  const destination = localGame.playerState.neighborIndices[direction]
+  const currentPos = localGame.playerState.position
+  map = updateMap(localGame.playerState, localGame.goblinState)
+  if (ability === 'attack') {
+    // prevent player from walking off map
+    if (destination === 'wall') {
+      addGameMessage('You spend your turn attacking the wall. It doesn\'t seem effective')
+    // if destination is empty, move player to that space and update neighbors
+    } else if (map[destination[0]][destination[1]] === '...') {
+      localGame.playerState.position = localGame.playerState.neighborIndices[direction]
+      setNeighborIndices(localGame.playerState)
+    // if destination is occupied by opposite type (gob -> player or player -> gob),
+    // call attack function
+    } else if (map[destination[0]][destination[1]] !== map[currentPos[0]][currentPos[1]]) {
+      targetAttack(localGame.playerState, destination)
     }
-    // when player's turn is ending, run all the gobs' turns, increase the round
-    // count, and do a spawnCheck
-    goblinTurns(localGame.goblinState)
-    localGame.round += 1
-    spawnCheck(localGame.round)
+  // Trigger sweeping attack
+  } else if (ability === 'sweep') {
+    sweepAttack(localGame.playerState)
+  // Trigger healing ability
+  } else if (ability === 'heal') {
+    heal(localGame.playerState)
   }
+  // when player's turn is ending, run all the gobs' turns, increase the round
+  // count, and do a spawnCheck
+  goblinTurns(localGame.goblinState)
+  localGame.round += 1
+  spawnCheck(localGame.round)
 
   // make list of live goblins
   const liveGoblins = findLiveGoblins(localGame.goblinState)
@@ -271,22 +265,9 @@ const movePlayer = function (direction, ability) {
   return game
 }
 
-// returns true if player's score is too low to use attempted ability. Else false.
-const abilityCostTooHigh = function (ability) {
-  const abilityCosts = {
-    sweep: 1,
-    heal: 3
-  }
-  if (localGame.score < abilityCosts[ability]) {
-    return true
-  } else {
-    return false
-  }
-}
-
 // Takes player obect as input to enact an attack at all four directions
 const sweepAttack = function (player) {
-  addGameMessage('player spends one score point to make a sweeping attack that strikes at all four sides')
+  addGameMessage('player makes a sweeping attack that strikes at all four sides')
   const attackDestinations = [
     player.neighborIndices['up'],
     player.neighborIndices['down'],
@@ -301,7 +282,7 @@ const sweepAttack = function (player) {
 const heal = function (player) {
   const formerHP = player.hp[0]
   player.hp[0] = player.hp[1]
-  const text = `player spends 3 score points to let loose a rallying shout, raising player's HP from ${formerHP} to ${player.hp[0]}!`
+  const text = `player quaffs a healing potion, raising their HP from ${formerHP} to ${player.hp[0]}!`
   addGameMessage(text)
 }
 
@@ -518,5 +499,6 @@ module.exports = {
   localGame,
   movePlayer,
   packageGameData,
-  loadGame
+  loadGame,
+  addGameMessage
 }

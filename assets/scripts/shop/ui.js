@@ -34,7 +34,13 @@ const storePurchases = function (data) {
     healthPotions: 0,
     healPurchaseIDs: [],
     sweep: false,
-    blast: false
+    blast: false,
+    // server item ID's only apply to the DevServer, TODO: update for production
+    serverItemIDs: {
+      heal: 1,
+      sweep: 4,
+      blast: 5
+    }
   }
   // add each purchase
   for (let i = 0; i < data.purchases.length; i++) {
@@ -79,6 +85,17 @@ const createPurchaseFailure = function (error) {
   console.log(error)
 }
 
+const deletePurchaseSuccess = function (data) {
+  $('#account-message').text('Purchase delete successful!')
+  $('#account-message').css('background-color', '#5cb85c')
+}
+
+const deletePurchaseFailure = function (error) {
+  $('#account-message').text('Error processing purchase deletion!')
+  $('#account-message').css('background-color', '#d9534f')
+  console.log(error)
+}
+
 module.exports = {
   getGoldSuccess,
   getGoldFailure,
@@ -87,5 +104,7 @@ module.exports = {
   getPurchasesSuccess,
   getPurchasesFailure,
   createPurchaseSuccess,
-  createPurchaseFailure
+  createPurchaseFailure,
+  deletePurchaseSuccess,
+  deletePurchaseFailure
 }

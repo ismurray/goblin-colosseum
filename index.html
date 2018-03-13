@@ -189,6 +189,8 @@
 
 
         <div id="non-auth-wrapper">
+
+          <div id="shop-wrapper">
           <!-- Get Gold Form: -->
           <p>Your Gold Balance: <span id="user-gold"></span></p>
           <form class="navbar-form" id="get-user-gold">
@@ -211,13 +213,35 @@
           <div class="all-purchases-content" id="all-purchases-content">
           </div>
 
-          <!-- Update Purchases Form: -->
+          <!-- Create Purchases Form: -->
           <form class="navbar-form" id="create-purchase">
             <fieldset>
               <input type="number" name="purchase[item_id]" placeholder="Item ID">
               <button type="submit" class="btn btn-primary btn">Create Purchase</button>
             </fieldset>
           </form>
+
+          <!-- Delete Purchases Form: -->
+          <form class="navbar-form" id="delete-purchase">
+            <fieldset>
+              <input type="number" placeholder="Purchase ID">
+              <button type="submit" class="btn btn-primary btn">Delete Purchase</button>
+            </fieldset>
+          </form>
+
+          <!-- Shop Items: -->
+          <!-- In Dev Server, Sweep item ID is 4, Heal item ID is 1 -> data id's are set to match this -->
+          <form class="navbar-form" id="unlock-sweep" data-id="sweep">
+            <button type="submit" class="blue-btn btn btn-default navbar-btn">Unlock Sweeping Strike</button>
+          </form>
+          <form class="navbar-form" id="buy-heal" data-id="heal">
+            <button type="submit" class="blue-btn btn btn-default navbar-btn">Buy Health Potion</button>
+          </form>
+          <form class="navbar-form" id="unlock-blast" data-id="blast">
+            <button type="submit" class="blue-btn btn btn-default navbar-btn">Unlock Lightning Blast</button>
+          </form>
+        </div>
+        <!-- End Shop Wrapper -->
 
 
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do

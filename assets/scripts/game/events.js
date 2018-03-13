@@ -4,6 +4,8 @@ const gameAPI = require('./api.js')
 const gameUI = require('./ui.js')
 const gameEngine = require('./engine.js')
 const getFormFields = require('../../../lib/get-form-fields')
+const store = require('../store')
+const shopAPI = require('../shop/api.js')
 
 const onGetAllGames = function (event) {
   event.preventDefault()
@@ -71,14 +73,29 @@ const onMakeMove = function (event) {
 
 const onSweepAttack = function (event) {
   event.preventDefault()
-  const game = gameEngine.movePlayer('down', 'sweep')
-  gameUI.updateMapUI(game)
+  if (store.accountPurchases['sweep']) {
+    const game = gameEngine.movePlayer('down', 'sweep')
+    gameUI.updateMapUI(game)
+  } else {
+    gameEngine.addGameMessage('You must unlock Sweeping Strike in the store to use it!')
+  }
 }
 
 const onHeal = function (event) {
   event.preventDefault()
-  const game = gameEngine.movePlayer('down', 'heal')
-  gameUI.updateMapUI(game)
+  if (store.accountPurchases.healthPotions > 0) {
+    console.log('before:', store.accountPurchases)
+    // heal player in game engine
+    const game = gameEngine.movePlayer('down', 'heal')
+    gameUI.updateMapUI(game)
+    // remove a heal purchase from local store and update API
+    const purchaseID = store.accountPurchases.healPurchaseIDs.shift()
+    shopAPI.deletePurchase(purchaseID)
+    store.accountPurchases.healthPotions -= 1
+    console.log('after:', store.accountPurchases)
+  } else {
+    gameEngine.addGameMessage('You must buy more Healing Potions in the store!')
+  }
 }
 
 const onGetHighScores = function (event) {

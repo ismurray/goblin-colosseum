@@ -48,9 +48,21 @@ const createPurchase = function (data) {
   })
 }
 
+const deletePurchase = function (purchaseID) {
+  return $.ajax({
+    url: config.apiOrigin + '/purchases/' + purchaseID,
+    method: 'DELETE',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 module.exports = {
   getGold,
   updateGold,
   getPurchases,
-  createPurchase
+  createPurchase,
+  deletePurchase
 }
