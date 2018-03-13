@@ -4,11 +4,13 @@ const setAPIOrigin = require('../../lib/set-api-origin')
 const config = require('./config')
 const authEvents = require('./auth/events.js')
 const gameEvents = require('./game/events.js')
+const shopEvents = require('./shop/events.js')
 
 $(() => {
   setAPIOrigin(location, config)
   authEvents.addHandlers()
   gameEvents.addHandlers()
+  shopEvents.addHandlers()
   $('#game-wrapper-div').hide()
   $('#non-auth-wrapper').hide()
   $('#account-navbar').hide()
