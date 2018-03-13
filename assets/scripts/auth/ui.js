@@ -48,6 +48,7 @@ const signOutSuccess = function () {
   $('#account-navbar').hide()
   $('#game-wrapper-div').hide()
   $('#non-auth-wrapper').hide()
+  $('#high-scores-content').html('')
 }
 
 const signOutFailure = function (error) {

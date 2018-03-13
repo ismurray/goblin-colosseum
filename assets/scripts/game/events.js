@@ -81,6 +81,13 @@ const onHeal = function (event) {
   gameUI.updateMapUI(game)
 }
 
+const onGetHighScores = function (event) {
+  event.preventDefault()
+  console.log('high scores!')
+  gameAPI.getHighScores()
+    .then(gameUI.getHighScoresSuccess)
+    .catch(gameUI.getHighScoresFailure)
+}
 
 const addHandlers = () => {
   $('#get-all-games').on('click', onGetAllGames)
@@ -88,14 +95,15 @@ const addHandlers = () => {
   $('#create-new-game').on('click', onCreateNewGame)
   $('#start-game').on('submit', onCreateNewGame)
   $('#update-game').on('submit', onUpdateGame)
-  $('.content').on('click', '.delete-button', onDeleteGame)
-  $('.content').on('click', '.load-button', onGetGame)
+  $('.all-games-content').on('click', '.delete-button', onDeleteGame)
+  $('.all-games-content').on('click', '.load-button', onGetGame)
   $('#move-left').on('click', onMakeMove)
   $('#move-right').on('click', onMakeMove)
   $('#move-up').on('click', onMakeMove)
   $('#move-down').on('click', onMakeMove)
   $('#sweep-button').on('click', onSweepAttack)
   $('#heal-button').on('click', onHeal)
+  $('#get-high-scores').on('click', onGetHighScores)
 }
 
 module.exports = {

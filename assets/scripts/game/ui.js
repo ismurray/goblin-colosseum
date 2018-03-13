@@ -1,6 +1,7 @@
 'use strict'
 
 const showAllGamesTemplate = require('../templates/game-listing.handlebars')
+const showHighScoresTemplate = require('../templates/score-listing.handlebars')
 // const gameMessageTemplate = require('../templates/game-message.handlebars')
 // const gameEngine = require('./engine.js')
 const store = require('../store')
@@ -8,7 +9,7 @@ const store = require('../store')
 const getAllGamesSuccess = function (data) {
   console.log(data.games)
   const showAllGamesHtml = showAllGamesTemplate({ games: data.games })
-  $('#content').html(showAllGamesHtml)
+  $('#all-games-content').html(showAllGamesHtml)
   $('#account-message').text('Games retrieved!')
   $('#account-message').css('background-color', '#5cb85c')
 }
@@ -24,7 +25,7 @@ const getGameSuccess = function (data) {
   $('#account-message').text('Game retrieved!')
   $('#account-message').css('background-color', '#5cb85c')
   const showGameHtml = showAllGamesTemplate({ games: data })
-  $('#content').html(showGameHtml)
+  $('#all-games-content').html(showGameHtml)
   $('#game-message').text('Game Loaded! Pick up where you left off and kill as many Goblins as you can before you die!')
   $('#get-game').find('input:text').val('')
 }
@@ -134,6 +135,21 @@ const deleteGameFailure = function (error) {
   console.log(error)
 }
 
+const getHighScoresSuccess = function (data) {
+  console.log('data is', data)
+  const showHighScoresHtml = showHighScoresTemplate({ scores: data })
+  $('#high-scores-content').html(showHighScoresHtml)
+  console.log(showHighScoresHtml)
+  $('#account-message').text('Scores retrieved!')
+  $('#account-message').css('background-color', '#5cb85c')
+}
+
+const getHighScoresFailure = function (error) {
+  $('#account-message').text('Error on getting scores!')
+  $('#account-message').css('background-color', '#d9534f')
+  console.log(error)
+}
+
 module.exports = {
   getAllGamesSuccess,
   getAllGamesFailure,
@@ -145,5 +161,7 @@ module.exports = {
   updateGameFailure,
   deleteGameSuccess,
   deleteGameFailure,
-  updateMapUI
+  updateMapUI,
+  getHighScoresSuccess,
+  getHighScoresFailure
 }

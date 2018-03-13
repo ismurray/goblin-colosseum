@@ -61,10 +61,22 @@ const deleteGame = function (id) {
   })
 }
 
+const getHighScores = function (data) {
+  return $.ajax({
+    url: config.apiOrigin + '/high-scores/10',
+    method: 'GET',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 module.exports = {
   getAllGames,
   getGame,
   createGame,
   updateGame,
-  deleteGame
+  deleteGame,
+  getHighScores
 }

@@ -1,0 +1,9 @@
+{{#each scores as |score|}}
+
+ <ul data-id="{{score.id}}">
+  <li>Score: {{score.score}}</li>
+  <li>Game ID: {{score.id}}</li>
+  <li>Player: {{score.email}}</li>
+</ul>
+
+{{/each}}
