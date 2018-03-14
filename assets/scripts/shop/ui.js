@@ -48,12 +48,18 @@ const storePurchases = function (data) {
       accountPurchases.healthPotions += 1
       // store consumable id's for easier deletion later
       accountPurchases.healPurchaseIDs.push(data.purchases[i].id)
+      $('#heal-button').css('background-color', '#5cb85c')
     } else if (data.purchases[i].item.name === 'Sweeping Strike') {
       accountPurchases.sweep = true
       $('#sweep-button').css('background-color', '#5cb85c')
+      $('#unlock-sweep').hide()
     } else if (data.purchases[i].item.name === 'Lightning Blast') {
       accountPurchases.blast = true
-      $('#blast-button').css('background-color', '#5cb85c')
+      $('#blast-left').css('background-color', '#5cb85c')
+      $('#blast-right').css('background-color', '#5cb85c')
+      $('#blast-up').css('background-color', '#5cb85c')
+      $('#blast-down').css('background-color', '#5cb85c')
+      $('#unlock-blast').hide()
     }
   }
   store.accountPurchases = accountPurchases

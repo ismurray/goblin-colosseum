@@ -31,6 +31,14 @@ const signInSuccess = function (data) {
   $('#account-navbar').show()
   $('#non-auth-wrapper').show()
   $('#get-user-purchases').click()
+  $('#heal-button').css('background-color', 'grey')
+  $('#sweep-button').css('background-color', 'grey')
+  $('#blast-left').css('background-color', 'grey')
+  $('#blast-right').css('background-color', 'grey')
+  $('#blast-up').css('background-color', 'grey')
+  $('#blast-down').css('background-color', 'grey')
+  $('#unlock-sweep').show()
+  $('#unlock-blast').show()
 }
 
 const signInFailure = function (error) {

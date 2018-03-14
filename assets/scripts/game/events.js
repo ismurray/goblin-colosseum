@@ -104,6 +104,9 @@ const onHeal = function (event) {
     shopAPI.deletePurchase(purchaseID)
     store.accountPurchases.healthPotions -= 1
     $('#current-heals').text('(' + store.accountPurchases.healthPotions + ')')
+    if (store.accountPurchases.healthPotions === 0) {
+      $('#heal-button').css('background-color', 'grey')
+    }
   } else {
     gameEngine.addGameMessage('You must buy more Healing Potions in the store!')
   }
