@@ -1,6 +1,7 @@
 'use strict'
 
 const gameAPI = require('./api.js')
+const shopEvents = require('../shop/events.js')
 
 // initial variables
 const rowLength = 5
@@ -352,7 +353,8 @@ const deathCheck = function (target) {
     // if target killed was player, game over
     } else if (target.name === 'player') {
       localGame.over = true
-      addGameMessage('YOU ARE DEAD. GAME OVER.')
+      shopEvents.onUpdateGold(localGame.score)
+      addGameMessage(`YOU ARE DEAD. GAME OVER. YOU EARNED ${localGame.score} GOLD.`)
     }
   }
   return updateMap(localGame.playerState, localGame.goblinState)

@@ -13,10 +13,10 @@ const onGetGold = function (event) {
     .catch(shopUI.getGoldFailure)
 }
 
-const onUpdateGold = function (event) {
+const onUpdateGold = function (amount) {
   event.preventDefault()
-  const tx = $('#update-gold input').val()
-  shopAPI.updateGold(tx)
+  // const tx = $('#update-gold input').val()
+  shopAPI.updateGold(amount)
     .then(shopUI.updateGoldSuccess)
     .catch(shopUI.updateGoldFailure)
 }
@@ -68,5 +68,6 @@ const addHandlers = () => {
 }
 
 module.exports = {
-  addHandlers
+  addHandlers,
+  onUpdateGold
 }

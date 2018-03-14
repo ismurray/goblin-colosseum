@@ -146,7 +146,6 @@ const getHighScoresSuccess = function (data) {
   console.log('data is', data)
   const showHighScoresHtml = showHighScoresTemplate({ scores: data })
   $('#high-scores-content').html(showHighScoresHtml)
-  console.log(showHighScoresHtml)
   $('#account-message').text('Scores retrieved!')
   $('#account-message').css('background-color', '#5cb85c')
 }
