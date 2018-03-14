@@ -220,7 +220,7 @@ const moveGoblin = function (goblin, direction) {
 
 // runs the player's and gobs turn when user inputs a direction
 const movePlayer = function (direction, ability) {
-  resetAttackAnimations()
+  // resetAttackAnimations()
   localGame.playerState.lastMove = direction
   const destination = localGame.playerState.neighborIndices[direction]
   const currentPos = localGame.playerState.position
@@ -323,7 +323,6 @@ const blastAttackTargets = function (player, direction) {
       break
     }
   }
-  console.log(targets)
   return targets
 }
 
@@ -535,21 +534,21 @@ const addGameMessage = function (message) {
   $('#game-message').prepend(gameMessageHtml)
 }
 
-const attackAnimation = function (position) {
-  const ID1 = '#mark' + position[0]
-  const spotID = ID1 + position[1]
-  $(spotID).css('background-color', '#d9534f')
-}
-
-const resetAttackAnimations = function () {
-  for (let y = 0; y < 5; y++) {
-    const ID1 = '#mark' + y
-    for (let x = 0; x < 5; x++) {
-      const spotID = ID1 + x
-      $(spotID).css('background-color', 'rgba(0, 0, 0, 0)')
-    }
-  }
-}
+// const attackAnimation = function (position) {
+//   const ID1 = '#mark' + position[0]
+//   const spotID = ID1 + position[1]
+//   $(spotID).css('background-color', '#d9534f')
+// }
+//
+// const resetAttackAnimations = function () {
+//   for (let y = 0; y < 5; y++) {
+//     const ID1 = '#mark' + y
+//     for (let x = 0; x < 5; x++) {
+//       const spotID = ID1 + x
+//       $(spotID).css('background-color', 'rgba(0, 0, 0, 0)')
+//     }
+//   }
+// }
 
 module.exports = {
   createNewGame,

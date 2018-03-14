@@ -7,7 +7,6 @@ const showHighScoresTemplate = require('../templates/score-listing.handlebars')
 const store = require('../store')
 
 const getAllGamesSuccess = function (data) {
-  console.log(data.games)
   const showAllGamesHtml = showAllGamesTemplate({ games: data.games })
   $('#all-games-content').html(showAllGamesHtml)
   $('#account-message').text('Games retrieved!')
@@ -51,7 +50,6 @@ const updateMapUI = function (game) {
   $('#current-hp').text(game.hp)
   $('#current-score').text(game.score)
   $('#current-game').text(game.gameId)
-  console.log(game)
   if (game.over) {
     $('#game-input-wrapper').hide()
   }
@@ -143,7 +141,6 @@ const deleteGameFailure = function (error) {
 }
 
 const getHighScoresSuccess = function (data) {
-  console.log('data is', data)
   const showHighScoresHtml = showHighScoresTemplate({ scores: data })
   $('#high-scores-content').html(showHighScoresHtml)
   $('#account-message').text('Scores retrieved!')

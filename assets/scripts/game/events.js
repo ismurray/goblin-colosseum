@@ -96,7 +96,6 @@ const onBlastAttack = function (event) {
 const onHeal = function (event) {
   event.preventDefault()
   if (store.accountPurchases.healthPotions > 0) {
-    console.log('before:', store.accountPurchases)
     // heal player in game engine
     const game = gameEngine.movePlayer('down', 'heal')
     gameUI.updateMapUI(game)
@@ -105,7 +104,6 @@ const onHeal = function (event) {
     shopAPI.deletePurchase(purchaseID)
     store.accountPurchases.healthPotions -= 1
     $('#current-heals').text('(' + store.accountPurchases.healthPotions + ')')
-    console.log('after:', store.accountPurchases)
   } else {
     gameEngine.addGameMessage('You must buy more Healing Potions in the store!')
   }
@@ -113,7 +111,6 @@ const onHeal = function (event) {
 
 const onGetHighScores = function (event) {
   event.preventDefault()
-  console.log('high scores!')
   gameAPI.getHighScores()
     .then(gameUI.getHighScoresSuccess)
     .catch(gameUI.getHighScoresFailure)

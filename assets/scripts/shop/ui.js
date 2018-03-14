@@ -64,7 +64,6 @@ const getPurchasesSuccess = function (data) {
   $('#shop-message').text('Purchases retrieved!')
   $('#shop-message').css('background-color', '#5cb85c')
   storePurchases(data)
-  console.log(store.accountPurchases)
   const showPurchasesHtml = showAllPurchasesTemplate({ accountPurchases: [store.accountPurchases] })
   $('#all-purchases-content').html(showPurchasesHtml)
 }

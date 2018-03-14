@@ -1,6 +1,6 @@
 'use strict'
 
-const getFormFields = require('../../../lib/get-form-fields')
+// const getFormFields = require('../../../lib/get-form-fields')
 const shopAPI = require('./api.js')
 const shopUI = require('./ui.js')
 const store = require('../store')
@@ -30,7 +30,6 @@ const onGetPurchases = function (event) {
 
 const onCreatePurchase = function (event) {
   event.preventDefault()
-  console.log('test!')
   const purchaseItem = $(this).attr('data-id')
   let data
   // if item is potion, or is an ability that hasn't been unlocked yet, buy it
@@ -45,7 +44,6 @@ const onCreatePurchase = function (event) {
   shopAPI.createPurchase(data)
     .then(shopUI.createPurchaseSuccess)
     .catch(shopUI.createPurchaseFailure)
-
 }
 
 const onDeletePurchase = function (event) {

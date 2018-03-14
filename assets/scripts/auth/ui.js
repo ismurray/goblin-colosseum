@@ -1,7 +1,7 @@
 'use strict'
 
 const store = require('../store')
-const shopEvents = require('../shop/events.js')
+// const shopEvents = require('../shop/events.js')
 
 const signUpSuccess = function (data) {
   $('#account-message').text('Signed up successfully!')
@@ -24,7 +24,6 @@ const signInSuccess = function (data) {
   $('#account-message').text('Signed in successfully!')
   $('#account-message').css('background-color', '#5cb85c')
   store.user = data.user
-  console.log(store.user)
   $('#sign-in-button').click()
   $('#sign-in').find('input:text').val('')
   $('#sign-in').find('input:password').val('')
