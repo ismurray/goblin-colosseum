@@ -4,8 +4,8 @@ const store = require('../store')
 const showAllPurchasesTemplate = require('../templates/purchase-listing.handlebars')
 
 const getGoldSuccess = function (data) {
-  $('#account-message').text('Gold retrieved!')
-  $('#account-message').css('background-color', '#5cb85c')
+  // $('#account-message').text('Gold retrieved!')
+  // $('#account-message').css('background-color', '#5cb85c')
   $('#user-gold').html(data)
 }
 
@@ -61,11 +61,11 @@ const storePurchases = function (data) {
 }
 
 const getPurchasesSuccess = function (data) {
-  $('#account-message').text('Purchases retrieved!')
-  $('#account-message').css('background-color', '#5cb85c')
+  // $('#account-message').text('Purchases retrieved!')
+  // $('#account-message').css('background-color', '#5cb85c')
   storePurchases(data)
   console.log(store.accountPurchases)
-  const showPurchasesHtml = showAllPurchasesTemplate({ purchases: data.purchases })
+  const showPurchasesHtml = showAllPurchasesTemplate({ accountPurchases: [store.accountPurchases] })
   $('#all-purchases-content').html(showPurchasesHtml)
 }
 

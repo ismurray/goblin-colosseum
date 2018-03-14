@@ -57,7 +57,7 @@ const onDeletePurchase = function (event) {
 }
 
 const addHandlers = () => {
-  $('#get-user-gold').on('click', onGetGold)
+  $('#shopModal').on('click', onGetGold)
   $('#update-gold').on('submit', onUpdateGold)
   $('#get-user-purchases').on('click', onGetPurchases)
   $('#create-purchase').on('submit', onCreatePurchase)

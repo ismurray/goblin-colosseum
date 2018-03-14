@@ -1,17 +1,19 @@
-{{#each purchases as |purchase|}}
+{{#each accountPurchases as |accountPurchase|}}
 
- <ul data-id="{{purchase.id}}">
-  <li>Name: {{purchase.item.name}}</li>
-  <li>Purchase ID: {{purchase.id}}</li>
-  {{#unless purchase.item.consumable}}
-  <li>This purchase in not consumable. You may use it as many times as you like.</li>
-  {{/unless}}
-  {{#if purchase.item.consumable}}
-  <li>This purchase is consumable. You may only use it once.</li>
+ <ul>
+  <li>Health Potions: {{accountPurchase.healthPotions}}</li>
+  {{#if accountPurchase.sweep}}
+  <li>Sweeping Strike: Unlocked!</li>
   {{/if}}
-  <li>Description: {{purchase.item.description}}</li>
-  <li>Gold Paid: {{purchase.item.cost}}</li>
-  <li>Date Purchased: {{purchase.created_at}}</li>
+  {{#unless accountPurchase.sweep}}
+  <li>Sweeping Strike: [Not Yet Purchased]</li>
+  {{/unless}}
+  {{#if accountPurchase.blast}}
+  <li>Lightning Blast: Unlocked!</li>
+  {{/if}}
+  {{#unless accountPurchase.blast}}
+  <li>Lightning Blast: [Not Yet Purchased]</li>
+  {{/unless}}
 </ul>
 
 {{/each}}

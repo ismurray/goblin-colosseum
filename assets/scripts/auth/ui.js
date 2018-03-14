@@ -1,6 +1,7 @@
 'use strict'
 
 const store = require('../store')
+const shopEvents = require('../shop/events.js')
 
 const signUpSuccess = function (data) {
   $('#account-message').text('Signed up successfully!')
@@ -52,6 +53,7 @@ const signOutSuccess = function () {
   $('#high-scores-content').html('')
   $('#change-password')[0].reset()
   $('#get-game')[0].reset()
+  $('#user-gold').html('')
 }
 
 const signOutFailure = function (error) {
