@@ -403,11 +403,41 @@
           </div>
 
           <!-- High Scores: -->
-          <form class="navbar-form" id="get-high-scores">
+          <!-- <form class="navbar-form" id="get-high-scores">
             <button type="submit" class="blue-btn btn btn-default navbar-btn">See High Scores</button>
           </form>
           <div class="high-scores-content" id="high-scores-content">
+          </div> -->
+
+          <!-- Begin Scores Modal -->
+          <div class="row">
+            <div class="col-xs-12 center-block">
+              <!-- Button trigger modal -->
+              <button type="button" id="get-high-scores" class="btn btn-primary btn-lg auth-buttons" data-toggle="modal" data-target="#scoresModal">
+                See High Scores
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="scoresModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Global Leaderboards: Top Ten Scores</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <div class="high-scores-content" id="high-scores-content">
+                      </div>
+                    </div>
+                    <!-- End modal body -->
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <!-- End Scores Modal -->
+
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
