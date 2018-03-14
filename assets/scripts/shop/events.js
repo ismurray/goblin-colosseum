@@ -30,7 +30,7 @@ const onGetPurchases = function (event) {
 
 const onCreatePurchase = function (event) {
   event.preventDefault()
-
+  console.log('test!')
   const purchaseItem = $(this).attr('data-id')
   let data
   // if item is potion, or is an ability that hasn't been unlocked yet, buy it
@@ -45,6 +45,7 @@ const onCreatePurchase = function (event) {
   shopAPI.createPurchase(data)
     .then(shopUI.createPurchaseSuccess)
     .catch(shopUI.createPurchaseFailure)
+
 }
 
 const onDeletePurchase = function (event) {
@@ -57,7 +58,7 @@ const onDeletePurchase = function (event) {
 }
 
 const addHandlers = () => {
-  $('#shopModal').on('click', onGetGold)
+  $('#shop-button').on('click', onGetGold)
   $('#update-gold').on('submit', onUpdateGold)
   $('#get-user-purchases').on('click', onGetPurchases)
   $('#create-purchase').on('submit', onCreatePurchase)

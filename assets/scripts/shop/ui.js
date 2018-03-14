@@ -10,20 +10,20 @@ const getGoldSuccess = function (data) {
 }
 
 const getGoldFailure = function (error) {
-  $('#account-message').text('Error retrieving gold balance!')
-  $('#account-message').css('background-color', '#d9534f')
+  $('#shop-message').text('Error retrieving gold balance!')
+  $('#shop-message').css('background-color', '#d9534f')
   console.log(error)
 }
 
 const updateGoldSuccess = function (data) {
-  $('#account-message').text('Transaction successful!')
-  $('#account-message').css('background-color', '#5cb85c')
+  $('#shop-message').text('Transaction successful!')
+  $('#shop-message').css('background-color', '#5cb85c')
   $('#user-gold').html(data)
 }
 
 const updateGoldFailure = function (error) {
-  $('#account-message').text('Error processing transaction!')
-  $('#account-message').css('background-color', '#d9534f')
+  $('#shop-message').text('Error processing transaction!')
+  $('#shop-message').css('background-color', '#d9534f')
   console.log(error)
 }
 
@@ -61,8 +61,8 @@ const storePurchases = function (data) {
 }
 
 const getPurchasesSuccess = function (data) {
-  // $('#account-message').text('Purchases retrieved!')
-  // $('#account-message').css('background-color', '#5cb85c')
+  $('#shop-message').text('Purchases retrieved!')
+  $('#shop-message').css('background-color', '#5cb85c')
   storePurchases(data)
   console.log(store.accountPurchases)
   const showPurchasesHtml = showAllPurchasesTemplate({ accountPurchases: [store.accountPurchases] })
@@ -70,33 +70,34 @@ const getPurchasesSuccess = function (data) {
 }
 
 const getPurchasesFailure = function (error) {
-  $('#account-message').text('Error retrieving purchases!')
-  $('#account-message').css('background-color', '#d9534f')
+  $('#shop-message').text('Error retrieving purchases!')
+  $('#shop-message').css('background-color', '#d9534f')
   console.log(error)
 }
 
 const createPurchaseSuccess = function (data) {
-  $('#account-message').text('Purchase successful!')
-  $('#account-message').css('background-color', '#5cb85c')
+  $('#shop-message').text('Purchase successful!')
+  $('#shop-message').css('background-color', '#5cb85c')
   const showPurchasesHtml = showAllPurchasesTemplate({ purchases: data })
   $('#all-purchases-content').append(showPurchasesHtml)
   $('#user-gold').html(data.purchase.user.gold)
+  $('#get-user-purchases').click()
 }
 
 const createPurchaseFailure = function (error) {
-  $('#account-message').text('Error processing purchase!')
-  $('#account-message').css('background-color', '#d9534f')
+  $('#shop-message').text('Error processing purchase!')
+  $('#shop-message').css('background-color', '#d9534f')
   console.log(error)
 }
 
 const deletePurchaseSuccess = function (data) {
-  $('#account-message').text('Purchase delete successful!')
-  $('#account-message').css('background-color', '#5cb85c')
+  $('#shop-message').text('Purchase delete successful!')
+  $('#shop-message').css('background-color', '#5cb85c')
 }
 
 const deletePurchaseFailure = function (error) {
-  $('#account-message').text('Error processing purchase deletion!')
-  $('#account-message').css('background-color', '#d9534f')
+  $('#shop-message').text('Error processing purchase deletion!')
+  $('#shop-message').css('background-color', '#d9534f')
   console.log(error)
 }
 
