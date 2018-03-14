@@ -29,11 +29,21 @@ body {
 }
 
 .well {
-  max-height: 100px;
+  height: 100px;
 }
 
 .board-spot img {
   margin-left: auto;
 	margin-right: auto;
 	display: block;
+}
+
+.auth-buttons {
+  margin-top: 25px;
+  margin-bottom: 25px
+
+}
+
+.player-inputs {
+  margin-bottom: 100px;
 }

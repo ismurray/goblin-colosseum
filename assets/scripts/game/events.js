@@ -121,6 +121,7 @@ const addHandlers = () => {
   $('#get-game').on('submit', onGetGame)
   $('#create-new-game').on('click', onCreateNewGame)
   $('#start-game').on('submit', onCreateNewGame)
+  $('#another-start-game-button').on('click', onCreateNewGame)
   $('#update-game').on('submit', onUpdateGame)
   $('.all-games-content').on('click', '.delete-button', onDeleteGame)
   $('.all-games-content').on('click', '.load-button', onGetGame)
