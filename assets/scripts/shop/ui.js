@@ -37,9 +37,9 @@ const storePurchases = function (data) {
     blast: false,
     // server item ID's only apply to the DevServer, TODO: update for production
     serverItemIDs: {
-      heal: 1,
-      sweep: 4,
-      blast: 5
+      heal: 2,
+      sweep: 3,
+      blast: 4
     }
   }
   // add each purchase
