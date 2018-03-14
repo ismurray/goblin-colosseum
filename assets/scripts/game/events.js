@@ -81,6 +81,18 @@ const onSweepAttack = function (event) {
   }
 }
 
+const onBlastAttack = function (event) {
+  event.preventDefault()
+
+  if (store.accountPurchases['blast']) {
+    const direction = event.currentTarget.id.split('-')[1]
+    const game = gameEngine.movePlayer(direction, 'blast')
+    gameUI.updateMapUI(game)
+  } else {
+    gameEngine.addGameMessage('You must unlock Lightning Blast in the store to use it!')
+  }
+}
+
 const onHeal = function (event) {
   event.preventDefault()
   if (store.accountPurchases.healthPotions > 0) {
@@ -119,6 +131,10 @@ const addHandlers = () => {
   $('#move-right').on('click', onMakeMove)
   $('#move-up').on('click', onMakeMove)
   $('#move-down').on('click', onMakeMove)
+  $('#blast-left').on('click', onBlastAttack)
+  $('#blast-right').on('click', onBlastAttack)
+  $('#blast-up').on('click', onBlastAttack)
+  $('#blast-down').on('click', onBlastAttack)
   $('#sweep-button').on('click', onSweepAttack)
   $('#heal-button').on('click', onHeal)
   $('#get-high-scores').on('click', onGetHighScores)

@@ -243,6 +243,9 @@ const movePlayer = function (direction, ability) {
   // Trigger healing ability
   } else if (ability === 'heal') {
     heal(localGame.playerState)
+  // Trigger blast ability
+  } else if (ability === 'blast') {
+    blastAttack(localGame.playerState, direction)
   }
   // when player's turn is ending, run all the gobs' turns, increase the round
   // count, and do a spawnCheck
@@ -282,11 +285,43 @@ const sweepAttack = function (player) {
   }
 }
 
+// Takes player obect as input to enact an attack at all four directions
+const blastAttack = function (player, direction) {
+  addGameMessage('player shoots a crackling beam of energy that hits all enemies in a line')
+  const attackDestinations = blastAttackTargets(player, direction)
+  if (attackDestinations.length > 0) {
+    for (let i = 0; i < attackDestinations.length; i++) {
+      targetAttack(player, attackDestinations[i])
+    }
+  } else {
+    addGameMessage('player shoots a crackling beam of energy that doesn\'t seem to damage the wall')
+  }
+}
+
 const heal = function (player) {
   const formerHP = player.hp[0]
   player.hp[0] = player.hp[1]
   const text = `player quaffs a healing potion, raising their HP from ${formerHP} to ${player.hp[0]}!`
   addGameMessage(text)
+}
+
+const blastAttackTargets = function (player, direction) {
+  const targets = []
+  const virtualCombatant = {position: []}
+  virtualCombatant.position[0] = player.position[0]
+  virtualCombatant.position[1] = player.position[1]
+  for (let i = 0; i < rowLength; i++) {
+    setNeighborIndices(virtualCombatant)
+    if (virtualCombatant.neighborIndices[direction] !== 'wall') {
+      targets.push(virtualCombatant.neighborIndices[direction])
+      virtualCombatant.position[0] = virtualCombatant.neighborIndices[direction][0]
+      virtualCombatant.position[1] = virtualCombatant.neighborIndices[direction][1]
+    } else {
+      break
+    }
+  }
+  console.log(targets)
+  return targets
 }
 
 // returns an array of live goblins
