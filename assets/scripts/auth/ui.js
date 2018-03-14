@@ -50,6 +50,8 @@ const signOutSuccess = function () {
   $('#game-wrapper-div').hide()
   $('#non-auth-wrapper').hide()
   $('#high-scores-content').html('')
+  $('#change-password')[0].reset()
+  $('#get-game')[0].reset()
 }
 
 const signOutFailure = function (error) {

@@ -80,6 +80,7 @@ const createPurchaseSuccess = function (data) {
   $('#account-message').css('background-color', '#5cb85c')
   const showPurchasesHtml = showAllPurchasesTemplate({ purchases: data })
   $('#all-purchases-content').append(showPurchasesHtml)
+  $('#user-gold').html(data.purchase.user.gold)
 }
 
 const createPurchaseFailure = function (error) {

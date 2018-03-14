@@ -32,19 +32,16 @@ const onCreatePurchase = function (event) {
   event.preventDefault()
 
   const purchaseItem = $(this).attr('data-id')
-  console.log(purchaseItem)
   let data
   // if item is potion, or is an ability that hasn't been unlocked yet, buy it
   if (purchaseItem === 'heal' || (purchaseItem !== 'heal' && !store.accountPurchases[purchaseItem])) {
     const purchaseID = store.accountPurchases.serverItemIDs[purchaseItem]
-    console.log(purchaseID)
     data = {
       'purchase': {
         'item_id': purchaseID
       }
     }
   }
-  console.log('data is ', data)
   shopAPI.createPurchase(data)
     .then(shopUI.createPurchaseSuccess)
     .catch(shopUI.createPurchaseFailure)

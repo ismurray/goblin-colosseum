@@ -43,6 +43,8 @@ const addHandlers = () => {
   $('#sign-in').on('submit', onSignIn)
   $('#sign-out').on('submit', onSignOut)
   $('#change-password').on('submit', onChangePassword)
+  $('#signUpModal').on('hide.bs.modal', function () { $('#sign-up')[0].reset() })
+  $('#signInModal').on('hide.bs.modal', function () { $('#sign-in')[0].reset() })
 }
 
 module.exports = {
