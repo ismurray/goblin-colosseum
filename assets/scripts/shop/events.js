@@ -34,10 +34,10 @@ const onCreatePurchase = function (event) {
   let data
   // if item is potion, or is an ability that hasn't been unlocked yet, buy it
   if (purchaseItem === 'heal' || (purchaseItem !== 'heal' && !store.accountPurchases[purchaseItem])) {
-    const purchaseID = store.accountPurchases.serverItemIDs[purchaseItem]
+    const purchaseItemName = store.accountPurchases.serverItemNames[purchaseItem]
     data = {
       'purchase': {
-        'item_id': purchaseID
+        'item_name': purchaseItemName
       }
     }
   }
