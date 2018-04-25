@@ -24,7 +24,6 @@ const signInSuccess = function (data) {
   $('#account-message').text('Signed in successfully!')
   $('#account-message').css('background-color', '#5cb85c')
   store.user = data.user
-  $('#sign-in-button').click()
   $('#sign-in').find('input:text').val('')
   $('#sign-in').find('input:password').val('')
   $('#auth-wrapper').hide()

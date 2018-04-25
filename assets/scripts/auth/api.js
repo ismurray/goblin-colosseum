@@ -48,9 +48,20 @@ const changePassword = function (data) {
   })
 }
 
+const wakeUpHeroku = function () {
+  return $.ajax({
+    url: config.apiOrigin + '/examples',
+    method: 'GET',
+    headers: {
+      contentType: 'application/json'
+    }
+  })
+}
+
 module.exports = {
   signUp,
   signIn,
   signOut,
-  changePassword
+  changePassword,
+  wakeUpHeroku
 }

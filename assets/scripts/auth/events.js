@@ -8,8 +8,11 @@ const onSignUp = function (event) {
   event.preventDefault()
 
   const data = getFormFields(this)
+  console.log('data is ', data)
   authAPI.signUp(data)
     .then(authUI.signUpSuccess)
+    .then(() => authAPI.signIn(data))
+    .then(authUI.signInSuccess)
     .catch(authUI.signUpFailure)
 }
 
@@ -19,6 +22,7 @@ const onSignIn = function (event) {
   const data = getFormFields(this)
   authAPI.signIn(data)
     .then(authUI.signInSuccess)
+    .then(() => $('#sign-in-button').click())
     .catch(authUI.signInFailure)
 }
 
