@@ -27,6 +27,7 @@ const signInSuccess = function (data) {
   // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Signed In!')
   store.user = data.user
+  console.log('store.user is ', store.user)
   $('#sign-in').find('input:text').val('')
   $('#sign-in').find('input:password').val('')
   $('#auth-wrapper').hide()
@@ -51,6 +52,7 @@ const signInFailure = function (error) {
   $('#sign-in').find('input:text').val('')
   $('#sign-in').find('input:password').val('')
   console.log(error)
+  return error
 }
 
 const signOutSuccess = function () {
@@ -65,13 +67,17 @@ const signOutSuccess = function () {
   $('#change-password')[0].reset()
   $('#get-game')[0].reset()
   $('#user-gold').html('')
+  sessionStorage.clear()
 }
 
 const signOutFailure = function (error) {
   // $('#account-page-message').text('Error on Signing Out')
   // $('#account-page-message').css('background-color', '#d9534f')
-  toast.failure('Error on signing out')
+  // toast.failure('Error on signing out')
   console.log(error)
+  // clear credentials from sessionStorage and render signout UI updates even in failure
+  sessionStorage.clear()
+  signOutSuccess()
 }
 
 const changePasswordSuccess = function () {

@@ -4,6 +4,18 @@ const getFormFields = require('../../../lib/get-form-fields')
 const authAPI = require('./api.js')
 const authUI = require('./ui.js')
 
+// checks session storage to see if user already has login info saved in
+// sessionStorage. If yes, load signInSuccess for UI update, otherwise do nothing
+const checkSessionCreds = function () {
+  const user = sessionStorage.getItem('user')
+  if (user !== undefined && user !== null) {
+    console.log('sessionCreds user is ', JSON.parse(user))
+    authUI.signInSuccess(JSON.parse(user))
+  } else {
+    console.log('sessionCreds user doesn\'t exist')
+  }
+}
+
 const onSignUp = function (event) {
   event.preventDefault()
 
@@ -20,7 +32,18 @@ const onSignIn = function (event) {
   event.preventDefault()
 
   const data = getFormFields(this)
+  console.log('data is ', data)
   authAPI.signIn(data)
+    .then((res) => {
+      console.log('res is ', res)
+      sessionStorage.setItem('user', JSON.stringify(res))
+      return res
+    })
+    .then((res) => {
+      const credentials = JSON.parse(sessionStorage.getItem('user'))
+      console.log('session credentials is ', credentials.user.token)
+      return res
+    })
     .then(authUI.signInSuccess)
     .then(() => $('#sign-in-button').click())
     .catch(authUI.signInFailure)
@@ -52,5 +75,6 @@ const addHandlers = () => {
 }
 
 module.exports = {
-  addHandlers
+  addHandlers,
+  checkSessionCreds
 }

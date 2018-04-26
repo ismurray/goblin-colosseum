@@ -13,10 +13,10 @@ $(() => {
   gameEvents.addHandlers()
   shopEvents.addHandlers()
   authAPI.wakeUpHeroku()
-    .then((res) => console.log('res is ', res))
   $('#game-wrapper-div').hide()
   $('#non-auth-wrapper').hide()
   $('#account-navbar').hide()
+  authEvents.checkSessionCreds()
 })
 
 // use require with a reference to bundle the file and use it in this file
