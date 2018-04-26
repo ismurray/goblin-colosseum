@@ -2,6 +2,7 @@
 
 const store = require('../store')
 const showAllPurchasesTemplate = require('../templates/purchase-listing.handlebars')
+const toast = require('../toasts.js')
 
 const getGoldSuccess = function (data) {
   // $('#account-message').text('Gold retrieved!')
@@ -10,20 +11,23 @@ const getGoldSuccess = function (data) {
 }
 
 const getGoldFailure = function (error) {
-  $('#shop-message').text('Error retrieving gold balance!')
-  $('#shop-message').css('background-color', '#d9534f')
+  // $('#shop-message').text('Error retrieving gold balance!')
+  // $('#shop-message').css('background-color', '#d9534f')
+  toast.failure('Error retrieving gold balance!')
   console.log(error)
 }
 
 const updateGoldSuccess = function (data) {
-  $('#shop-message').text('Transaction successful!')
-  $('#shop-message').css('background-color', '#5cb85c')
+  // $('#shop-message').text('Transaction successful!')
+  // $('#shop-message').css('background-color', '#5cb85c')
+  toast.success('Purchase complete!')
   $('#user-gold').html(data)
 }
 
 const updateGoldFailure = function (error) {
-  $('#shop-message').text('Error processing transaction!')
-  $('#shop-message').css('background-color', '#d9534f')
+  // $('#shop-message').text('Error processing transaction!')
+  // $('#shop-message').css('background-color', '#d9534f')
+  toast.failure('Error processing transaction!')
   console.log(error)
 }
 
@@ -35,7 +39,6 @@ const storePurchases = function (data) {
     healPurchaseIDs: [],
     sweep: false,
     blast: false,
-    // server item ID's only apply to the DevServer, TODO: update for production
     serverItemNames: {
       heal: 'Health Potion',
       sweep: 'Sweeping Strike',
@@ -67,22 +70,25 @@ const storePurchases = function (data) {
 }
 
 const getPurchasesSuccess = function (data) {
-  $('#shop-message').text('Purchases retrieved!')
-  $('#shop-message').css('background-color', '#5cb85c')
+  // $('#shop-message').text('Purchases retrieved!')
+  // $('#shop-message').css('background-color', '#5cb85c')
+  toast.success('Purchases retrieved!')
   storePurchases(data)
   const showPurchasesHtml = showAllPurchasesTemplate({ accountPurchases: [store.accountPurchases] })
   $('#all-purchases-content').html(showPurchasesHtml)
 }
 
 const getPurchasesFailure = function (error) {
-  $('#shop-message').text('Error retrieving purchases!')
-  $('#shop-message').css('background-color', '#d9534f')
+  // $('#shop-message').text('Error retrieving purchases!')
+  // $('#shop-message').css('background-color', '#d9534f')
+  toast.failure('Error retrieving purchases!')
   console.log(error)
 }
 
 const createPurchaseSuccess = function (data) {
-  $('#shop-message').text('Purchase successful!')
-  $('#shop-message').css('background-color', '#5cb85c')
+  // $('#shop-message').text('Purchase successful!')
+  // $('#shop-message').css('background-color', '#5cb85c')
+  toast.success('Purchase successful!')
   const showPurchasesHtml = showAllPurchasesTemplate({ purchases: data })
   $('#all-purchases-content').append(showPurchasesHtml)
   $('#user-gold').html(data.purchase.user.gold)
@@ -90,19 +96,9 @@ const createPurchaseSuccess = function (data) {
 }
 
 const createPurchaseFailure = function (error) {
-  $('#shop-message').text('Error processing purchase!')
-  $('#shop-message').css('background-color', '#d9534f')
-  console.log(error)
-}
-
-const deletePurchaseSuccess = function (data) {
-  $('#shop-message').text('Purchase delete successful!')
-  $('#shop-message').css('background-color', '#5cb85c')
-}
-
-const deletePurchaseFailure = function (error) {
-  $('#shop-message').text('Error processing purchase deletion!')
-  $('#shop-message').css('background-color', '#d9534f')
+  // $('#shop-message').text('Error processing purchase!')
+  // $('#shop-message').css('background-color', '#d9534f')
+  toast.failure('Error processing purchase!')
   console.log(error)
 }
 
@@ -114,7 +110,5 @@ module.exports = {
   getPurchasesSuccess,
   getPurchasesFailure,
   createPurchaseSuccess,
-  createPurchaseFailure,
-  deletePurchaseSuccess,
-  deletePurchaseFailure
+  createPurchaseFailure
 }

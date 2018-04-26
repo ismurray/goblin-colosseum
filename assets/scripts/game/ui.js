@@ -5,25 +5,29 @@ const showHighScoresTemplate = require('../templates/score-listing.handlebars')
 // const gameMessageTemplate = require('../templates/game-message.handlebars')
 // const gameEngine = require('./engine.js')
 const store = require('../store')
+const toast = require('../toasts.js')
 
 const getAllGamesSuccess = function (data) {
   const showAllGamesHtml = showAllGamesTemplate({ games: data.games })
   $('#all-games-content').html(showAllGamesHtml)
-  $('#account-message').text('Games retrieved!')
-  $('#account-message').css('background-color', '#5cb85c')
+  // $('#account-message').text('Games retrieved!')
+  // $('#account-message').css('background-color', '#5cb85c')
+  toast.success('Games retrieved!')
 }
 
 const getAllGamesFailure = function (error) {
-  $('#account-message').text('Error on getting games!')
-  $('#account-message').css('background-color', '#d9534f')
+  // $('#account-message').text('Error on getting games!')
+  // $('#account-message').css('background-color', '#d9534f')
+  toast.failure('Error getting games!')
   console.log(error)
 }
 
 const getGameSuccess = function (data) {
   $('#game-wrapper-div').show()
   $('#game-input-wrapper').show()
-  $('#account-message').text('Game retrieved!')
-  $('#account-message').css('background-color', '#5cb85c')
+  // $('#account-message').text('Game retrieved!')
+  // $('#account-message').css('background-color', '#5cb85c')
+  toast.success('Game Loaded!')
   const showGameHtml = showAllGamesTemplate({ games: data })
   $('#all-games-content').html(showGameHtml)
   $('#game-message').text('Game Loaded! Pick up where you left off and kill as many Goblins as you can before you die!')
@@ -31,8 +35,9 @@ const getGameSuccess = function (data) {
 }
 
 const getGameFailure = function (error) {
-  $('#account-message').text('Error retrieving game!')
-  $('#account-message').css('background-color', '#d9534f')
+  // $('#account-message').text('Error retrieving game!')
+  // $('#account-message').css('background-color', '#d9534f')
+  toast.failure('Error retrieving game!')
   console.log(error)
   $('#get-game').find('input:text').val('')
 }
@@ -106,23 +111,11 @@ const updateMapUI = function (game) {
 }
 
 const createGameFailure = function (error) {
-  $('#account-message').text('Error creating game!')
-  $('#account-message').css('background-color', '#d9534f')
+  // $('#account-message').text('Error creating game!')
+  // $('#account-message').css('background-color', '#d9534f')
+  toast.failure('Error creating game!')
   console.log(error)
   $('#create-game').find('input:text').val('')
-}
-
-const updateGameSuccess = function (id) {
-  $('#account-message').text('You have updated a game!')
-  $('#account-message').css('background-color', '#5cb85c')
-  $('#get-all-games-button').click()
-}
-
-const updateGameFailure = function (error) {
-  $('#account-message').text('Error updating game!')
-  $('#account-message').css('background-color', '#d9534f')
-  console.log(error)
-  $('#update-game').find('input:text').val('')
 }
 
 const deleteGameSuccess = function (id) {
@@ -130,26 +123,30 @@ const deleteGameSuccess = function (id) {
   if (currentGameId === store.deletedGameId) {
     $('#game-wrapper-div').hide()
   }
-  $('#account-message').text('You have deleted a game!')
-  $('#account-message').css('background-color', '#5cb85c')
+  // $('#account-message').text('You have deleted a game!')
+  // $('#account-message').css('background-color', '#5cb85c')
+  toast.success('You have deleted a game!')
 }
 
 const deleteGameFailure = function (error) {
-  $('#account-message').text('Error deleting game!')
-  $('#account-message').css('background-color', '#d9534f')
+  // $('#account-message').text('Error deleting game!')
+  // $('#account-message').css('background-color', '#d9534f')
+  toast.failure('Error deleting game!')
   console.log(error)
 }
 
 const getHighScoresSuccess = function (data) {
   const showHighScoresHtml = showHighScoresTemplate({ scores: data })
   $('#high-scores-content').html(showHighScoresHtml)
-  $('#account-message').text('Scores retrieved!')
-  $('#account-message').css('background-color', '#5cb85c')
+  // $('#account-message').text('Scores retrieved!')
+  // $('#account-message').css('background-color', '#5cb85c')
+  toast.success('Scores retrieved!')
 }
 
 const getHighScoresFailure = function (error) {
-  $('#account-message').text('Error on getting scores!')
-  $('#account-message').css('background-color', '#d9534f')
+  // $('#account-message').text('Error on getting scores!')
+  // $('#account-message').css('background-color', '#d9534f')
+  toast.failure('Error getting scores!')
   console.log(error)
 }
 
@@ -160,8 +157,6 @@ module.exports = {
   getGameFailure,
   createGameSuccess,
   createGameFailure,
-  updateGameSuccess,
-  updateGameFailure,
   deleteGameSuccess,
   deleteGameFailure,
   updateMapUI,

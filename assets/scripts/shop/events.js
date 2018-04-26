@@ -46,15 +46,6 @@ const onCreatePurchase = function (event) {
     .catch(shopUI.createPurchaseFailure)
 }
 
-const onDeletePurchase = function (event) {
-  event.preventDefault()
-  const purchaseID = $('#delete-purchase input').val()
-
-  shopAPI.deletePurchase(purchaseID)
-    .then(shopUI.deletePurchaseSuccess)
-    .catch(shopUI.deletePurchaseFailure)
-}
-
 const addHandlers = () => {
   $('#shop-button').on('click', onGetGold)
   $('#update-gold').on('submit', onUpdateGold)
@@ -63,7 +54,6 @@ const addHandlers = () => {
   $('#unlock-sweep').on('submit', onCreatePurchase)
   $('#unlock-blast').on('submit', onCreatePurchase)
   $('#buy-heal').on('submit', onCreatePurchase)
-  $('#delete-purchase').on('submit', onDeletePurchase)
 }
 
 module.exports = {
