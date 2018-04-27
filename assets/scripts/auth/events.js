@@ -2,7 +2,10 @@
 
 const getFormFields = require('../../../lib/get-form-fields')
 const authAPI = require('./api.js')
+const shopAPI = require('../shop/api.js')
+const store = require('../store')
 const authUI = require('./ui.js')
+const toast = require('../toasts.js')
 
 // checks session storage to see if user already has login info saved in
 // sessionStorage. If yes, load signInSuccess for UI update, otherwise do nothing
@@ -10,7 +13,18 @@ const checkSessionCreds = function () {
   const user = sessionStorage.getItem('user')
   if (user !== undefined && user !== null) {
     console.log('sessionCreds user is ', JSON.parse(user))
-    authUI.signInSuccess(JSON.parse(user))
+    store.user = JSON.parse(user).user
+    console.log('store.user is ', store.user)
+    shopAPI.getGold()
+      .then(() => authUI.signInSuccess(JSON.parse(user)))
+      .catch((res) => {
+        console.log(res.status)
+        // if token is no longer valid, clear it from sessionStorage
+        if (res.status === 401) {
+          toast.failure('No longer signed in')
+          sessionStorage.clear()
+        }
+      })
   } else {
     console.log('sessionCreds user doesn\'t exist')
   }
