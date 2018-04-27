@@ -70,6 +70,10 @@ body {
   color: black;
 }
 
+.modal-body {
+  overflow-x: auto;
+}
+
 
 .form-control::-webkit-input-placeholder { color: black; }  /* WebKit, Blink, Edge */
 .form-control:-moz-placeholder { color: black; }  /* Mozilla Firefox 4 to 18 */
