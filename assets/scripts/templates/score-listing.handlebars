@@ -1,9 +1,19 @@
+
+<table class="table table-striped table-hover">
+<tr class='header_row'>
+  <td>Score:</td>
+  <td>Player:</td>
+  <td>Game ID:</td>
+</tr>
+
 {{#each scores as |score|}}
 
- <ul data-id="{{score.id}}">
-  <li>Score: {{score.score}}</li>
-  <li>Game ID: {{score.id}}</li>
-  <li>Player: {{score.email}}</li>
-</ul>
+ <tr class="crew_row" data-id="{{crew.id}}">
+   <td>{{score.score}}</td>
+   <td>{{score.email}}</td>
+   <td>{{score.id}}</td>
+ </tr>
+
 
 {{/each}}
+</table>
