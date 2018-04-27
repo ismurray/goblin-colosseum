@@ -25,8 +25,11 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #232055;
-  color: grey;
+  h1, h2 {
+    color: #fffff0;
+  }
 }
+
 
 .game-message-well {
   height: 100px;
@@ -47,3 +50,29 @@ body {
 .player-inputs {
   margin-bottom: 100px;
 }
+
+.navbar {
+  // background-color: rgb(165, 139, 242);
+  background-color: rgb(80, 122, 143);
+  border-color: grey;
+  color: black;
+}
+
+.navbar-btn {
+  // background-color: #337ab7;
+  background-color: #374f5a;
+  color: #fffff0;
+  border-color: black;
+}
+
+#nav-text {
+  background-color: rgb(80, 122, 143);
+  color: black;
+}
+
+
+.form-control::-webkit-input-placeholder { color: black; }  /* WebKit, Blink, Edge */
+.form-control:-moz-placeholder { color: black; }  /* Mozilla Firefox 4 to 18 */
+.form-control::-moz-placeholder { color: black; }  /* Mozilla Firefox 19+ */
+.form-control:-ms-input-placeholder { color: black; }  /* Internet Explorer 10-11 */
+.form-control::-ms-input-placeholder { color: black; }  /* Microsoft Edge */
