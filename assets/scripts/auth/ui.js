@@ -2,6 +2,7 @@
 
 const store = require('../store')
 const toast = require('../toasts.js')
+const gameUI = require('../game/ui')
 
 const signUpSuccess = function (data) {
   // $('#account-message').text('Signed up successfully!')
@@ -68,6 +69,7 @@ const signOutSuccess = function () {
   $('#get-game')[0].reset()
   $('#user-gold').html('')
   sessionStorage.clear()
+  document.removeEventListener('keydown', gameUI.keyDownHandler, false)
 }
 
 const signOutFailure = function (error) {

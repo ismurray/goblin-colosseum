@@ -32,6 +32,8 @@ const getGameSuccess = function (data) {
   $('#all-games-content').html(showGameHtml)
   $('#game-message').text('Game Loaded! Pick up where you left off and kill as many Goblins as you can before you die!')
   $('#get-game').find('input:text').val('')
+  // add keyboard input listener
+  document.addEventListener('keydown', keyDownHandler, false)
 }
 
 const getGameFailure = function (error) {
@@ -47,6 +49,8 @@ const createGameSuccess = function () {
   $('#game-message').text('New Game! See how many Gobs you can kill before dying!')
   $('#game-message').css('background-color', '#fefefe')
   $('#game-input-wrapper').show()
+  // add keyboard input listener
+  document.addEventListener('keydown', keyDownHandler, false)
 }
 
 // updates the UI map/score/etc to match the internal map
@@ -57,6 +61,7 @@ const updateMapUI = function (game) {
   $('#current-game').text(game.gameId)
   if (game.over) {
     $('#game-input-wrapper').hide()
+    document.removeEventListener('keydown', keyDownHandler, false)
   }
 
   for (let y = 0; y < 5; y++) {
@@ -150,6 +155,53 @@ const getHighScoresFailure = function (error) {
   console.log(error)
 }
 
+// handles keyboard inputs for game actions
+const keyDownHandler = function (event) {
+  console.log('event.key is ', event.key)
+  switch (event.key) {
+    case 'w':
+      console.log('move/attack up!')
+      $('#move-up').click()
+      break
+    case 'a':
+      console.log('move/attack left!')
+      $('#move-left').click()
+      break
+    case 's':
+      console.log('move/attack down!')
+      $('#move-down').click()
+      break
+    case 'd':
+      console.log('move/attack right!')
+      $('#move-right').click()
+      break
+    case 'W':
+      console.log('lightning blast up!')
+      $('#blast-up').click()
+      break
+    case 'A':
+      console.log('lightning blast left!')
+      $('#blast-left').click()
+      break
+    case 'S':
+      console.log('lightning blast down!')
+      $('#blast-down').click()
+      break
+    case 'D':
+      console.log('lightning blast right!')
+      $('#blast-right').click()
+      break
+    case 'e':
+      console.log('Sweeping Strike!')
+      $('#sweep-button').click()
+      break
+    case 'r':
+      console.log('Healing Potion!')
+      $('#heal-button').click()
+      break
+  }
+}
+
 module.exports = {
   getAllGamesSuccess,
   getAllGamesFailure,
@@ -161,5 +213,6 @@ module.exports = {
   deleteGameFailure,
   updateMapUI,
   getHighScoresSuccess,
-  getHighScoresFailure
+  getHighScoresFailure,
+  keyDownHandler
 }
