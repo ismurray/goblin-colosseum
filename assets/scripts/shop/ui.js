@@ -5,29 +5,21 @@ const showAllPurchasesTemplate = require('../templates/purchase-listing.handleba
 const toast = require('../toasts.js')
 
 const getGoldSuccess = function (data) {
-  // $('#account-message').text('Gold retrieved!')
-  // $('#account-message').css('background-color', '#5cb85c')
   $('#user-gold').html(data)
 }
 
 const getGoldFailure = function (error) {
-  // $('#shop-message').text('Error retrieving gold balance!')
-  // $('#shop-message').css('background-color', '#d9534f')
   toast.failure('Error retrieving gold balance!')
   console.log(error)
 }
 
 const updateGoldSuccess = function (data) {
-  // $('#shop-message').text('Transaction successful!')
-  // $('#shop-message').css('background-color', '#5cb85c')
-  toast.success('Purchase complete!')
+  toast.success('Gold Deposited Into Your Account!')
   $('#user-gold').html(data)
 }
 
 const updateGoldFailure = function (error) {
-  // $('#shop-message').text('Error processing transaction!')
-  // $('#shop-message').css('background-color', '#d9534f')
-  toast.failure('Error processing transaction!')
+  toast.failure('No Gold Transferred!')
   console.log(error)
 }
 
@@ -70,8 +62,6 @@ const storePurchases = function (data) {
 }
 
 const getPurchasesSuccess = function (data) {
-  // $('#shop-message').text('Purchases retrieved!')
-  // $('#shop-message').css('background-color', '#5cb85c')
   toast.success('Purchases retrieved!')
   storePurchases(data)
   const showPurchasesHtml = showAllPurchasesTemplate({ accountPurchases: [store.accountPurchases] })
@@ -79,15 +69,11 @@ const getPurchasesSuccess = function (data) {
 }
 
 const getPurchasesFailure = function (error) {
-  // $('#shop-message').text('Error retrieving purchases!')
-  // $('#shop-message').css('background-color', '#d9534f')
   toast.failure('Error retrieving purchases!')
   console.log(error)
 }
 
 const createPurchaseSuccess = function (data) {
-  // $('#shop-message').text('Purchase successful!')
-  // $('#shop-message').css('background-color', '#5cb85c')
   toast.success('Purchase successful!')
   const showPurchasesHtml = showAllPurchasesTemplate({ purchases: data })
   $('#all-purchases-content').append(showPurchasesHtml)
@@ -96,8 +82,6 @@ const createPurchaseSuccess = function (data) {
 }
 
 const createPurchaseFailure = function (error) {
-  // $('#shop-message').text('Error processing purchase!')
-  // $('#shop-message').css('background-color', '#d9534f')
   toast.failure('Error processing purchase!')
   console.log(error)
 }

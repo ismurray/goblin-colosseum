@@ -5,8 +5,6 @@ const toast = require('../toasts.js')
 const gameUI = require('../game/ui')
 
 const signUpSuccess = function (data) {
-  // $('#account-message').text('Signed up successfully!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Signed Up!')
   $('#sign-up-button').click()
   $('#sign-up').find('input:text').val('')
@@ -14,8 +12,6 @@ const signUpSuccess = function (data) {
 }
 
 const signUpFailure = function (error) {
-  // $('#account-message').text('Error on signing up')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error on signing up')
   $('#sign-up-button').click()
   $('#sign-up').find('input:text').val('')
@@ -24,11 +20,9 @@ const signUpFailure = function (error) {
 }
 
 const signInSuccess = function (data) {
-  // $('#account-message').text('Signed in successfully!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Signed In!')
   store.user = data.user
-  console.log('store.user is ', store.user)
+  // console.log('store.user is ', store.user)
   $('#sign-in').find('input:text').val('')
   $('#sign-in').find('input:password').val('')
   $('#auth-wrapper').hide()
@@ -46,8 +40,6 @@ const signInSuccess = function (data) {
 }
 
 const signInFailure = function (error) {
-  // $('#account-message').text('Error on signing in')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error on signing in')
   $('#sign-in-button').click()
   $('#sign-in').find('input:text').val('')
@@ -57,8 +49,6 @@ const signInFailure = function (error) {
 }
 
 const signOutSuccess = function () {
-  // $('#account-message').text('Signed out successfully!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Signed Out!')
   $('#auth-wrapper').show()
   $('#account-navbar').hide()
@@ -73,8 +63,6 @@ const signOutSuccess = function () {
 }
 
 const signOutFailure = function (error) {
-  // $('#account-page-message').text('Error on Signing Out')
-  // $('#account-page-message').css('background-color', '#d9534f')
   // toast.failure('Error on signing out')
   console.log(error)
   // clear credentials from sessionStorage and render signout UI updates even in failure
@@ -83,16 +71,12 @@ const signOutFailure = function (error) {
 }
 
 const changePasswordSuccess = function () {
-  // $('#account-message').text('Password changed successfully!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Password Changed!')
   $('#change-password').find('input:text').val('')
   $('#change-password').find('input:password').val('')
 }
 
 const changePasswordFailure = function (error) {
-  // $('#account-message').text('Error on changing password')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error on changing password')
   $('#change-password').find('input:text').val('')
   $('#change-password').find('input:password').val('')

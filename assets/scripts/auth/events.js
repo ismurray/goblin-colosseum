@@ -12,13 +12,13 @@ const toast = require('../toasts.js')
 const checkSessionCreds = function () {
   const user = sessionStorage.getItem('user')
   if (user !== undefined && user !== null) {
-    console.log('sessionCreds user is ', JSON.parse(user))
+    // console.log('sessionCreds user is ', JSON.parse(user))
     store.user = JSON.parse(user).user
-    console.log('store.user is ', store.user)
+    // console.log('store.user is ', store.user)
     shopAPI.getGold()
       .then(() => authUI.signInSuccess(JSON.parse(user)))
       .catch((res) => {
-        console.log(res.status)
+        // console.log(res.status)
         // if token is no longer valid, clear it from sessionStorage
         if (res.status === 401) {
           toast.failure('No longer signed in')
@@ -26,7 +26,7 @@ const checkSessionCreds = function () {
         }
       })
   } else {
-    console.log('sessionCreds user doesn\'t exist')
+    // console.log('sessionCreds user doesn\'t exist')
   }
 }
 
@@ -34,7 +34,7 @@ const onSignUp = function (event) {
   event.preventDefault()
 
   const data = getFormFields(this)
-  console.log('data is ', data)
+  // console.log('data is ', data)
   authAPI.signUp(data)
     .then(authUI.signUpSuccess)
     .then(() => authAPI.signIn(data))
@@ -46,16 +46,16 @@ const onSignIn = function (event) {
   event.preventDefault()
 
   const data = getFormFields(this)
-  console.log('data is ', data)
+  // console.log('data is ', data)
   authAPI.signIn(data)
     .then((res) => {
-      console.log('res is ', res)
+      // console.log('res is ', res)
       sessionStorage.setItem('user', JSON.stringify(res))
       return res
     })
     .then((res) => {
       const credentials = JSON.parse(sessionStorage.getItem('user'))
-      console.log('session credentials is ', credentials.user.token)
+      // console.log('session credentials is ', credentials.user.token)
       return res
     })
     .then(authUI.signInSuccess)

@@ -10,14 +10,10 @@ const toast = require('../toasts.js')
 const getAllGamesSuccess = function (data) {
   const showAllGamesHtml = showAllGamesTemplate({ games: data.games })
   $('#all-games-content').html(showAllGamesHtml)
-  // $('#account-message').text('Games retrieved!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Games retrieved!')
 }
 
 const getAllGamesFailure = function (error) {
-  // $('#account-message').text('Error on getting games!')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error getting games!')
   console.log(error)
 }
@@ -25,8 +21,6 @@ const getAllGamesFailure = function (error) {
 const getGameSuccess = function (data) {
   $('#game-wrapper-div').show()
   $('#game-input-wrapper').show()
-  // $('#account-message').text('Game retrieved!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Game Loaded!')
   const showGameHtml = showAllGamesTemplate({ games: data })
   $('#all-games-content').html(showGameHtml)
@@ -37,8 +31,6 @@ const getGameSuccess = function (data) {
 }
 
 const getGameFailure = function (error) {
-  // $('#account-message').text('Error retrieving game!')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error retrieving game!')
   console.log(error)
   $('#get-game').find('input:text').val('')
@@ -62,6 +54,7 @@ const updateMapUI = function (game) {
   if (game.over) {
     $('#game-input-wrapper').hide()
     document.removeEventListener('keydown', keyDownHandler, false)
+    toast.gameOver('You Died! TRY AGAIN')
   }
 
   for (let y = 0; y < 5; y++) {
@@ -116,8 +109,6 @@ const updateMapUI = function (game) {
 }
 
 const createGameFailure = function (error) {
-  // $('#account-message').text('Error creating game!')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error creating game!')
   console.log(error)
   $('#create-game').find('input:text').val('')
@@ -128,14 +119,10 @@ const deleteGameSuccess = function (id) {
   if (currentGameId === store.deletedGameId) {
     $('#game-wrapper-div').hide()
   }
-  // $('#account-message').text('You have deleted a game!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('You have deleted a game!')
 }
 
 const deleteGameFailure = function (error) {
-  // $('#account-message').text('Error deleting game!')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error deleting game!')
   console.log(error)
 }
@@ -143,60 +130,56 @@ const deleteGameFailure = function (error) {
 const getHighScoresSuccess = function (data) {
   const showHighScoresHtml = showHighScoresTemplate({ scores: data })
   $('#high-scores-content').html(showHighScoresHtml)
-  // $('#account-message').text('Scores retrieved!')
-  // $('#account-message').css('background-color', '#5cb85c')
   toast.success('Scores retrieved!')
 }
 
 const getHighScoresFailure = function (error) {
-  // $('#account-message').text('Error on getting scores!')
-  // $('#account-message').css('background-color', '#d9534f')
   toast.failure('Error getting scores!')
   console.log(error)
 }
 
 // handles keyboard inputs for game actions
 const keyDownHandler = function (event) {
-  console.log('event.key is ', event.key)
+  // console.log('event.key is ', event.key)
   switch (event.key) {
     case 'w':
-      console.log('move/attack up!')
+      // console.log('move/attack up!')
       $('#move-up').click()
       break
     case 'a':
-      console.log('move/attack left!')
+      // console.log('move/attack left!')
       $('#move-left').click()
       break
     case 's':
-      console.log('move/attack down!')
+      // console.log('move/attack down!')
       $('#move-down').click()
       break
     case 'd':
-      console.log('move/attack right!')
+      // console.log('move/attack right!')
       $('#move-right').click()
       break
     case 'W':
-      console.log('lightning blast up!')
+      // console.log('lightning blast up!')
       $('#blast-up').click()
       break
     case 'A':
-      console.log('lightning blast left!')
+      // console.log('lightning blast left!')
       $('#blast-left').click()
       break
     case 'S':
-      console.log('lightning blast down!')
+      // console.log('lightning blast down!')
       $('#blast-down').click()
       break
     case 'D':
-      console.log('lightning blast right!')
+      // console.log('lightning blast right!')
       $('#blast-right').click()
       break
     case 'e':
-      console.log('Sweeping Strike!')
+      // console.log('Sweeping Strike!')
       $('#sweep-button').click()
       break
     case 'r':
-      console.log('Healing Potion!')
+      // console.log('Healing Potion!')
       $('#heal-button').click()
       break
   }
