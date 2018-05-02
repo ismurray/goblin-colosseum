@@ -37,6 +37,7 @@ const signInSuccess = function (data) {
   $('#blast-down').css('background-color', 'grey')
   $('#unlock-sweep').show()
   $('#unlock-blast').show()
+  $('#get-user-purchases').hide()
 }
 
 const signInFailure = function (error) {
