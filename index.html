@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Goblin Colosseum</title>
+      <!-- development title icon: -->
+      <!-- <link rel="shortcut icon" type="image/png" href="./assets/resources/shield-and-swords-32.png" /> -->
+      <!-- production title icon: -->
+      <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/ismurray/image/upload/v1520796171/shield-and-swords-32.png">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body class="container-fluid">
+
+      <div class="header-box">
+        <h1>Goblin Colosseum</h1>
+      </div>
+
+      <!-- Start non-header/footer body -->
+      <div class="container-fluid">
+
+        <!-- Hide/Show All for testing-->
+        <!-- <form id="hide-all" class="border">
+        <fieldset>
+          <input type="submit" value="Hide All">
+        </fieldset>
+      </form>
+      <form id="show-all" class="border">
+        <fieldset>
+          <input type="submit" value="Show All">
+        </fieldset>
+      </form> -->
+
+      <!-- Start Nav Bar: -->
+      <nav class="navbar navbar-default" id="account-navbar">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand navbar-btn" href="#">Brand</a> -->
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <!-- New Game Button -->
+            <ul class="nav navbar-nav">
+              <li>
+                <form class="navbar-form" id="start-game">
+                <button type="submit" class="blue-btn btn btn-default navbar-btn">New Game</button>
+                </form>
+              </li>
+            </ul>
+            <!-- Button trigger All Games modal -->
+            <ul class="nav navbar-nav">
+              <li>
+                <form class="navbar-form">
+                <button type="button" id="get-all-games" class="blue-btn btn btn-default navbar-btn" data-toggle="modal" data-target="#all-games-modal">
+                  Get All Games
+                </button>
+              </form>
+              </li>
+            </ul>
+            <!-- Get Game Form: -->
+            <!-- <form class="navbar-form navbar-left" id="get-game">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Load game by ID">
+              </div>
+              <button type="submit" class="blue-btn btn btn-default navbar-btn">Submit</button>
+            </form> -->
+            <ul class="nav navbar-nav navbar-right">
+
+              <li class="dropdown navbar-btn">
+                <a href="#" id="nav-text" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Change Password <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <!-- Change Password Form: -->
+                  <form class="navbar-form navbar-left" id="change-password">
+                    <div class="form-group">
+                      <input type="password" name="passwords[old]" class="form-control" placeholder="Old Password">
+                      <input type="password" name="passwords[new]" class="form-control" placeholder="New Password">
+                    </div>
+                    <button type="submit" class="blue-btn btn btn-default navbar-btn">Submit</button>
+                  </form>
+                </ul>
+              </li>
+              <li>
+                <!-- Sign Out Form: -->
+                <form class="navbar-form" id="sign-out">
+                <button type="submit" class="blue-btn btn btn-default navbar-btn">Sign Out</button>
+              </form>
+            </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <!-- End Nav Bar -->
+
+        <!-- Account Message Panel -->
+        <!-- <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="account-message">
+            <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+            </div>
+        </div> -->
+
+        <!-- Begin SignIn/SignOut Wrapper: -->
+        <div id="auth-wrapper">
+          <h2>Sign in to Play!</h2>
+
+          <!-- <div class="col-md-3 col-sm-6 col-xs-8 panel panel-default" id="account-message">
+            <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-xs-12 center-block">
+              <!-- Button trigger modal -->
+              <button type="button" id="sign-in-button" class="col-xs-12 btn btn-primary btn-lg auth-buttons" data-toggle="modal" data-target="#signInModal">
+                Sign In
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="signInModalLabel">Sign In to an Existing Account</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Sign In Form: -->
+                      <form id="sign-in" class="border">
+                        <fieldset>
+                          <input type="text" name="credentials[email]" placeholder="Username">
+                          <input type="password" name="credentials[password]" placeholder="Password">
+                          <button type="submit" class="btn btn-primary btn">Sign In</button>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 center-block">
+              <!-- Button trigger modal -->
+              <button type="button" id="sign-up-button" class="col-xs-12 btn btn-primary btn-lg auth-buttons" data-toggle="modal" data-target="#signUpModal">
+                Sign Up
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Sign Up to Create An Account</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Sign Up Form: -->
+                      <form id="sign-up" class="border">
+                        <fieldset>
+                          <input type="text" name="credentials[email]" placeholder="Username">
+                          <input type="password" name="credentials[password]" placeholder="Password">
+                          <input type="password" name="credentials[password_confirmation]" placeholder="Confirm Password">
+                          <button type="submit" class="btn btn-primary btn">Sign Up</button>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End SignIn/SignOut Wrapper -->
+
+
+
+
+
+        <div id="non-auth-wrapper">
+
+
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. </p> -->
+
+          <!-- Begin Shop Modal -->
+          <div class="row">
+            <div class="col-xs-12 center-block">
+              <!-- Button trigger modal -->
+              <button type="button" id="shop-button" class="col-xs-12 btn btn-primary btn-lg auth-buttons" data-toggle="modal" data-target="#shopModal">
+                Shop
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="shopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Unlock Items and Abilities Here!</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="shop-message">
+                          <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+                          </div>
+                      </div> -->
+                      <!-- Get Gold Form: -->
+                      <h3>Your Gold Balance: <span id="user-gold"></span></h3>
+
+
+
+                      <h3>Buyable Items and Abilities:</h3>
+                      <!-- Shop Items: -->
+                      <h4>Ability: Sweeping Strike</h4>
+                      <p>This purchase is not consumable -- you may use it as many times as you like. Unlocking this
+                        allows a player to perform a special ability, attacking all adjacent enemies at once.
+                      </p>
+                      <form class="navbar-form" id="unlock-sweep" data-id="sweep">
+                        <p>Cost: 100 Gold</p>
+                        <button type="submit" class="blue-btn btn btn-default btn-primary">Unlock Sweeping Strike</button>
+                      </form>
+
+                      <h4>Ability: Lightning Blast</h4>
+                      <p>This purchase is not consumable -- you may use it as many times as you like. Unlocking this allows
+                        a player to perform a special ability, firing a blast of energy that hits all enemies in a straight
+                        line.
+                      </p>
+                      <form class="navbar-form" id="unlock-blast" data-id="blast">
+                        <p>Cost: 100 Gold</p>
+                        <button type="submit" class="blue-btn btn btn-default btn-primary">Unlock Lightning Blast</button>
+                      </form>
+
+
+                      <h4>Item: Healing Potion</h4>
+                      <p>This purchase is consumable -- you may only use it once (unless you buy more). Drinking this potion
+                        restores the player's HP back to maximum. </p>
+                      <form class="navbar-form" id="buy-heal" data-id="heal">
+                          <p>Cost: 20 Gold</p>
+                        <button type="submit" class="blue-btn btn btn-default btn-primary">Buy Health Potion</button>
+                      </form>
+
+
+
+
+                      <!-- Get Purchases Form: -->
+                      <form class="navbar-form" id="get-user-purchases">
+                        <button type="submit" class="blue-btn btn btn-default btn-primary">See All Of Your Purchases:</button>
+                      </form>
+                      <p>Your Purchases: </p>
+                      <div class="all-purchases-content" id="all-purchases-content">
+                      </div>
+
+                    </div>
+                    <!-- End Modal Body -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <!-- End Shop Modal -->
+
+        <!-- Begin Scores Modal -->
+        <div class="row">
+          <div class="col-xs-12 center-block">
+            <!-- Button trigger modal -->
+            <button type="button" id="get-high-scores" class="col-xs-12 btn btn-primary btn-lg auth-buttons" data-toggle="modal" data-target="#scoresModal">
+              See High Scores
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="scoresModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Global Leaderboards: Top 10 Scores</h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="high-scores-content" id="high-scores-content">
+                    </div>
+                  </div>
+                  <!-- End modal body -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Scores Modal -->
+
+        <!-- Game Button -->
+        <div class="row">
+          <div class="col-xs-12 center-block">
+            <!-- Button trigger modal -->
+            <button type="button" id="another-start-game-button" class="col-xs-12 btn btn-primary btn-lg auth-buttons" data-toggle="modal">
+              New Game
+            </button>
+          </div>
+        </div>
+
+          <!-- Begin Game Display -->
+          <div class="game-wrapper" id="game-wrapper-div">
+            <!-- Game Message Panel -->
+            <!-- <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" id="game-message">
+              <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+              </div>
+            </div> -->
+
+            <!-- Instructions Dropdown -->
+            <div class="row">
+              <div class="col-xs-12 center-block">
+                <button class="col-xs-12 btn btn-primary stats-drop-button center-block btn-lg instructions-button auth-buttons" type="button" data-toggle="collapse" data-target="#collapse-classic-instructions" aria-expanded="false" aria-controls="collapse-classic-instructions">
+                  Instructions
+                </button>
+                <div class="collapse" id="collapse-classic-instructions">
+                  <div class="stats-well col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 well instructions">
+
+                  <div class="row">
+                      <div class="col-xs-12">
+                        <p>Goblin colosseum is a turn-based roguelike RPG, where players fight increasingly
+                        difficult waves of goblins in an attempt to earn gold and get a score high
+                        enough to make it onto the leaderboards.</p>
+
+                        <ul>
+                          <li> Players can move in the 4 cardinal directions (using the WASD keys)</li>
+                          <li> Moving towards an adjacent enemy triggers an attack</li>
+                          <li> A new wave of goblins spawns every 10 rounds</li>
+                          <li> Every wave, goblins are spawned in random positions, and the number of
+                              spawned goblins goes up</li>
+                          <li> Every time you kill a goblin, your score increases</li>
+                          <li> The game is over when the player drops to 0 HP</li>
+                          <li> At gameover, an amount of gold equal to your final score is added to your
+                              account</li>
+                          <li> If your score is high enough, you might just make it onto the global
+                              leaderboards</li>
+                          <li> Users can spend their gold to unlock special abilities, and buy consumable
+                              items in the Shop</li>
+                          <li> Items and Special Abilities:
+                            <ul>
+                            <li> Sweeping Strike: [Ability] attacks all adjacent enemies (by pressing the E key)</li>
+                            <li> Lightning Blast: [Ability] attacks all enemies in a straight line (by holding Shift and pressing the WASD keys)</li>
+                            <li> Healing Potion: [Item] Restores the players hit points back to maximum (by pressing the R key)</li>
+                          </ul>
+                        </ul>
+                        <h3> Controls:</h3>
+                        <img class="keyboard-control-layout" src="http://res.cloudinary.com/ismurray/image/upload/v1525217581/keyboard-layout-cropped.png" alt="Move/Attack with WASD, Shift+WASD for Lightning Blast, Heal with R, Sweeping Strike with E.">
+                        <button class="btn btn-primary center-block btn-lg auth-buttons" type="button" data-toggle="collapse" data-target="#non-keyboard-controls" aria-expanded="false" aria-controls="non-keyboard-controls">
+                          Toggle Non-Keyboard Control Panel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Instructions Dropdown -->
+
+
+            <div class="col-md-12 wrapper">
+              <div class="row hud-row">
+                <div class="col-xs-10 col-sm-5 col-lg-3">
+                  <p>Current Game ID: <span id="current-game"></span></p>
+                </div>
+                <div class="col-xs-10 col-sm-5 col-lg-3">
+                  <p>Your Score: <span id="current-score"></span></p>
+                </div>
+                <div class="col-xs-10 col-sm-5 col-lg-2">
+                  <p>Round: <span id="current-round"></span></p>
+                </div>
+                <div class="col-xs-10 col-sm-5 col-lg-2">
+                  <p>Your HP: <span id="current-hp"></span></p>
+                </div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="0" id="mark00"> </div>
+                <div class="col-xs-2 board-spot" data-id="1" id="mark01"> </div>
+                <div class="col-xs-2 board-spot" data-id="2" id="mark02"> </div>
+                <div class="col-xs-2 board-spot" data-id="3" id="mark03"> </div>
+                <div class="col-xs-2 board-spot" data-id="4" id="mark04"> </div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="5" id="mark10"> </div>
+                <div class="col-xs-2 board-spot" data-id="6" id="mark11"> </div>
+                <div class="col-xs-2 board-spot" data-id="7" id="mark12"> </div>
+                <div class="col-xs-2 board-spot" data-id="8" id="mark13"> </div>
+                <div class="col-xs-2 board-spot" data-id="8" id="mark14"> </div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="10" id="mark20"> </div>
+                <div class="col-xs-2 board-spot" data-id="11" id="mark21"> </div>
+                <div class="col-xs-2 board-spot" data-id="12" id="mark22"> </div>
+                <div class="col-xs-2 board-spot" data-id="13" id="mark23"> </div>
+                <div class="col-xs-2 board-spot" data-id="14" id="mark24"> </div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="15" id="mark30"> </div>
+                <div class="col-xs-2 board-spot" data-id="16" id="mark31"> </div>
+                <div class="col-xs-2 board-spot" data-id="17" id="mark32"> </div>
+                <div class="col-xs-2 board-spot" data-id="18" id="mark33"> </div>
+                <div class="col-xs-2 board-spot" data-id="19" id="mark34"> </div>
+              </div>
+              <div class="row board-row">
+                <div class="col-xs-2 board-spot" data-id="20" id="mark40"> </div>
+                <div class="col-xs-2 board-spot" data-id="21" id="mark41"> </div>
+                <div class="col-xs-2 board-spot" data-id="22" id="mark42"> </div>
+                <div class="col-xs-2 board-spot" data-id="23" id="mark43"> </div>
+                <div class="col-xs-2 board-spot" data-id="24" id="mark44"> </div>
+              </div>
+            </div>
+
+            <!-- Game Messages: -->
+            <div class="col-md-10 col-sm-10 col-xs-10 well well-sm pre-scrollable scroll-box game-message-well" id="game-message">
+              <div class="col-md-6 col-sm-8 col-xs-12 message-container panel-body">
+              </div>
+            </div>
+
+
+
+            <!-- Game Input Wrapper: -->
+          <div class="border player-inputs" id="game-input-wrapper">
+            <div class="collapse" id="non-keyboard-controls">
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="heal-button" type="submit" class="btn btn-primary btn">Healing Potions <span id="current-heals"></span></button>
+                  <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
+                  <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
+                  <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="sweep-button" type="submit" class="btn btn-primary btn">Sweeping Strike</button>
+                  <button id="blast-up" type="submit" class="btn btn-primary btn">Lightning Blast Up</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="blast-left" type="submit" class="btn btn-primary btn">Lightning Blast Left</button>
+                  <button id="blast-down" type="submit" class="btn btn-primary btn">Lightning Blast Down</button>
+                  <button id="blast-right" type="submit" class="btn btn-primary btn">Lightning Blast Right</button>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+          <!-- End Game Input Wrapper -->
+
+
+        </div>
+          <!-- End game-wrapper -->
+
+
+          <!-- Get All Games Form -->
+          <!-- <h2>Get All Games</h2>
+          <form id="get-all-games" class="border">
+            <fieldset>
+              <button type="submit" id="get-all-games-button" class="btn btn-primary btn">Get All Games</button>
+            </fieldset>
+          </form>
+
+          <div class="content" id="content">
+          </div> -->
+
+          <!-- Button trigger All Games modal -->
+          <!-- <div class="row">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#all-games-modal">
+              Get All Games
+            </button>
+          </div> -->
+
+          <!-- All Games Modal -->
+          <div class="modal fade" id="all-games-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" id="close-all-games-modal" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">All your games</h4>
+                </div>
+                <div class="modal-body">
+                  <!-- <form  class="border">
+                    <fieldset>
+                      <button type="submit" id="get-all-games-button" class="btn btn-primary btn">Get All Games</button>
+                    </fieldset>
+                  </form> -->
+                  <!-- All Games handlebars target: -->
+                  <div class="all-games-content" id="all-games-content">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+        <!-- End non-auth wrapper -->
+        <!-- end non-header/footer body -->
+        </div>
+
+
+
+
+
+    </body>
+</html>
