@@ -36,7 +36,7 @@ https://ismurray.github.io/goblin-colosseum/
 
 ## Wire Frames
 Initial Wire frames:
-![ERD](https://imgur.com/IIScTZZ)
+![ERD](https://i.imgur.com/IIScTZZ.jpg)
 
 
 ## User Stories
