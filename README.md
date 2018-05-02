@@ -33,11 +33,10 @@ https://ismurray.github.io/goblin-colosseum/
 - Github Repo: https://github.com/ismurray/goblin-colosseum-api
 - API: https://goblin-colosseum-api.herokuapp.com/
 
-## Development Process
-[PLACEHOLDER TEXT]
 
 ## Wire Frames
-Initial Wire frames: https://imgur.com/IIScTZZ
+Initial Wire frames:
+![ERD](https://imgur.com/IIScTZZ)
 
 
 ## User Stories
@@ -72,5 +71,3 @@ Below are some of the initial user stories I made during the planning stage:
 * GIT/GITHUB
 * Atom
 * Webpack
-
-## Future Iterations
