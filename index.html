@@ -72,12 +72,12 @@
               </li>
             </ul>
             <!-- Get Game Form: -->
-            <form class="navbar-form navbar-left" id="get-game">
+            <!-- <form class="navbar-form navbar-left" id="get-game">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Load game by ID">
               </div>
               <button type="submit" class="blue-btn btn btn-default navbar-btn">Submit</button>
-            </form>
+            </form> -->
             <ul class="nav navbar-nav navbar-right">
 
               <li class="dropdown navbar-btn">
@@ -318,51 +318,74 @@
             </div> -->
 
             <!-- Instructions Dropdown -->
-            <button class="btn btn-primary stats-drop-button center-block instructions-button" type="button" data-toggle="collapse" data-target="#collapse-classic-instructions" aria-expanded="false" aria-controls="collapse-classic-instructions">
-              Instructions
-            </button>
-            <div class="collapse" id="collapse-classic-instructions">
-              <div class="stats-well col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12 well">
+            <div class="row">
+              <div class="col-xs-12 center-block">
+                <button class="col-xs-12 btn btn-primary stats-drop-button center-block btn-lg instructions-button auth-buttons" type="button" data-toggle="collapse" data-target="#collapse-classic-instructions" aria-expanded="false" aria-controls="collapse-classic-instructions">
+                  Instructions
+                </button>
+                <div class="collapse" id="collapse-classic-instructions">
+                  <div class="stats-well col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 well instructions">
 
-              <div class="row">
-                  <div class="col-xs-12">
-                    <p>Goblin colosseum is a turn-based roguelike RPG, where players fight increasingly
-                    difficult waves of goblins in an attempt to earn gold and get a score high
-                    enough to make it onto the leaderboards.</p>
+                  <div class="row">
+                      <div class="col-xs-12">
+                        <p>Goblin colosseum is a turn-based roguelike RPG, where players fight increasingly
+                        difficult waves of goblins in an attempt to earn gold and get a score high
+                        enough to make it onto the leaderboards.</p>
 
-                    <ul>
-                      <li> Players can move in the 4 cardinal directions</li>
-                      <li> Moving towards an adjacent enemy triggers an attack</li>
-                      <li> A new wave of goblins spawns every 10 rounds</li>
-                      <li> Every wave, goblins are spawned in random positions, and the number of
-                          spawned goblins goes up</li>
-                      <li> Every time you kill a goblin, your score increases</li>
-                      <li> The game is over when the player drops to 0 HP</li>
-                      <li> At gameover, an amount of gold equal to your final score is added to your
-                          account</li>
-                      <li> If your score is high enough, you might just make it onto the global
-                          leaderboards</li>
-                      <li> Users can spend their gold to unlock special abilities, and buy consumable
-                          items in the Shop</li>
-                      <li> Items and Special Abilities:
                         <ul>
-                        <li> Sweeping Strike: [Ability] attacks all adjacent enemies</li>
-                        <li> Lightning Blast: [Ability] attacks all enemies in a straight line</li>
-                        <li> Healing Potion: [Item] Restores the players hit points back to maximum</li>
-                      </ul>
-                    </ul>
+                          <li> Players can move in the 4 cardinal directions (using the WASD keys)</li>
+                          <li> Moving towards an adjacent enemy triggers an attack</li>
+                          <li> A new wave of goblins spawns every 10 rounds</li>
+                          <li> Every wave, goblins are spawned in random positions, and the number of
+                              spawned goblins goes up</li>
+                          <li> Every time you kill a goblin, your score increases</li>
+                          <li> The game is over when the player drops to 0 HP</li>
+                          <li> At gameover, an amount of gold equal to your final score is added to your
+                              account</li>
+                          <li> If your score is high enough, you might just make it onto the global
+                              leaderboards</li>
+                          <li> Users can spend their gold to unlock special abilities, and buy consumable
+                              items in the Shop</li>
+                          <li> Items and Special Abilities:
+                            <ul>
+                            <li> Sweeping Strike: [Ability] attacks all adjacent enemies (by pressing the E key)</li>
+                            <li> Lightning Blast: [Ability] attacks all enemies in a straight line (by holding Shift and pressing the WASD keys)</li>
+                            <li> Healing Potion: [Item] Restores the players hit points back to maximum (by pressing the R key)</li>
+                          </ul>
+                        </ul>
+                        <h3> Controls:</h3>
+                        <img class="keyboard-control-layout" src="http://res.cloudinary.com/ismurray/image/upload/v1525217581/keyboard-layout-cropped.png" alt="Move/Attack with WASD, Shift+WASD for Lightning Blast, Heal with R, Sweeping Strike with E.">
+                        <button class="btn btn-primary center-block btn-lg auth-buttons" type="button" data-toggle="collapse" data-target="#non-keyboard-controls" aria-expanded="false" aria-controls="non-keyboard-controls">
+                          Toggle Non-Keyboard Control Panel
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <!-- End Instructions Dropdown -->
 
-            <p>Current Game ID: <span id="current-game"></span></p>
+            <!-- <p>Current Game ID: <span id="current-game"></span></p>
             <p>Your Score: <span id="current-score"></span></p>
             <p>Round: <span id="current-round"></span></p>
-            <p>Your HP: <span id="current-hp"></span></p>
+            <p>Your HP: <span id="current-hp"></span></p> -->
 
             <div class="col-md-12 wrapper">
+              <div class="row hud-row">
+                <div class="col-xs-10 col-sm-5 col-lg-3">
+                  <p>Current Game ID: <span id="current-game"></span></p>
+                </div>
+                <div class="col-xs-10 col-sm-5 col-lg-3">
+                  <p>Your Score: <span id="current-score"></span></p>
+                </div>
+                <div class="col-xs-10 col-sm-5 col-lg-2">
+                  <p>Round: <span id="current-round"></span></p>
+                </div>
+                <div class="col-xs-10 col-sm-5 col-lg-2">
+                  <p>Your HP: <span id="current-hp"></span></p>
+                </div>
+              </div>
               <div class="row board-row">
                 <div class="col-xs-2 board-spot" data-id="0" id="mark00"> </div>
                 <div class="col-xs-2 board-spot" data-id="1" id="mark01"> </div>
@@ -410,33 +433,38 @@
 
             <!-- Game Input Wrapper: -->
           <div class="border player-inputs" id="game-input-wrapper">
-            <div class="row">
-              <div class="col-md-6 col-lg-6">
-                <button id="heal-button" type="submit" class="btn btn-primary btn">Healing Potions <span id="current-heals"></span></button>
-                <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
+            <div class="collapse" id="non-keyboard-controls">
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="heal-button" type="submit" class="btn btn-primary btn">Healing Potions <span id="current-heals"></span></button>
+                  <button id="move-up" type="submit" class="btn btn-primary btn">Move/Attack Up</button>
 
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
+                  <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
+                  <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="sweep-button" type="submit" class="btn btn-primary btn">Sweeping Strike</button>
+                  <button id="blast-up" type="submit" class="btn btn-primary btn">Lightning Blast Up</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <button id="blast-left" type="submit" class="btn btn-primary btn">Lightning Blast Left</button>
+                  <button id="blast-down" type="submit" class="btn btn-primary btn">Lightning Blast Down</button>
+                  <button id="blast-right" type="submit" class="btn btn-primary btn">Lightning Blast Right</button>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6">
-                <button id="move-left" type="submit" class="btn btn-primary btn">Move/Attack Left</button>
-                <button id="move-down" type="submit" class="btn btn-primary btn">Move/Attack Down</button>
-                <button id="move-right" type="submit" class="btn btn-primary btn">Move/Attack Right</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6">
-                <button id="sweep-button" type="submit" class="btn btn-primary btn">Sweeping Strike</button>
-                <button id="blast-up" type="submit" class="btn btn-primary btn">Lightning Blast Up</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-lg-6">
-                <button id="blast-left" type="submit" class="btn btn-primary btn">Lightning Blast Left</button>
-                <button id="blast-down" type="submit" class="btn btn-primary btn">Lightning Blast Down</button>
-                <button id="blast-right" type="submit" class="btn btn-primary btn">Lightning Blast Right</button>
-              </div>
-            </div>
+
+
+
           </div>
           <!-- End Game Input Wrapper -->
 

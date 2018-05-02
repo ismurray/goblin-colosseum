@@ -1,6 +1,24 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 
+.hud-row {
+  div {
+    background-color: #232055;
+  }
+  p {
+    color: #fffff0;
+  }
+}
+
+.instructions {
+  background-color: #232055;
+  color: #fffff0;
+}
+
+.keyboard-control-layout {
+  width: 60%;
+}
+
 .board-spot {
   border: 1px solid black;
   min-height: 50px;
